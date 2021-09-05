@@ -1,0 +1,50 @@
+import types from "../actions/types";
+
+const initialState = {
+    userDetails: {},
+    isLoading: false
+};
+
+const Profile = ((state = initialState, actions = {}) => {
+    switch (actions.type) {
+        case types.profile.GET_USER_PROFILE: {
+            return {
+                ...state, userDetails: actions.payload.data.data[0]
+            }
+        }
+        case types.profile.UPDATE_USER_PROFILE: {
+            console.log("reducer");
+            return {
+                ...state, userDetails: {
+                    ...state.userDetails,
+                    noOfTables: actions.payload.fetchConfig.params.Restaurants.NoOfTables,
+                    phoneNumber: actions.payload.fetchConfig.params.Restaurants.PhoneNumber,
+                    website: actions.payload.fetchConfig.params.Restaurants.Website,
+                    GSTIN: actions.payload.fetchConfig.params.Restaurants.GSTIN,
+                    address: actions.payload.fetchConfig.params.Restaurants.Address,
+                    city: actions.payload.fetchConfig.params.Restaurants.City,
+                    states: actions.payload.fetchConfig.params.Restaurants.State,
+                    zipCode: actions.payload.fetchConfig.params.Restaurants.ZipCode,
+                }
+            }
+        }
+        case types.profile.UPDATE_USER_PROFILE_PIC: {
+            return {
+                ...state, userDetails: {
+                    ...state.userDetails,
+                    profilePic: actions.payload.data.data
+                }
+            }
+        }
+        case types.profile.SWITCH_PROFILE_LOADER: {
+            return {
+                ...state, isLoading: actions.payload.status
+            }
+        }
+        default: {
+            return state;
+        }
+    }
+});
+
+export default Profile;

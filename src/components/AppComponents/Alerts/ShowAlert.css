@@ -1,0 +1,9 @@
+.AnimatedAlert {
+    top:30px;
+    right: 0;
+    position: fixed;
+    width: 25%;
+    transition: 1s;
+    border-radius: 0;
+    z-index: 10;
+}
