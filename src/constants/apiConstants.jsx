@@ -3,6 +3,7 @@ export const GlobalConstants = {
     ACCESS_TOKEN_NAME: 'login_access_token',
     EXPIRY_DATE_NAME: 'ExpiryDate',
     REFRESH_TOKEN_NAME: 'RefreshToken',
+    FORGOT_PASSWORD_LINK: "http://164.52.216.130/auth/reset-password",
     Limit: 10
 }
 

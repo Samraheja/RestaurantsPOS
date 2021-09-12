@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ErrorMessages, SuccessMessages, AlertTypes } from '../../constants/apiConstants';
+import { ErrorMessages, SuccessMessages, AlertTypes, GlobalConstants } from '../../constants/apiConstants';
 import ForgotPasswordComp from "../../components/ForgotPassword/ForgotPassword";
 import { doesHaveValue, isValidEmail } from "../../utils/functions";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,7 +56,7 @@ const ForgotPassword = (props) => {
             const payload = {
                 "ForgotPassword": {
                     "Email": state.email,
-                    "Url": "http://localhost:3000/auth/reset-password"
+                    "Url": GlobalConstants.FORGOT_PASSWORD_LINK
                 }
             }
 
