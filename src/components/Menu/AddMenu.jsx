@@ -115,6 +115,25 @@ const AddMenu = (props) => {
                                         <FormGroup>
                                             <label
                                                 className="form-control-label"
+                                                htmlFor="itemCode"
+                                            >
+                                                Item Code
+                                            </label>
+                                            <Input
+                                                id="itemCode"
+                                                placeholder="Enter Item Code"
+                                                type="text"
+                                                className="form-control-alternative"
+                                                value={props.itemCode}
+                                                onChange={props.onChange}
+                                                error={props.errorMessages.itemCode}
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col lg="6">
+                                        <FormGroup>
+                                            <label
+                                                className="form-control-label"
                                                 htmlFor="name"
                                             >
                                                 Name
@@ -130,7 +149,9 @@ const AddMenu = (props) => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    <Col lg="6">
+                                </Row>
+                                <Row>
+                                    <Col lg="4">
                                         <FormGroup>
                                             <label
                                                 className="form-control-label"
@@ -149,9 +170,7 @@ const AddMenu = (props) => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                </Row>
-                                <Row>
-                                    <Col lg="6">
+                                    <Col lg="4">
                                         <FormGroup>
                                             <label
                                                 className="form-control-label"
@@ -170,7 +189,7 @@ const AddMenu = (props) => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    <Col lg="6">
+                                    <Col lg="4">
                                         <FormGroup>
                                             <label
                                                 className="form-control-label"
@@ -191,7 +210,7 @@ const AddMenu = (props) => {
                                     </Col>
                                 </Row>
                                 <Row>
-                                <Col lg="6">
+                                    <Col lg="6">
                                         <FormGroup>
                                             <label
                                                 className="form-control-label"

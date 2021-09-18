@@ -136,7 +136,6 @@ const Profile = (props) => {
                             type="text"
                             value={props.restaurantName}
                             onChange={props.onChange}
-                            disabled={true}
                           />
                         </FormGroup>
                       </Col>

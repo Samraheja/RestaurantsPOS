@@ -32,6 +32,7 @@ const Menu = (props) => {
                                         <th scope="col" className="Header">Sr. No. </th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("CategoryName")}>Category</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("SubCategoryName")}>Sub Category</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("ItemCode")}>Item Code</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("Name")}>Name</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("TablePrice")}>Table Price</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("IsVeg")}>Veg/Non Veg</th>
@@ -52,6 +53,9 @@ const Menu = (props) => {
                                                     </td>
                                                     <td>
                                                         {item.subCategory.subCategoryName}
+                                                    </td>
+                                                    <td>
+                                                        {item.itemCode}
                                                     </td>
                                                     <td>
                                                         {item.name}

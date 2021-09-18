@@ -1,4 +1,5 @@
 export const GlobalConstants = {
+    //API_BASE_URL: "https://localhost:44375/api/POS",
     API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
     ACCESS_TOKEN_NAME: 'login_access_token',
     EXPIRY_DATE_NAME: 'ExpiryDate',
@@ -57,6 +58,7 @@ export const ErrorMessages = {
     CategorySelectionRequired: "Please select category",
     SubCategoryRequired: "Please enter sub category name",
     SubCategorySelectionRequired: "Please select sub category",
+    ItemCodeRequired: "Please enter item code",
     MenuNameRequired: "Please enter menu name",
     TablePriceRequired: "Please enter table price",
     TakeAwayPriceRequired: "Please enter take away price",
@@ -119,6 +121,7 @@ export const AddMenuDefaults = {
     id: 0,
     categoryId: 0,
     subCategoryId: 0,
+    itemCode: "",
     name: "",
     tablePrice: 0,
     takeAwayPrice: 0,
@@ -146,6 +149,10 @@ export const AutoCompleteDefaults = {
     filteredMenu: [],
     suggestionBoxClass: "autoCompleteItemBox",
     errorMessages: {}
+}
+
+export const MostOrderedDefaults = {
+    subCategoryId: 0
 }
 
 export const OrdersDefault = {

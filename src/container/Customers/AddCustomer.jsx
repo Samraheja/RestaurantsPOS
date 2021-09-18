@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddCustomerComp from "../../components/Customers/AddCustomer";
 import { AddCustomerDefault, ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
@@ -11,6 +11,13 @@ const AddCustomer = (props) => {
     });
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        props.mobileNumber && setState(prevState => ({
+            ...prevState,
+            mobileNumber: props.mobileNumber
+        }));
+    }, [])
 
     const onChange = (e) => {
         const { id, value } = e.target;

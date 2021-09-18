@@ -87,7 +87,7 @@ const CustomerSummary = (props) => {
                     className="modal-dialog-centered modal-popup-800"
                     showModal={props.showModal}
                     switchModal={props.switchModal}
-                    formComponent={<AddCustomer tableNumber={props.tableNumber} />}
+                    formComponent={<AddCustomer tableNumber={props.tableNumber} mobileNumber={props.mobileNumber} />}
                 />
             }
         </>

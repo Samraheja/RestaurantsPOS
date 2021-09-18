@@ -7,7 +7,7 @@ import { AddMenuDefaults, ErrorMessages, GlobalConstants, ImageTypes, SuccessMes
 import { getCategories } from "../../redux-store/actions/category";
 import { getSubCategoriesByCategoryId } from "../../redux-store/actions/subCategory";
 import { getMenuById, saveMenu, updateMenu, updateMenuPic } from "../../redux-store/actions/menu";
-import { doesHaveValue, isValidAlphaNumeric, isValidPrice } from "../../utils/functions";
+import { doesHaveValue, isValidAlphabets, isValidAlphaNumeric, isValidPrice } from "../../utils/functions";
 
 const AddMenu = (props) => {
     const [state, setState] = useState({
@@ -73,6 +73,7 @@ const AddMenu = (props) => {
                     "id": item.id,
                     "categoryId": item.category.id,
                     "subCategoryId": item.subCategoryId,
+                    "itemCode": item.itemCode,
                     "name": item.name,
                     "tablePrice": item.tablePrice,
                     "takeAwayPrice": item.takeAwayPrice,
@@ -93,6 +94,7 @@ const AddMenu = (props) => {
                 "id": editMenu.id,
                 "categoryId": editMenu.categoryId,
                 "subCategoryId": editMenu.subCategoryId,
+                "itemCode": editMenu.itemCode,
                 "name": editMenu.name,
                 "tablePrice": parseInt(editMenu.tablePrice),
                 "takeAwayPrice": editMenu.takeAwayPrice,
@@ -129,6 +131,7 @@ const AddMenu = (props) => {
         const finalErrorMessages = {}
 
         const categoryId = id && id === "categoryId" ? value : state.categoryId;
+        const itemCode = id && id === "itemCode" ? value : state.itemCode;
         const name = id && id === "name" ? value : state.name;
         const tablePrice = id && id === "tablePrice" ? value : state.tablePrice;
         const takeAwayPrice = id && id === "takeAwayPrice" ? value : state.takeAwayPrice
@@ -139,11 +142,18 @@ const AddMenu = (props) => {
             finalErrorMessages.categoryId = ErrorMessages.CategorySelectionRequired;
         }
 
+        if (!doesHaveValue(itemCode)) {
+            finalErrorMessages.itemCode = ErrorMessages.ItemCodeRequired;
+        }
+        else if (!isValidAlphaNumeric(itemCode)) {
+            finalErrorMessages.itemCode = ErrorMessages.ValidAlphanumeric;
+        }
+
         if (!doesHaveValue(name)) {
             finalErrorMessages.name = ErrorMessages.MenuNameRequired;
         }
         else if (!isValidAlphaNumeric(name)) {
-            finalErrorMessages.name = ErrorMessages.ValidAlphabets;
+            finalErrorMessages.name = ErrorMessages.ValidAlphanumeric;
         }
 
         if (!doesHaveValue(tablePrice)) {
@@ -236,6 +246,7 @@ const AddMenu = (props) => {
                 "CollectionName": "Menu",
                 "Menu": {
                     "SubCategoryId": parseInt(state.subCategoryId),
+                    "ItemCode": state.itemCode,
                     "Name": state.name,
                     "TablePrice": parseFloat(state.tablePrice),
                     "TakeAwayPrice": parseFloat(state.takeAwayPrice),
@@ -278,6 +289,7 @@ const AddMenu = (props) => {
                 "Menu": {
                     "ID": state.id,
                     "SubCategoryId": parseInt(state.subCategoryId),
+                    "ItemCode": state.itemCode,
                     "Name": state.name,
                     "TablePrice": parseFloat(state.tablePrice),
                     "TakeAwayPrice": parseFloat(state.takeAwayPrice),
@@ -323,7 +335,7 @@ const AddMenu = (props) => {
                 id={state.id}
                 categoryId={state.categoryId}
                 subCategoryId={state.subCategoryId}
-                subCategoryId={state.subCategoryId}
+                itemCode={state.itemCode}
                 name={state.name}
                 tablePrice={state.tablePrice}
                 takeAwayPrice={state.takeAwayPrice}

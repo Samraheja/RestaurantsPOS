@@ -84,6 +84,7 @@ const AddCustomer = (props) => {
                                             value={props.mobileNumber}
                                             onChange={props.onChange}
                                             error={props.errorMessages.mobileNumber}
+                                            disabled={true}
                                         />
                                     </FormGroup>
                                 </Col>

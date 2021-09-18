@@ -11,7 +11,7 @@ import ShowModal from "../AppComponents/Modal/Modal";
 import AddCover from "../../container/Tables/AddCover";
 
 const Tables = (props) => {
-
+    debugger;
     return (
         <>
             <div className="header bg-gradient-info pb-8 pt-5 pt-md-7">
@@ -39,7 +39,19 @@ const Tables = (props) => {
                                                         )
                                                     }}
                                                 >
-                                                    {i + 1}
+                                                    <Row>
+                                                        <Col lg="6" className="font-weight-bold small">
+                                                            {i + 1}
+                                                        </Col>
+                                                        <Col lg="6" className="font-weight-bold small">
+                                                            {
+                                                                props.tablesStatus[i + 1] && <i className="fa fa-rupee-sign"></i>
+                                                            }
+                                                            {
+                                                                props.tablesStatus[i + 1] && " " + props.tablesStatus[i + 1].totalAmount
+                                                            }
+                                                        </Col>
+                                                    </Row>
                                                 </div>
                                             </Col>
                                         )

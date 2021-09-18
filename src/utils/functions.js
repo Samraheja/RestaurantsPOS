@@ -19,7 +19,7 @@ export const isValidAlphabets = (value) => {
 };
 
 export const isValidAlphaNumeric = (value) => {
-    var pattern = new RegExp(/^[a-zA-Z0-9 ,.@]+$/i);
+    var pattern = new RegExp(/^[a-zA-Z0-9 ,.@-]+$/i);
 
     if (!pattern.test(value)) {
         return false;

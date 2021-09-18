@@ -176,6 +176,7 @@ const Profile = (props) => {
                 CollectionName: "Restaurants",
                 Restaurants: {
                     "Id": parseInt(state.id),
+                    "Name": state.restaurantName,
                     "NoOfTables": parseInt(state.noOfTables),
                     "PhoneNumber": state.phoneNumber,
                     "Website": state.website,

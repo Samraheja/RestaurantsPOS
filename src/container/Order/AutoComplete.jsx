@@ -47,7 +47,7 @@ const MostOrdered = (props) => {
         setState(prevState => ({
             ...prevState,
             [id]: value,
-            filteredMenu: value !== "" ? menu.filter(item => item.name.toLowerCase().includes(value.toLowerCase())) : [],
+            filteredMenu: value !== "" ? menu.filter(item => (item.name.toLowerCase().includes(value.toLowerCase()) || item.itemCode.toLowerCase().includes(value.toLowerCase()))) : [],
             suggestionBoxClass: "autoCompleteItemBox"
         }));
     };

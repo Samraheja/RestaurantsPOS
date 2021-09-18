@@ -75,8 +75,8 @@ const Login = (props) => {
 
       const onSuccess = (response) => {
         if (response.status === 200) {
-          if (response.data.SubscriptionStatus === "Subscribed" || (response.data.SubscriptionStatus === "Trial Period" && response.data.isProfileUpdated)) {
-            props.history.push('/admin/home');
+          if (response.data.subscriptionStatus === "Subscribed" || (response.data.subscriptionStatus === "Trial Period" && response.data.isProfileUpdated)) {
+            props.history.push('/admin/tables');
           }
           else {
             props.history.push('/admin/user-profile');
