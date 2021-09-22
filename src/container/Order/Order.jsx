@@ -100,8 +100,7 @@ const Order = (props) => {
                 CollectionName: "Billing",
                 "Billing": {
                     "ID": parseInt(billingDetails.id),
-                    "Discount": state.discount === "" ? 0 : parseFloat(state.discount),
-                    "PaymentMode": state.paymentMode
+                    "Discount": state.discount === "" ? 0 : parseFloat(state.discount)
                 }
             };
 

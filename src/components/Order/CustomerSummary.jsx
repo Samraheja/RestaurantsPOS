@@ -9,24 +9,8 @@ import Modal from "../AppComponents/Modal/Modal";
 import AddCustomer from "../../container/Customers/AddCustomer";
 
 const CustomerSummary = (props) => {
-
     return (
         <>
-            <Row>
-                <Col lg="12" className="p-1 pl-4 pr-4 font-weight-bold small">
-                    Payment Mode:
-                    <select
-                        id="paymentMode"
-                        className="form-control form-control-alternative"
-                        value={props.paymentMode}
-                        onChange={props.onSelectChange}
-                    >
-                        <option value="Cash">Cash</option>
-                        <option value="UPI">UPI</option>
-                        <option value="Card">Card</option>
-                    </select>
-                </Col>
-            </Row>
             <Row>
                 <Col lg="8" className="p-1 pl-4">
                     <Input
@@ -87,7 +71,7 @@ const CustomerSummary = (props) => {
                     className="modal-dialog-centered modal-popup-800"
                     showModal={props.showModal}
                     switchModal={props.switchModal}
-                    formComponent={<AddCustomer tableNumber={props.tableNumber} mobileNumber={props.mobileNumber} />}
+                    formComponent={<AddCustomer billId={props.billId} mobileNumber={props.mobileNumber} />}
                 />
             }
         </>

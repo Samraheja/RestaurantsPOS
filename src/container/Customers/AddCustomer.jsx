@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddCustomerComp from "../../components/Customers/AddCustomer";
 import { AddCustomerDefault, ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
 import { saveCustomer } from "../../redux-store/actions/customer";
+import { toggleModal } from "../../redux-store/actions/modal";
 import { doesHaveValue, isDigitsOnly, isValidAlphabets, isValidAlphaNumeric, isValidEmail, isValidMobileNumber, isValidZipCode } from "../../utils/functions";
 
 const AddCustomer = (props) => {
@@ -11,6 +12,7 @@ const AddCustomer = (props) => {
     });
 
     const dispatch = useDispatch();
+    const { customerInfo } = useSelector(state => state.customer);
 
     useEffect(() => {
         props.mobileNumber && setState(prevState => ({
@@ -114,8 +116,8 @@ const AddCustomer = (props) => {
         if (Object.keys(finalErrorMessages).length === 0) {
             const payload = {
                 CollectionName: "Customers",
-                "Orders": {
-                    "TableNumber": parseInt(props.tableNumber)
+                "Billing": {
+                    "ID": parseInt(props.billId)
                 },
                 Customers: {
                     "Id": parseInt(state.id),
@@ -132,9 +134,14 @@ const AddCustomer = (props) => {
 
             const successMessage = SuccessMessages.CustomerRegistered;
 
+            const onSuccess = () => {
+                dispatch(toggleModal());
+            }
+
             dispatch(saveCustomer({
                 params: payload,
                 successMessage,
+                onSuccess,
                 dispatch
             }));
         }

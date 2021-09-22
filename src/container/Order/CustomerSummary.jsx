@@ -82,6 +82,12 @@ const CustomerSummary = (props) => {
                 if (response.data.length === 0) {
                     switchModal();
                 }
+                else {
+                    setState(prevState => ({
+                        ...prevState,
+                        mobileNumber: ""
+                    }));
+                }
             }
 
             dispatch(searchCustomer({
@@ -100,14 +106,14 @@ const CustomerSummary = (props) => {
 
     return (
         <CustomerSummaryComp
-            tableNumber={props.tableNumber}
+            customerId={props.customerId}
+            billId={props.billId}
             mobileNumber={state.mobileNumber}
             onChange={onChange}
             errorMessages={state.errorMessages}
             onCustomerSearch={onCustomerSearch}
             customerInfo={props.customerInfo}
             switchModal={switchModal}
-            onSelectChange={props.onChange}
         />
     )
 };

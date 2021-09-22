@@ -45,7 +45,7 @@ export const searchCustomer = payload => {
 };
 
 export const saveCustomer = payload => {
-    const { params, dispatch } = payload;
+    const { params, successMessage, onSuccess, dispatch } = payload;
     dispatch(switchCustomerLoader({ status: true }));
     return {
         type: types.customers.SAVE_CUSTOMER,
@@ -53,7 +53,9 @@ export const saveCustomer = payload => {
             fetchConfig: {
                 path: GlobalConstants.API_BASE_URL + "/CREATE",
                 params,
+                successMessage,
                 onSuccess: () => {
+                    onSuccess && onSuccess();
                     dispatch(switchCustomerLoader({ status: false }));
                 },
                 onError: () => {
