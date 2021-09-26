@@ -1,4 +1,5 @@
 import { GlobalConstants } from "../../constants/apiConstants";
+import { toggleModal } from "./modal";
 import types from "./types";
 
 export const getTablesStatus = payload => {
@@ -34,6 +35,7 @@ export const addTableCover = payload => {
                 params,
                 onSuccess: (response) => {
                     onSuccess && onSuccess(response);
+                    dispatch(toggleModal());
                     dispatch(switchTablesLoader({ status: false }));
                 },
                 onError: () => {

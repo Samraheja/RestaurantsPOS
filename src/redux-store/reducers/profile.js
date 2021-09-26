@@ -13,11 +13,11 @@ const Profile = ((state = initialState, actions = {}) => {
             }
         }
         case types.profile.UPDATE_USER_PROFILE: {
-            console.log("reducer");
             return {
                 ...state, userDetails: {
                     ...state.userDetails,
                     noOfTables: actions.payload.fetchConfig.params.Restaurants.NoOfTables,
+                    dayOpenTime: actions.payload.fetchConfig.params.Restaurants.DayOpenTimes,
                     phoneNumber: actions.payload.fetchConfig.params.Restaurants.PhoneNumber,
                     website: actions.payload.fetchConfig.params.Restaurants.Website,
                     GSTIN: actions.payload.fetchConfig.params.Restaurants.GSTIN,
@@ -33,6 +33,14 @@ const Profile = ((state = initialState, actions = {}) => {
                 ...state, userDetails: {
                     ...state.userDetails,
                     profilePic: actions.payload.data.data
+                }
+            }
+        }
+        case types.profile.UPDATE_DAY_OPEN_CLOSE_STATUS: {
+            return {
+                ...state, userDetails: {
+                    ...state.userDetails,
+                    isOpenedForDay: actions.payload.status
                 }
             }
         }

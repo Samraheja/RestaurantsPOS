@@ -19,6 +19,7 @@ const Profile = (props) => {
         id: 0,
         restaurantName: "",
         noOfTables: 0,
+        dayOpenTime: "",
         email: "",
         mobileNumber: "",
         phoneNumber: "",
@@ -49,6 +50,7 @@ const Profile = (props) => {
             id: userDetails.id,
             restaurantName: userDetails.name,
             noOfTables: userDetails.noOfTables,
+            dayOpenTime: getOpenDate(userDetails.dayOpenTime),
             email: userDetails.emailID,
             mobileNumber: userDetails.mobileNumber,
             phoneNumber: userDetails.phoneNumber,
@@ -83,6 +85,23 @@ const Profile = (props) => {
         return formatedDate;
     }
 
+    const getOpenDate = (dayOpenTime) => {
+        var time = dayOpenTime.split(':');
+        var hour = time[0];
+        var minutes = time[1];
+
+        if(hour.length < 2) {
+            hour = "0" + hour;
+        }
+
+        if(minutes.length < 2) {
+            minutes = "0" + minutes;
+        }
+
+        var formatTime = hour + ":" + minutes + ":00";
+        return formatTime;
+    }
+
     const onChange = (e) => {
         const { id, value } = e.target;
         const finalErrorMessages = validate(id, value);
@@ -101,6 +120,7 @@ const Profile = (props) => {
         const finalErrorMessages = {}
 
         const noOfTables = id && id === "noOfTables" ? value : state.noOfTables;
+        const dayOpenTime = id && id === "dayOpenTime" ? value : state.dayOpenTime;
         const phoneNumber = id && id === "phoneNumber" ? value : state.phoneNumber;
         const website = id && id === "website" ? value : state.website;
         const GSTIN = id && id === "GSTIN" ? value : state.GSTIN;
@@ -178,6 +198,7 @@ const Profile = (props) => {
                     "Id": parseInt(state.id),
                     "Name": state.restaurantName,
                     "NoOfTables": parseInt(state.noOfTables),
+                    "DayOpenTimes": state.dayOpenTime,
                     "PhoneNumber": state.phoneNumber,
                     "Website": state.website,
                     "GSTIN": state.GSTIN,
@@ -237,6 +258,7 @@ const Profile = (props) => {
         <ProfileComp
             restaurantName={state.restaurantName}
             noOfTables={state.noOfTables}
+            dayOpenTime={state.dayOpenTime}
             email={state.email}
             mobileNumber={state.mobileNumber}
             phoneNumber={state.phoneNumber}

@@ -25,7 +25,11 @@ const Tables = (props) => {
             params: payload,
             dispatch
         }));
-    }, []);
+        
+        if (!userDetails.isOpenedForDay) {
+            dispatch(toggleModal());
+        }
+    }, [userDetails.isOpenedForDay]);
 
     const switchModal = () => {
         dispatch(toggleModal());
@@ -36,13 +40,18 @@ const Tables = (props) => {
             props.history.push("/admin/order", billId);
         }
         else {
-            setState(prevState => ({
-                ...prevState,
-                showCover: true,
-                tableNumber: tableNumber
-            }));
+            if (userDetails.isOpenedForDay) {
+                setState(prevState => ({
+                    ...prevState,
+                    showCover: true,
+                    tableNumber: tableNumber
+                }));
 
-            dispatch(toggleModal());
+                dispatch(toggleModal());
+            }
+            else {
+                dispatch(toggleModal());
+            }
         }
     }
 
@@ -60,6 +69,7 @@ const Tables = (props) => {
                 tablesStatus={tablesStatus}
                 onTableClick={onTableClick}
                 history={props.history}
+                isOpenedForDay={userDetails.isOpenedForDay}
             >
             </TablesComp>
         </>

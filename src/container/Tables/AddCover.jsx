@@ -61,7 +61,6 @@ const AddCover = (props) => {
             }
 
             const onSuccess = (response) => {
-                dispatch(toggleModal());
                 const billId = response.data.id;
                 props.history.push("/admin/order", billId);
             }

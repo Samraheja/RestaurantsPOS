@@ -27,7 +27,9 @@ export const SuccessMessages = {
     MenuDeleted: "Menu item has been successfully deleted",
     ItemAdded: "Item Added",
     OrderCompleted: "Order has been completed successfully",
-    CustomerRegistered: "Customer has been registered successfully"
+    CustomerRegistered: "Customer has been registered successfully",
+    DayOpened: "Restaurant is open for the day now",
+    DayClosed: "Restaurant is close for the day now"
 }
 
 export const ErrorMessages = {
@@ -71,7 +73,11 @@ export const ErrorMessages = {
     QuantityRequired: "Quantity",
     ValidQuantity: "Not valid",
     CoverRequired: "Please enter cover value",
-    ValidDigits: "Value must be greater than 0"
+    ValidDigits: "Value must be greater than 0",
+    NotOpenned: "Can not close restaurant without opening for the day",
+    AlreadyOpened: "Restaurant is already opened",
+    AlreadyClosed: "Restaurant is already closed",
+    UnsettledBills: "Can not close restaurant. Please settle unsettled bills"
 }
 
 export const AlertTypes = {

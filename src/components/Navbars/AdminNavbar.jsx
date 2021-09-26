@@ -27,6 +27,11 @@ const AdminNavbar = (props) => {
           >
             {props.brandText}
           </Link>
+          <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto small white">
+            <div className="pr-2">Day Sale : <i className="fa fa-rupee-sign"></i> {props.daySale || 0.00}</div>
+            |
+            <div className="pl-2">Unsettled : <i className="fa fa-rupee-sign"></i> {props.unsettled || 0.00}</div>
+          </Form>
           <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
               <InputGroup className="input-group-alternative">
@@ -67,17 +72,17 @@ const AdminNavbar = (props) => {
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
+                <DropdownItem to="/admin/user-profile" tag={Link} onClick={() => props.openOrCloseDay("Open")}>
+                  <i className="fas fa-lock-open" />
+                  <span>Open Day</span>
+                </DropdownItem>
+                <DropdownItem to="/admin/user-profile" tag={Link} onClick={() => props.openOrCloseDay("Close")}>
+                  <i className="fas fa-lock" />
+                  <span>Close Day</span>
+                </DropdownItem>
                 <DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-settings-gear-65" />
                   <span>Settings</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-calendar-grid-58" />
-                  <span>Activity</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-support-16" />
-                  <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem href="#" onClick={(e) => { e.preventDefault(); props.Logout(); }}>

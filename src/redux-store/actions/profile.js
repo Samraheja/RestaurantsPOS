@@ -68,6 +68,13 @@ export const updateUserProfilePic = payload => {
     }
 };
 
+export const updateDayOpenCloseStatus = payload => {
+    return {
+        type: types.profile.UPDATE_DAY_OPEN_CLOSE_STATUS,
+        payload
+    }
+};
+
 export const switchProfileLoader = payload => {
     return {
         type: types.profile.SWITCH_PROFILE_LOADER,

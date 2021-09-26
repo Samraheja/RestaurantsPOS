@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import AddCategoryComp from "../../components/Category/AddCategory";
 import { ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
 import { saveCategory, updateCategory } from "../../redux-store/actions/category";

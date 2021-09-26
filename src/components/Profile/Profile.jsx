@@ -121,7 +121,7 @@ const Profile = (props) => {
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
-                      <Col lg="6">
+                      <Col lg="12">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -139,6 +139,8 @@ const Profile = (props) => {
                           />
                         </FormGroup>
                       </Col>
+                    </Row>
+                    <Row>
                       <Col lg="6">
                         <FormGroup>
                           <label
@@ -155,6 +157,24 @@ const Profile = (props) => {
                             value={props.noOfTables}
                             onChange={props.onChange}
                             error={props.errorMessages.noOfTables}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="dayOpenTime"
+                          >
+                            Day Open Time
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="dayOpenTime"
+                            type="time"
+                            value={props.dayOpenTime}
+                            onChange={props.onChange}
+                            error={props.errorMessages.dayOpenTime}
                           />
                         </FormGroup>
                       </Col>
@@ -352,7 +372,7 @@ const Profile = (props) => {
                       <Col md="12" className="text-center">
                         <Button className="my-4" color="primary" type="button" onClick={props.onSubmitClick}>
                           Update
-                      </Button>
+                        </Button>
                       </Col>
                     </Row>
                   </div>

@@ -16258,3 +16258,7 @@ button:focus, :focus {
 .discountInput {
   height: 25px;
 }
+
+.white {
+  color: #fff;
+}

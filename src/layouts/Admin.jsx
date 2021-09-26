@@ -7,9 +7,12 @@ import AdminFooter from "../components/Footers/AdminFooter";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux-store/actions/login";
-import { getUserProfile } from "../redux-store/actions/profile";
+import { getUserProfile, updateDayOpenCloseStatus } from "../redux-store/actions/profile";
+import { openCloseDay } from "../redux-store/actions/openCloseDay";
 import ShowAlert from "../components/AppComponents/Alerts/ShowAlert";
 import Loader from "../components/AppComponents/Loader/Loader";
+import { AlertTypes, ErrorMessages, SuccessMessages } from "../constants/apiConstants.jsx";
+import { addAlert } from "../redux-store/actions/alert.js";
 
 const Admin = (props) => {
   const dispatch = useDispatch();
@@ -28,6 +31,60 @@ const Admin = (props) => {
       dispatch
     }));
   }, []);
+
+  const openOrCloseDay = (operation) => {
+    const payload = {
+      "CollectionName": "DailyOpening",
+      "Operation": operation
+    }
+
+    const successMessage = operation == "Open" ? SuccessMessages.DayOpened : SuccessMessages.DayClosed;
+
+    const onSuccess = (response) => {
+      const result = response.data;
+      var alertType = "Danger";
+      var message = "";
+
+      if (result === 1) {
+        alertType = "Success";
+        message = successMessage;
+
+        const status = operation == "Open" ? true : false;
+
+        dispatch(updateDayOpenCloseStatus({
+          status
+        }));
+      }
+      else if (result === 0) {
+        message = ErrorMessages.CommonError;
+      }
+      else if (result === -1) {
+        message = ErrorMessages.NotOpenned;
+      }
+      else if (result === -2) {
+        message = ErrorMessages.AlreadyOpened;
+      }
+      else if (result === -3) {
+        message = ErrorMessages.AlreadyClosed;
+      }
+      else if (result === -4) {
+        message = ErrorMessages.UnsettledBills;
+      }
+
+      dispatch(addAlert({
+        alertType,
+        message
+      }));
+
+      props.history.push("/admin/tables")
+    };
+
+    dispatch(openCloseDay({
+      params: payload,
+      onSuccess,
+      dispatch
+    }));
+  }
 
   const Logout = () => {
     const onSuccess = (response) => {
@@ -69,7 +126,7 @@ const Admin = (props) => {
   };
 
   const Loading = (isLoading || Object.keys(userDetails).length === 0)
-  
+
   if (Loading) {
     return <Loader />
   }
@@ -93,6 +150,9 @@ const Admin = (props) => {
             Logout={Logout}
             profilePic={userDetails.profilePic}
             name={userDetails.name}
+            openOrCloseDay={openOrCloseDay}
+            daySale={userDetails.daySale}
+            unsettled={userDetails.unsettled}
           />
           <Switch>
             {getRoutes(routes)}

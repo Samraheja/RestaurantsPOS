@@ -9,9 +9,9 @@ import {
 } from "reactstrap";
 import ShowModal from "../AppComponents/Modal/Modal";
 import AddCover from "../../container/Tables/AddCover";
+import DailyOpeningClosing from "../../container/DailyOpeningClosing/DailyOpeningClosing";
 
 const Tables = (props) => {
-    debugger;
     return (
         <>
             <div className="header bg-gradient-info pb-8 pt-5 pt-md-7">
@@ -65,9 +65,17 @@ const Tables = (props) => {
                         props.showCover &&
                         <ShowModal
                             title="Add Cover"
-                            showModal={props.showModal}
                             switchModal={props.switchModal}
                             formComponent={<AddCover tableNumber={props.tableNumber} orderType={props.orderType} history={props.history} />}
+                        />
+                    }
+
+                    {
+                        !props.isOpenedForDay &&
+                        <ShowModal
+                            title="Open for day"
+                            switchModal={props.switchModal}
+                            formComponent={<DailyOpeningClosing message="Would you like to open for the day?" />}
                         />
                     }
                 </Row>
