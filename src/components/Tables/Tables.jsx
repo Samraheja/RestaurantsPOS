@@ -5,11 +5,16 @@ import {
     CardHeader,
     Container,
     Row,
-    Col
+    Col,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
 } from "reactstrap";
 import ShowModal from "../AppComponents/Modal/Modal";
 import AddCover from "../../container/Tables/AddCover";
 import DailyOpeningClosing from "../../container/DailyOpeningClosing/DailyOpeningClosing";
+import SettleBill from "../../container/SettleBill/SettleBill";
 
 const Tables = (props) => {
     return (
@@ -52,6 +57,54 @@ const Tables = (props) => {
                                                             }
                                                         </Col>
                                                     </Row>
+                                                    {
+                                                        props.tablesStatus[i + 1] &&
+                                                        <Row>
+                                                            <Col lg="12" className="text-right">
+                                                                <UncontrolledDropdown>
+                                                                    <DropdownToggle
+                                                                        className="btn-icon-only text-dark"
+                                                                        href="#sahil"
+                                                                        role="button"
+                                                                        size="sm"
+                                                                        color=""
+                                                                        onClick={(e) => { e.stopPropagation(); }}
+                                                                    >
+                                                                        <i className="fas fa-ellipsis-v" />
+                                                                    </DropdownToggle>
+                                                                    <DropdownMenu className="dropdown-menu-arrow" right>
+                                                                        <DropdownItem
+                                                                            href="#sahil"
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation(); props.onVoidBill(
+                                                                                    props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id
+                                                                                );
+                                                                            }}
+                                                                        >
+                                                                            Void Bill
+                                                                        </DropdownItem>
+
+                                                                        {
+                                                                            props.tablesStatus[i + 1].isOrderCompleted &&
+                                                                            <DropdownItem
+                                                                                href="#sahil"
+                                                                                onClick={(e) => {
+                                                                                    e.stopPropagation(); props.onSettleBill(
+                                                                                        props.tablesStatus[i + 1].id,
+                                                                                        props.tablesStatus[i + 1].tableNumber,
+                                                                                        props.tablesStatus[i + 1].billNumber,
+                                                                                        props.tablesStatus[i + 1].netAmount
+                                                                                    );
+                                                                                }}
+                                                                            >
+                                                                                Settle Bill
+                                                                            </DropdownItem>
+                                                                        }
+                                                                    </DropdownMenu>
+                                                                </UncontrolledDropdown>
+                                                            </Col>
+                                                        </Row>
+                                                    }
                                                 </div>
                                             </Col>
                                         )
@@ -76,6 +129,23 @@ const Tables = (props) => {
                             title="Open for day"
                             switchModal={props.switchModal}
                             formComponent={<DailyOpeningClosing message="Would you like to open for the day?" />}
+                        />
+                    }
+
+                    {
+                        props.showSettleBill &&
+                        <ShowModal
+                            title="Settle Bill"
+                            className="modal-xl modal-dialog-centered"
+                            switchModal={props.switchModal}
+                            formComponent={
+                                <SettleBill
+                                    billId={props.billId}
+                                    tableNumber={props.tableNumber}
+                                    billNumber={props.billNumber}
+                                    netAmount={props.netAmount}
+                                />
+                            }
                         />
                     }
                 </Row>

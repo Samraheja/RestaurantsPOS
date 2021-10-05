@@ -10,6 +10,7 @@ import tables from "./tables";
 import mostOrdered from "./mostOrdered";
 import order from "./order";
 import customer from "./customer";
+import settleBill from "./settleBill";
 
 export default combineReducers({
     login,
@@ -22,5 +23,6 @@ export default combineReducers({
     tables,
     mostOrdered,
     order,
-    customer
+    customer,
+    settleBill
 });

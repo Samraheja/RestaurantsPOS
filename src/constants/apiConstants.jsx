@@ -27,9 +27,11 @@ export const SuccessMessages = {
     MenuDeleted: "Menu item has been successfully deleted",
     ItemAdded: "Item Added",
     OrderCompleted: "Order has been completed successfully",
+    OrderVoided: "Order has been cleared successfully",
     CustomerRegistered: "Customer has been registered successfully",
     DayOpened: "Restaurant is open for the day now",
-    DayClosed: "Restaurant is close for the day now"
+    DayClosed: "Restaurant is close for the day now",
+    BillSettled: "Bill has been successfully settled"
 }
 
 export const ErrorMessages = {
@@ -77,7 +79,12 @@ export const ErrorMessages = {
     NotOpenned: "Can not close restaurant without opening for the day",
     AlreadyOpened: "Restaurant is already opened",
     AlreadyClosed: "Restaurant is already closed",
-    UnsettledBills: "Can not close restaurant. Please settle unsettled bills"
+    UnsettledBills: "Can not close restaurant. Please settle unsettled bills",
+    PaymentModeRequired: "Please select Payment Mode",
+    TransactionRequired: "Please enter transaction number",
+    AmountRequired: "Please enter amount",
+    ValidAmount: "Amount must be greater than 0",
+    NotSettled: "Unable to settle bill"
 }
 
 export const AlertTypes = {
@@ -184,4 +191,16 @@ export const AddCustomerDefault = {
     states: "",
     zipCode: "",
     errorMessages: {}
+}
+
+export const BillSettlementDefaults = {
+    billId: 0,
+    vendorId: 0,
+    vendor: "",
+    paymentModeId: 0,
+    paymentMode: "",
+    transactionNumber: "",
+    amount: 0,
+    errorMessages: {},
+    paymentDetails: []
 }

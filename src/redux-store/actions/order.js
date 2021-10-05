@@ -90,6 +90,29 @@ export const completeOrder = payload => {
     }
 };
 
+export const voidOrder = payload => {
+    const { params, successMessage, onSuccess, dispatch } = payload;
+    dispatch(switchOrderLoader({ status: true }));
+
+    return {
+        type: types.orders.VOID_ORDER,
+        payload: {
+            fetchConfig: {
+                path: GlobalConstants.API_BASE_URL + "/Update",
+                params,
+                successMessage,
+                onSuccess: () => {
+                    onSuccess && onSuccess();
+                    dispatch(switchOrderLoader({ status: false }));
+                },
+                onError: () => {
+                    dispatch(switchOrderLoader({ status: false }));
+                }
+            }
+        }
+    }
+};
+
 export const switchOrderLoader = payload => {
     return {
         type: types.orders.SWITCH_ORDER_LOADER,

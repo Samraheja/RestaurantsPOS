@@ -62,6 +62,7 @@ const types = {
         "SAVE_ORDER_ITEM": "SAVE_ORDER_ITEM",
         "UPDATE_QUANTITY": "UPDATE_QUANTITY",
         "COMPLETE_ORDER": "COMPLETE_ORDER",
+        "VOID_ORDER": "VOID_ORDER",
         "SWITCH_ORDER_LOADER": "SWITCH_ORDER_LOADER"
     },
     customers: {
@@ -74,6 +75,12 @@ const types = {
     openCloseDay: {
         "OPEN_CLOSE_DAY": "OPEN_CLOSE_DAY",
         "SWITCH_DAY_LOADER": "SWITCH_DAY_LOADER"
+    },
+    settleBill: {
+        "BIND_VENDORS": "BIND_VENDORS",
+        "BIND_PAYMENT_MODES": "BIND_PAYMENT_MODES",
+        "SETTLE_BILL": "SETTLE_BILL",
+        "SWITCH_BILL_SETTLEMENT_LOADER": "SWITCH_BILL_SETTLEMENT_LOADER"
     }
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from 'reactstrap';
 
-const InputComp = (props) => {
+const SelectComp = (props) => {
     return (
         <>
             {
@@ -34,4 +34,4 @@ const InputComp = (props) => {
     );
 }
 
-export default InputComp;
+export default SelectComp;

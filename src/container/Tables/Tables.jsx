@@ -2,14 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import TablesComp from "../../components/Tables/Tables";
+import { SuccessMessages } from "../../constants/apiConstants";
 import { toggleModal } from "../../redux-store/actions/modal";
-import { getTablesStatus } from "../../redux-store/actions/tables"
+import { voidOrder } from "../../redux-store/actions/order";
+import { getTablesStatus } from "../../redux-store/actions/tables";
 
 const Tables = (props) => {
     const [state, setState] = useState({
         showCover: false,
+        showSettleBill: false,
         tableNumber: 0,
-        orderType: "Dine-in"
+        orderType: "Dine-in",
+        billId: 0,
+        billNumber: "",
+        netAmount: 0
     });
 
     const { userDetails } = useSelector(state => state.profile);
@@ -25,7 +31,7 @@ const Tables = (props) => {
             params: payload,
             dispatch
         }));
-        
+
         if (!userDetails.isOpenedForDay) {
             dispatch(toggleModal());
         }
@@ -55,6 +61,53 @@ const Tables = (props) => {
         }
     }
 
+    const onSettleBill = (billId, tableNumber, billNumber, netAmount) => {
+        if (billId !== undefined && billId > 0) {
+            setState(prevState => ({
+                ...prevState,
+                showSettleBill: true,
+                billId: billId,
+                tableNumber: tableNumber,
+                billNumber: billNumber,
+                netAmount: netAmount
+            }));
+
+            dispatch(toggleModal());
+        }
+    }
+
+    const onVoidBill = (billId) => {
+        if (billId !== undefined && billId > 0) {
+            const payload = {
+                CollectionName: "Billing",
+                Operation: "Void Bill",
+                "Billing": {
+                    "ID": parseInt(billId)
+                }
+            };
+
+            const successMessage = SuccessMessages.OrderVoided;
+
+            const onSuccess = () => {
+                const payload = {
+                    CollectionName: "Tables"
+                };
+        
+                dispatch(getTablesStatus({
+                    params: payload,
+                    dispatch
+                }));
+            }
+
+            dispatch(voidOrder({
+                params: payload,
+                successMessage,
+                onSuccess,
+                dispatch
+            }));
+        }
+    }
+
     return (
         <>
             {
@@ -70,6 +123,12 @@ const Tables = (props) => {
                 onTableClick={onTableClick}
                 history={props.history}
                 isOpenedForDay={userDetails.isOpenedForDay}
+                showSettleBill={state.showSettleBill}
+                billId={state.billId}
+                billNumber={state.billNumber}
+                netAmount={state.netAmount}
+                onSettleBill={onSettleBill}
+                onVoidBill={onVoidBill}
             >
             </TablesComp>
         </>
