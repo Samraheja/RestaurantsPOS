@@ -78,6 +78,27 @@ export const settleBillDetails = payload => {
     }
 };
 
+export const getSettledBills= payload => {
+    const { params, dispatch } = payload;
+    dispatch(switchbillSattlementLoader({ status: true }));
+    
+    return {
+        type: types.settleBill.GET_SETTLED_BILL,
+        payload: {
+            fetchConfig: {
+                path: GlobalConstants.API_BASE_URL + "/Get",
+                params,
+                onSuccess: () => {
+                    dispatch(switchbillSattlementLoader({ status: false }));
+                },
+                onError: () => {
+                    dispatch(switchbillSattlementLoader({ status: false }));
+                }
+            }
+        }
+    }
+};
+
 export const switchbillSattlementLoader = payload => {
     return {
         type: types.settleBill.SWITCH_BILL_SETTLEMENT_LOADER,

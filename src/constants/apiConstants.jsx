@@ -204,3 +204,10 @@ export const BillSettlementDefaults = {
     errorMessages: {},
     paymentDetails: []
 }
+
+export const SettledBillsDefaults = {
+    pageNo: 1,
+    sortBy: "BillDate",
+    order: "asc",
+    billDate: ""
+}

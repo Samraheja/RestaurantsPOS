@@ -9,6 +9,7 @@ import Menu from "./container/Menu/Menu";
 import AddMenu from "./container/Menu/AddMenu";
 import Tables from "./container/Tables/Tables";
 import Order from "./container/Order/Order";
+import SettledBills from "./container/SettleBill/SettledBills";
 
 var routes = [
   {
@@ -87,6 +88,13 @@ var routes = [
     icon: "fas fa-list icon-color",
     component: Order,
     layout: "/admin"
+  },
+  {
+    path: "/settledBills",
+    name: "Settled Bills",
+    icon: "fas fa-utensils icon-color",
+    component: SettledBills,
+    layout: "/admin",
   },
 ];
 export default routes;

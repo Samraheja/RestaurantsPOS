@@ -167,7 +167,7 @@ const SettleBill = (props) => {
                                                 {details.transactionNumber}
                                             </td>
                                             <td>
-                                                {details.Amount}
+                                                {details.amount}
                                             </td>
                                             <td className="text-right">
 

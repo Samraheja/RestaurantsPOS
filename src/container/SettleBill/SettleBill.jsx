@@ -122,7 +122,7 @@ const SettleBill = (props) => {
             details.paymentMode = state.paymentMode;
             details.paymentModeId = state.paymentModeId;
             details.transactionNumber = state.transactionNumber;
-            details.Amount = state.amount
+            details.amount = state.amount
 
             setState((prevState) => ({
                 ...prevState,
@@ -153,10 +153,10 @@ const SettleBill = (props) => {
                     "CollectionName": "BillSettlement",
                     "BillSettlement": {
                         "BillId": parseInt(state.billId),
-                        "Vendor": parseInt(state.vendorId),
-                        "PaymentModeId": parseInt(state.paymentModeId),
-                        "TransactionNumber": state.transactionNumber,
-                        "Amount": parseFloat(state.amount)
+                        "VendorId": parseInt(state.paymentDetails[i].vendorId),
+                        "PaymentModeId": parseInt(state.paymentDetails[i].paymentModeId),
+                        "TransactionNumber": state.paymentDetails[i].transactionNumber,
+                        "Amount": parseFloat(state.paymentDetails[i].amount)
                     }
                 };
 

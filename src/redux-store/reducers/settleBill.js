@@ -3,6 +3,9 @@ import types from "../actions/types";
 const initialState = {
     vendors: [],
     paymentModes: [],
+    settledBills: [],
+    totalRecords: 0,
+    totalPages: 0,
     isLoading: false
 };
 
@@ -18,6 +21,14 @@ const SettleBill = ((state = initialState, actions = {}) => {
             return {
                 ...state,
                 paymentModes: actions.payload.data.data.response
+            }
+        }
+        case types.settleBill.GET_SETTLED_BILL: {
+            return {
+                ...state,
+                totalRecords: actions.payload.data.data.totalRecords,
+                totalPages: actions.payload.data.data.totalPages,
+                settledBills: actions.payload.data.data.response
             }
         }
         case types.settleBill.SWITCH_BILL_SETTLEMENT_LOADER: {
