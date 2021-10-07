@@ -75,6 +75,27 @@ export const updateDayOpenCloseStatus = payload => {
     }
 };
 
+export const getDailySaleDetails = payload => {
+    const { params, dispatch } = payload;
+    dispatch(switchProfileLoader({ status: true }));
+
+    return {
+        type: types.profile.GET_DAILY_SALE_DETAILS,
+        payload: {
+            fetchConfig: {
+                path: GlobalConstants.API_BASE_URL + "/Get",
+                params,
+                onSuccess: () => {
+                    dispatch(switchProfileLoader({ status: false }));
+                },
+                onError: () => {
+                    dispatch(switchProfileLoader({ status: false }));
+                }
+            }
+        }
+    }
+};
+
 export const switchProfileLoader = payload => {
     return {
         type: types.profile.SWITCH_PROFILE_LOADER,

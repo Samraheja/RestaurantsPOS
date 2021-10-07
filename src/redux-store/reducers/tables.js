@@ -9,7 +9,7 @@ const Tables = ((state = initialState, actions = {}) => {
     switch (actions.type) {
         case types.tables.GET_TABLES_STATUS: {
             const tablesStatus = {};
-            
+
             actions.payload.data.data.map((item, i) => {
                 tablesStatus[item.tableNumber] = item
             });

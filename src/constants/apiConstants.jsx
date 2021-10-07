@@ -1,6 +1,6 @@
 export const GlobalConstants = {
-    //API_BASE_URL: "https://localhost:44375/api/POS",
-    API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
+    API_BASE_URL: "https://localhost:44375/api/POS",
+    //API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
     ACCESS_TOKEN_NAME: 'login_access_token',
     EXPIRY_DATE_NAME: 'ExpiryDate',
     REFRESH_TOKEN_NAME: 'RefreshToken',
@@ -80,6 +80,7 @@ export const ErrorMessages = {
     AlreadyOpened: "Restaurant is already opened",
     AlreadyClosed: "Restaurant is already closed",
     UnsettledBills: "Can not close restaurant. Please settle unsettled bills",
+    PreviousOpened: "Can not open restaurant, due to previous day's unsettled bills",
     PaymentModeRequired: "Please select Payment Mode",
     TransactionRequired: "Please enter transaction number",
     AmountRequired: "Please enter amount",
@@ -145,6 +146,14 @@ export const AddMenuDefaults = {
     menuPic: "",
     buttonText: "Save",
     errorMessages: {}
+}
+
+export const TablesDefaults = {
+    billId: 0,
+    tableNumber: 0,
+    orderType: "Dine-in",
+    showCover: false,
+    showSettleBill: false
 }
 
 export const AddCoverDefaults = {

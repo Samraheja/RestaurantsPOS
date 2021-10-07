@@ -16262,3 +16262,24 @@ button:focus, :focus {
 .white {
   color: #fff;
 }
+
+.navbar-collapse {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.navbar-collapse:before{
+  margin: 0 !important;
+}
+
+.navbar-nav {
+  margin: 0 !important;
+}
+
+#sidenav-main.navbar-vertical.navbar-expand-md {
+  max-width: 210px !important;
+}
+
+#sidenav-main.navbar-vertical.navbar-expand-md.fixed-left + .main-content {
+    margin-left: 210px;
+}

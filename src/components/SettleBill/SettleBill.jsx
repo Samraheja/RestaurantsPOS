@@ -19,15 +19,15 @@ const SettleBill = (props) => {
             <Row>
                 <Col lg="4">
                     <span className="p-1 pl-4 font-weight-bold small">Table Number:</span>
-                    <span className="p-1 pr-4 text-right small">{props.tableNumber || 0}</span>
+                    <span className="p-1 pr-4 text-right small">{props.billingDetails.tableNumber || 0}</span>
                 </Col>
                 <Col lg="4">
                     <span className="p-1 pl-4 font-weight-bold small">Bill Number:</span>
-                    <span className="p-1 pr-4 text-right small">{props.billNumber || ""}</span>
+                    <span className="p-1 pr-4 text-right small">{props.billingDetails.billNumber || ""}</span>
                 </Col>
                 <Col lg="4">
                     <span className="p-1 pl-4 font-weight-bold small">Bill Amount:</span>
-                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.netAmount || 0.00}</span>
+                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.billingDetails.netAmount || 0.00}</span>
                 </Col>
             </Row>
             <hr />
@@ -75,7 +75,6 @@ const SettleBill = (props) => {
                                         value={props.paymentModeId}
                                         onChange={props.onChange}
                                         error={props.errorMessages.paymentModeId}
-                                        showDefault={true}
                                         options={props.paymentModes.map((mode) => ({
                                             text: mode.mode,
                                             value: mode.id

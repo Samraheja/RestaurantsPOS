@@ -4,7 +4,7 @@ import Loader from "../../components/AppComponents/Loader/Loader";
 import AutoCompleteComp from "../../components/Order/AutoComplete";
 import { AutoCompleteDefaults, ErrorMessages, GlobalConstants } from "../../constants/apiConstants";
 import { getMenu } from "../../redux-store/actions/menu";
-import { doesHaveValue, isValidAlphabets, isValidQuantity } from "../../utils/functions";
+import { doesHaveValue, isValidAlphabets, isValidAlphaNumeric, isValidQuantity } from "../../utils/functions";
 
 const MostOrdered = (props) => {
     const [state, setState] = useState({
@@ -61,8 +61,8 @@ const MostOrdered = (props) => {
         if (!doesHaveValue(searchItem)) {
             finalErrorMessages.searchItem = ErrorMessages.MenuNameRequired;
         }
-        else if (!isValidAlphabets(searchItem)) {
-            finalErrorMessages.searchItem = ErrorMessages.ValidAlphabets;
+        else if (!isValidAlphaNumeric(searchItem)) {
+            finalErrorMessages.searchItem = ErrorMessages.ValidAlphanumeric;
         }
 
         if (!doesHaveValue(quantity)) {

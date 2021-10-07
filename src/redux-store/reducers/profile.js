@@ -2,6 +2,7 @@ import types from "../actions/types";
 
 const initialState = {
     userDetails: {},
+    saleDetails: {},
     isLoading: false
 };
 
@@ -42,6 +43,11 @@ const Profile = ((state = initialState, actions = {}) => {
                     ...state.userDetails,
                     isOpenedForDay: actions.payload.status
                 }
+            }
+        }
+        case types.profile.GET_DAILY_SALE_DETAILS: {
+            return {
+                ...state, saleDetails: actions.payload.data.data
             }
         }
         case types.profile.SWITCH_PROFILE_LOADER: {

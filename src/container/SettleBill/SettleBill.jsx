@@ -5,6 +5,10 @@ import { AlertTypes, BillSettlementDefaults, ErrorMessages, SuccessMessages } fr
 import { getVendors, getPaymentModes, settleBill, settleBillDetails } from "../../redux-store/actions/settleBill";
 import { doesHaveValue, isDigitsOnly, isValidDigits } from "../../utils/functions";
 import { addAlert } from "../../redux-store/actions/alert";
+import { toggleModal } from "../../redux-store/actions/modal";
+import { getOrderItemsList } from "../../redux-store/actions/order";
+import { getTablesStatus } from "../../redux-store/actions/tables";
+import { getDailySaleDetails } from "../../redux-store/actions/profile";
 
 const SettleBill = (props) => {
     const [state, setState] = useState({
@@ -13,6 +17,7 @@ const SettleBill = (props) => {
 
     const dispatch = useDispatch();
     const { vendors, paymentModes } = useSelector(state => state.settleBill);
+    const { billingDetails } = useSelector(state => state.order);
 
     useEffect(() => {
         bindVendors();
@@ -23,6 +28,21 @@ const SettleBill = (props) => {
                 ...prevState,
                 billId: props.billId
             }));
+
+            if (props.billId > 0) {
+                const payload = {
+                    "CollectionName": "Billing",
+                    "Id": parseInt(props.billId)
+                };
+
+                dispatch(getOrderItemsList({
+                    params: payload,
+                    dispatch
+                }));
+            };
+        }
+        else {
+            dispatch(toggleModal());
         }
     }, []);
 
@@ -51,8 +71,17 @@ const SettleBill = (props) => {
             CollectionName: "PaymentModes"
         };
 
+        const onSuccess = (response) => {
+            setState((prevState) => ({
+                ...prevState,
+                paymentModeId: response.data.response[0].id,
+                paymentMode: response.data.response[0].mode
+            }));
+        };
+
         dispatch(getPaymentModes({
             params: payload,
+            onSuccess,
             dispatch
         }));
     };
@@ -90,12 +119,7 @@ const SettleBill = (props) => {
     const Validate = (id, value) => {
         const finalErrorMessages = {}
 
-        const paymentModeId = id && id === "paymentModeId" ? value : state.paymentModeId;
         const amount = id && id === "amount" ? value : state.amount;
-
-        if (!doesHaveValue(paymentModeId)) {
-            finalErrorMessages.paymentModeId = ErrorMessages.PaymentModeRequired;
-        }
 
         if (!doesHaveValue(amount)) {
             finalErrorMessages.amount = ErrorMessages.AmountRequired;
@@ -128,8 +152,8 @@ const SettleBill = (props) => {
                 ...prevState,
                 vendorId: vendors[0].id,
                 vendor: vendors[0].name,
-                paymentModeId: 0,
-                paymentMode: "",
+                paymentModeId: paymentModes[0].id,
+                paymentMode: paymentModes[0].mode,
                 transactionNumber: "",
                 amount: 0,
                 paymentDetails: [
@@ -163,6 +187,15 @@ const SettleBill = (props) => {
                 const successMessage = SuccessMessages.BillSettled;
 
                 const onSuccess = (response) => {
+                    const payload = {
+                        CollectionName: "Tables"
+                    };
+            
+                    dispatch(getTablesStatus({
+                        params: payload,
+                        dispatch
+                    }));
+
                     const result = parseInt(response.data);
 
                     if (result < 0) {
@@ -171,6 +204,15 @@ const SettleBill = (props) => {
                             message: ErrorMessages.NotSettled
                         }));
                     }
+
+                    const payloadSale = {
+                        CollectionName: "DailySales"
+                    }
+        
+                    dispatch(getDailySaleDetails({
+                        params: payloadSale,
+                        dispatch
+                    }));
                 }
 
                 dispatch(settleBillDetails({
@@ -179,6 +221,8 @@ const SettleBill = (props) => {
                     onSuccess,
                     dispatch
                 }));
+
+                dispatch(toggleModal());
             };
         }
         else {
@@ -199,11 +243,9 @@ const SettleBill = (props) => {
             amount={state.amount}
             errorMessages={state.errorMessages}
             onChange={onChange}
-            tableNumber={props.tableNumber}
-            billNumber={props.billNumber}
-            netAmount={props.netAmount}
             vendors={vendors}
             paymentModes={paymentModes}
+            billingDetails={billingDetails}
             paymentDetails={state.paymentDetails}
             onPaymentAdd={onPaymentAdd}
             onSettleBill={onSettleBill}

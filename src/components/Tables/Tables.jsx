@@ -31,7 +31,7 @@ const Tables = (props) => {
                             <CardBody>
                                 <Row>
                                     {
-                                        [...Array(props.noOfTables)].map((e, i) =>
+                                        [...Array(props.noOfTables)].map((value, i) =>
                                             <Col lg="2" md="3" className="cursor-pointer">
                                                 <div
                                                     key={i}
@@ -40,7 +40,8 @@ const Tables = (props) => {
                                                         e.preventDefault();
                                                         props.onTableClick(
                                                             props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id,
-                                                            (i + 1)
+                                                            (i + 1),
+                                                            props.tablesStatus[i + 1] && props.tablesStatus[i + 1].isOrderCompleted
                                                         )
                                                     }}
                                                 >
@@ -53,7 +54,7 @@ const Tables = (props) => {
                                                                 props.tablesStatus[i + 1] && <i className="fa fa-rupee-sign"></i>
                                                             }
                                                             {
-                                                                props.tablesStatus[i + 1] && " " + props.tablesStatus[i + 1].totalAmount
+                                                                props.tablesStatus[i + 1] && " " + props.tablesStatus[i + 1].netAmount
                                                             }
                                                         </Col>
                                                     </Row>
@@ -73,16 +74,19 @@ const Tables = (props) => {
                                                                         <i className="fas fa-ellipsis-v" />
                                                                     </DropdownToggle>
                                                                     <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                        <DropdownItem
-                                                                            href="#sahil"
-                                                                            onClick={(e) => {
-                                                                                e.stopPropagation(); props.onVoidBill(
-                                                                                    props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id
-                                                                                );
-                                                                            }}
-                                                                        >
-                                                                            Void Bill
-                                                                        </DropdownItem>
+                                                                        {
+                                                                            !props.tablesStatus[i + 1].isOrderCompleted &&
+                                                                            <DropdownItem
+                                                                                href="#sahil"
+                                                                                onClick={(e) => {
+                                                                                    e.stopPropagation(); props.onVoidBill(
+                                                                                        props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id
+                                                                                    );
+                                                                                }}
+                                                                            >
+                                                                                Void Bill
+                                                                            </DropdownItem>
+                                                                        }
 
                                                                         {
                                                                             props.tablesStatus[i + 1].isOrderCompleted &&
@@ -90,10 +94,7 @@ const Tables = (props) => {
                                                                                 href="#sahil"
                                                                                 onClick={(e) => {
                                                                                     e.stopPropagation(); props.onSettleBill(
-                                                                                        props.tablesStatus[i + 1].id,
-                                                                                        props.tablesStatus[i + 1].tableNumber,
-                                                                                        props.tablesStatus[i + 1].billNumber,
-                                                                                        props.tablesStatus[i + 1].netAmount
+                                                                                        props.tablesStatus[i + 1].id
                                                                                     );
                                                                                 }}
                                                                             >
@@ -141,9 +142,6 @@ const Tables = (props) => {
                             formComponent={
                                 <SettleBill
                                     billId={props.billId}
-                                    tableNumber={props.tableNumber}
-                                    billNumber={props.billNumber}
-                                    netAmount={props.netAmount}
                                 />
                             }
                         />

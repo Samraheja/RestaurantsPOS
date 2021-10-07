@@ -26,7 +26,7 @@ export const getVendors = payload => {
 };
 
 export const getPaymentModes = payload => {
-    const { params, dispatch } = payload;
+    const { params, onSuccess, dispatch } = payload;
     dispatch(switchbillSattlementLoader({ status: true }));
 
     return {
@@ -35,7 +35,8 @@ export const getPaymentModes = payload => {
             fetchConfig: {
                 path: GlobalConstants.API_BASE_URL + "/Get",
                 params,
-                onSuccess: () => {
+                onSuccess: (response) => {
+                    onSuccess && onSuccess(response);
                     dispatch(switchbillSattlementLoader({ status: false }));
                 },
                 onError: () => {
@@ -59,15 +60,6 @@ export const settleBillDetails = payload => {
                 onSuccess: (response) => {
                     dispatch(toggleModal());
                     onSuccess && onSuccess(response);
-
-                    const payload = {
-                        CollectionName: "Tables"
-                    };
-            
-                    dispatch(getTablesStatus({
-                        params: payload,
-                        dispatch
-                    }));
                     dispatch(switchbillSattlementLoader({ status: false }));
                 },
                 onError: () => {

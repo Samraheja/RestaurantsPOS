@@ -58,6 +58,9 @@ const DailyOpeningClosing = (props) => {
             else if (result === -4) {
                 message = ErrorMessages.UnsettledBills;
             }
+            else if (result === -5) {
+                message = ErrorMessages.PreviousOpened;
+            }
 
             dispatch(addAlert({
                 alertType,

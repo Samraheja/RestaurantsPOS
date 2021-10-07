@@ -20,6 +20,7 @@ const types = {
         "UPDATE_USER_PROFILE": "UPDATE_USER_PROFILE",
         "UPDATE_USER_PROFILE_PIC": "UPDATE_USER_PROFILE_PIC",
         "UPDATE_DAY_OPEN_CLOSE_STATUS": "UPDATE_DAY_OPEN_CLOSE_STATUS",
+        "GET_DAILY_SALE_DETAILS": "GET_DAILY_SALE_DETAILS",
         "SWITCH_PROFILE_LOADER": "SWITCH_PROFILE_LOADER"
     },
     category: {
@@ -51,6 +52,7 @@ const types = {
     tables: {
         "GET_TABLES_STATUS": "GET_TABLES_STATUS",
         "ADD_TABLE_COVER": "ADD_TABLE_COVER",
+        "VOID_ORDER": "VOID_ORDER",
         "SWITCH_TABLES_LOADER": "SWITCH_TABLES_LOADER"
     },
     mostOrdered: {
@@ -62,7 +64,6 @@ const types = {
         "SAVE_ORDER_ITEM": "SAVE_ORDER_ITEM",
         "UPDATE_QUANTITY": "UPDATE_QUANTITY",
         "COMPLETE_ORDER": "COMPLETE_ORDER",
-        "VOID_ORDER": "VOID_ORDER",
         "SWITCH_ORDER_LOADER": "SWITCH_ORDER_LOADER"
     },
     customers: {

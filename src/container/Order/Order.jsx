@@ -5,6 +5,7 @@ import OrderComp from "../../components/Order/Order";
 import { AlertTypes, ErrorMessages, OrdersDefault, SuccessMessages } from "../../constants/apiConstants";
 import { completeOrder, getOrderItemsList, saveOrderItem, updateQuantity } from "../../redux-store/actions/order"
 import { addAlert } from "../../redux-store/actions/alert";
+import { getDailySaleDetails } from "../../redux-store/actions/profile";
 
 const Order = (props) => {
     const [state, setState] = useState({
@@ -26,10 +27,8 @@ const Order = (props) => {
 
             if (billId > 0) {
                 const payload = {
-                    CollectionName: "Orders",
-                    "Orders": {
-                        "BillId": parseInt(billId)
-                    }
+                    "CollectionName": "Billing",
+                    "Id": parseInt(billId)
                 };
 
                 dispatch(getOrderItemsList({
@@ -41,7 +40,7 @@ const Order = (props) => {
         else {
             props.history.push("/admin/tables")
         }
-    }, [customerInfo, orderedItems.length]);
+    }, [customerInfo, orderedItems && orderedItems.length]);
 
     const onChange = (e) => {
         const { id, value } = e.target;
@@ -62,9 +61,7 @@ const Order = (props) => {
             CollectionName: "Orders",
             "Orders": {
                 "BillId": parseInt(billingDetails.id),
-                "TableNumber": parseInt(billingDetails.tableNumber),
                 "MenuId": parseInt(menuId),
-                "OrderType": billingDetails.orderType,
                 "Price": parseFloat(price),
                 "Quantity": parseInt(quantity)
             }
@@ -72,9 +69,21 @@ const Order = (props) => {
 
         const successMessage = SuccessMessages.ItemAdded;
 
+        const onSuccess = () => {
+            const payloadSale = {
+                CollectionName: "DailySales"
+            }
+
+            dispatch(getDailySaleDetails({
+                params: payloadSale,
+                dispatch
+            }));
+        }
+
         dispatch(saveOrderItem({
             params: payload,
             successMessage,
+            onSuccess,
             dispatch
         }));
     }
@@ -88,8 +97,20 @@ const Order = (props) => {
             }
         };
 
+        const onSuccess = () => {
+            const payloadSale = {
+                CollectionName: "DailySales"
+            }
+
+            dispatch(getDailySaleDetails({
+                params: payloadSale,
+                dispatch
+            }));
+        }
+
         dispatch(updateQuantity({
             params: payload,
+            onSuccess,
             dispatch
         }));
     }

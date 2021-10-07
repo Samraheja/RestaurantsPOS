@@ -7,17 +7,17 @@ import AdminFooter from "../components/Footers/AdminFooter";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux-store/actions/login";
-import { getUserProfile, updateDayOpenCloseStatus } from "../redux-store/actions/profile";
+import { getDailySaleDetails, getUserProfile, updateDayOpenCloseStatus } from "../redux-store/actions/profile";
 import { openCloseDay } from "../redux-store/actions/openCloseDay";
 import ShowAlert from "../components/AppComponents/Alerts/ShowAlert";
 import Loader from "../components/AppComponents/Loader/Loader";
-import { AlertTypes, ErrorMessages, SuccessMessages } from "../constants/apiConstants.jsx";
+import { ErrorMessages, SuccessMessages } from "../constants/apiConstants.jsx";
 import { addAlert } from "../redux-store/actions/alert.js";
 
 const Admin = (props) => {
   const dispatch = useDispatch();
 
-  const { userDetails } = useSelector(state => state.profile);
+  const { userDetails, saleDetails } = useSelector(state => state.profile);
   const { alertType, message } = useSelector(state => state.alert);
   const { isLoading } = useSelector(state => state.profile);
 
@@ -28,6 +28,15 @@ const Admin = (props) => {
 
     dispatch(getUserProfile({
       params: payload,
+      dispatch
+    }));
+
+    const payloadSale = {
+      CollectionName: "DailySales"
+    }
+
+    dispatch(getDailySaleDetails({
+      params: payloadSale,
       dispatch
     }));
   }, []);
@@ -151,8 +160,8 @@ const Admin = (props) => {
             profilePic={userDetails.profilePic}
             name={userDetails.name}
             openOrCloseDay={openOrCloseDay}
-            daySale={userDetails.daySale}
-            unsettled={userDetails.unsettled}
+            daySale={saleDetails.daySale}
+            unsettled={saleDetails.unsettledAmount}
           />
           <Switch>
             {getRoutes(routes)}

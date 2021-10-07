@@ -46,6 +46,29 @@ export const addTableCover = payload => {
     }
 };
 
+export const voidOrder = payload => {
+    const { params, successMessage, onSuccess, dispatch } = payload;
+    dispatch(switchTablesLoader({ status: true }));
+
+    return {
+        type: types.tables.VOID_ORDER,
+        payload: {
+            fetchConfig: {
+                path: GlobalConstants.API_BASE_URL + "/Update",
+                params,
+                successMessage,
+                onSuccess: () => {
+                    onSuccess && onSuccess();
+                    dispatch(switchTablesLoader({ status: false }));
+                },
+                onError: () => {
+                    dispatch(switchTablesLoader({ status: false }));
+                }
+            }
+        }
+    }
+};
+
 export const switchTablesLoader = payload => {
     return {
         type: types.tables.SWITCH_TABLES_LOADER,

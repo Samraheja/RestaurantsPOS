@@ -24,7 +24,7 @@ export const getOrderItemsList = payload => {
 };
 
 export const saveOrderItem = payload => {
-    const { params, successMessage, dispatch } = payload;
+    const { params, successMessage, onSuccess, dispatch } = payload;
     dispatch(switchOrderLoader({ status: true }));
 
     return {
@@ -35,6 +35,7 @@ export const saveOrderItem = payload => {
                 params,
                 successMessage,
                 onSuccess: () => {
+                    onSuccess && onSuccess();
                     dispatch(switchOrderLoader({ status: false }));
                 },
                 onError: () => {
@@ -46,7 +47,7 @@ export const saveOrderItem = payload => {
 };
 
 export const updateQuantity = payload => {
-    const { params, dispatch } = payload;
+    const { params, onSuccess, dispatch } = payload;
     dispatch(switchOrderLoader({ status: true }));
 
     return {
@@ -56,6 +57,7 @@ export const updateQuantity = payload => {
                 path: GlobalConstants.API_BASE_URL + "/Update",
                 params,
                 onSuccess: () => {
+                    onSuccess && onSuccess();
                     dispatch(switchOrderLoader({ status: false }));
                 },
                 onError: () => {
@@ -80,29 +82,6 @@ export const completeOrder = payload => {
                 onSuccess: () => {
                     onSuccess && onSuccess();
                     dispatch(clearCustomer());
-                    dispatch(switchOrderLoader({ status: false }));
-                },
-                onError: () => {
-                    dispatch(switchOrderLoader({ status: false }));
-                }
-            }
-        }
-    }
-};
-
-export const voidOrder = payload => {
-    const { params, successMessage, onSuccess, dispatch } = payload;
-    dispatch(switchOrderLoader({ status: true }));
-
-    return {
-        type: types.orders.VOID_ORDER,
-        payload: {
-            fetchConfig: {
-                path: GlobalConstants.API_BASE_URL + "/Update",
-                params,
-                successMessage,
-                onSuccess: () => {
-                    onSuccess && onSuccess();
                     dispatch(switchOrderLoader({ status: false }));
                 },
                 onError: () => {
