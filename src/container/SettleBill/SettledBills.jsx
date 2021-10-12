@@ -14,16 +14,9 @@ const SettledBills = (props) => {
     const { totalRecords, totalPages, settledBills, isLoading } = useSelector(state => state.settleBill);
 
     useEffect(() => {
-        var curr = new Date();
-        curr.setDate(curr.getDate());
-        var date = curr.toISOString().substr(0,10);
-
-        setState(prevState => ({
-            ...prevState,
-            billDate: date
-        }));
-
-        getSettledBillsDetails(date);
+        if (state.billDate !== "") {
+            getSettledBillsDetails(state.billDate);
+        }
     }, [state.billDate, state.sortBy, state.order, state.pageNo, dispatch]);
 
     const getSettledBillsDetails = (date) => {

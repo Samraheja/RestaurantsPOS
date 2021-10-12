@@ -3,7 +3,7 @@ import types from "./types";
 import { clearCustomer } from "./customer";
 
 export const getOrderItemsList = payload => {
-    const { params, dispatch } = payload;
+    const { params, onSuccess, dispatch } = payload;
     dispatch(switchOrderLoader({ status: true }));
 
     return {
@@ -12,7 +12,8 @@ export const getOrderItemsList = payload => {
             fetchConfig: {
                 path: GlobalConstants.API_BASE_URL + "/Get",
                 params,
-                onSuccess: () => {
+                onSuccess: (response) => {
+                    onSuccess && onSuccess(response);
                     dispatch(switchOrderLoader({ status: false }));
                 },
                 onError: () => {

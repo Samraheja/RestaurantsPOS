@@ -24,22 +24,24 @@ const SettleBill = (props) => {
         bindPaymentModes();
 
         if (props.billId !== undefined && props.billId > 0) {
-            setState((prevState) => ({
-                ...prevState,
-                billId: props.billId
-            }));
-
-            if (props.billId > 0) {
-                const payload = {
-                    "CollectionName": "Billing",
-                    "Id": parseInt(props.billId)
-                };
-
-                dispatch(getOrderItemsList({
-                    params: payload,
-                    dispatch
-                }));
+            const payload = {
+                "CollectionName": "Billing",
+                "Id": parseInt(props.billId)
             };
+
+            const onSuccess = (response) => {
+                setState((prevState) => ({
+                    ...prevState,
+                    billId: props.billId,
+                    remainingAmount: response.data.netAmount
+                }));
+            }
+
+            dispatch(getOrderItemsList({
+                params: payload,
+                onSuccess,
+                dispatch
+            }));
         }
         else {
             dispatch(toggleModal());
@@ -94,14 +96,16 @@ const SettleBill = (props) => {
             setState(prevState => ({
                 ...prevState,
                 [id]: value,
-                "vendor": e.target.selectedOptions[0].text
+                "vendor": e.target.selectedOptions[0].text,
+                "amount": e.target.selectedOptions[0].text !== "Self" ? billingDetails.netAmount : "0"
             }));
         }
         else if (id === "paymentModeId") {
             setState(prevState => ({
                 ...prevState,
                 [id]: value,
-                "paymentMode": e.target.selectedOptions[0].text
+                "paymentMode": e.target.selectedOptions[0].text,
+                "amount": e.target.selectedOptions[0].text === "Payment Due" ? billingDetails.netAmount : "0"
             }));
         }
         else {
@@ -139,8 +143,9 @@ const SettleBill = (props) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
-            const details = {};
+            const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseInt(curr.amount), 0) + parseInt(state.amount);
 
+            const details = {};
             details.vendor = state.vendor;
             details.vendorId = state.vendorId;
             details.paymentMode = state.paymentMode;
@@ -156,6 +161,9 @@ const SettleBill = (props) => {
                 paymentMode: paymentModes[0].mode,
                 transactionNumber: "",
                 amount: 0,
+                remainingAmount: billingDetails.netAmount - totalAmount,
+                tenderedAmount: totalAmount,
+                returnToCustomer: totalAmount > billingDetails.netAmount ? totalAmount - billingDetails.netAmount : 0,
                 paymentDetails: [
                     ...state.paymentDetails,
                     details
@@ -172,63 +180,73 @@ const SettleBill = (props) => {
 
     const onSettleBill = () => {
         if (state.paymentDetails.length > 0) {
-            for (var i = 0; i < state.paymentDetails.length; i++) {
-                const payload = {
-                    "CollectionName": "BillSettlement",
-                    "BillSettlement": {
-                        "BillId": parseInt(state.billId),
-                        "VendorId": parseInt(state.paymentDetails[i].vendorId),
-                        "PaymentModeId": parseInt(state.paymentDetails[i].paymentModeId),
-                        "TransactionNumber": state.paymentDetails[i].transactionNumber,
-                        "Amount": parseFloat(state.paymentDetails[i].amount)
-                    }
-                };
+            const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseInt(curr.amount), 0);
 
-                const successMessage = SuccessMessages.BillSettled;
-
-                const onSuccess = (response) => {
+            if (totalAmount <= billingDetails.netAmount) {
+                for (var i = 0; i < state.paymentDetails.length; i++) {
                     const payload = {
-                        CollectionName: "Tables"
+                        "CollectionName": "BillSettlement",
+                        "BillSettlement": {
+                            "BillId": parseInt(state.billId),
+                            "VendorId": parseInt(state.paymentDetails[i].vendorId),
+                            "PaymentModeId": parseInt(state.paymentDetails[i].paymentModeId),
+                            "TransactionNumber": state.paymentDetails[i].transactionNumber,
+                            "Amount": parseFloat(state.paymentDetails[i].amount)
+                        }
                     };
-            
-                    dispatch(getTablesStatus({
-                        params: payload,
-                        dispatch
-                    }));
 
-                    const result = parseInt(response.data);
+                    const successMessage = SuccessMessages.BillSettled;
 
-                    if (result < 0) {
-                        dispatch(addAlert({
-                            alertType: AlertTypes.Danger,
-                            message: ErrorMessages.NotSettled
+                    const onSuccess = (response) => {
+                        const payload = {
+                            CollectionName: "Tables"
+                        };
+
+                        dispatch(getTablesStatus({
+                            params: payload,
+                            dispatch
+                        }));
+
+                        const result = parseInt(response.data);
+
+                        if (result < 0) {
+                            dispatch(addAlert({
+                                alertType: AlertTypes.Danger,
+                                message: ErrorMessages.NotSettled
+                            }));
+                        }
+
+                        const payloadSale = {
+                            CollectionName: "DailySales"
+                        }
+
+                        dispatch(getDailySaleDetails({
+                            params: payloadSale,
+                            dispatch
                         }));
                     }
 
-                    const payloadSale = {
-                        CollectionName: "DailySales"
-                    }
-        
-                    dispatch(getDailySaleDetails({
-                        params: payloadSale,
+                    dispatch(settleBillDetails({
+                        params: payload,
+                        successMessage,
+                        onSuccess,
                         dispatch
                     }));
-                }
 
-                dispatch(settleBillDetails({
-                    params: payload,
-                    successMessage,
-                    onSuccess,
-                    dispatch
+                    dispatch(toggleModal());
+                };
+            }
+            else {
+                dispatch(addAlert({
+                    alertType: AlertTypes.Danger,
+                    message: ErrorMessages.AmountCheck
                 }));
-
-                dispatch(toggleModal());
-            };
+            }
         }
         else {
             dispatch(addAlert({
                 alertType: AlertTypes.Danger,
-                message: "Please add payment details"
+                message: ErrorMessages.AddPayment
             }));
         }
     };
@@ -241,6 +259,9 @@ const SettleBill = (props) => {
             paymentMode={state.paymentMode}
             transactionNumber={state.transactionNumber}
             amount={state.amount}
+            remainingAmount={state.remainingAmount}
+            tenderedAmount={state.tenderedAmount}
+            returnToCustomer={state.returnToCustomer}
             errorMessages={state.errorMessages}
             onChange={onChange}
             vendors={vendors}

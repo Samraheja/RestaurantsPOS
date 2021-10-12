@@ -85,7 +85,9 @@ export const ErrorMessages = {
     TransactionRequired: "Please enter transaction number",
     AmountRequired: "Please enter amount",
     ValidAmount: "Amount must be greater than 0",
-    NotSettled: "Unable to settle bill"
+    NotSettled: "Unable to settle bill",
+    AddPayment: "Please add payment details",
+    AmountCheck: "Settlement amount can not be greater than bill amount"
 }
 
 export const AlertTypes = {
@@ -210,6 +212,9 @@ export const BillSettlementDefaults = {
     paymentMode: "",
     transactionNumber: "",
     amount: 0,
+    tenderedAmount: 0,
+    remainingAmount: 0,
+    returnToCustomer: 0,
     errorMessages: {},
     paymentDetails: []
 }

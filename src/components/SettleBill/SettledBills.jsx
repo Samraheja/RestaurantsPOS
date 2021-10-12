@@ -51,6 +51,7 @@ const SettledBills = (props) => {
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("BillDate")}>Bill Date</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("BillNumber")}>Bill Number</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("Name")}>Customer Name</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("Vendor")}>Vendor</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("PaymentMode")}>Payment Mode</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("Amount")}>Amount</th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("SettledAmount")}>Settled Amount</th>
@@ -74,6 +75,9 @@ const SettledBills = (props) => {
                                                     </td>
                                                     <td>
                                                         {item.name}
+                                                    </td>
+                                                    <td>
+                                                        {item.vendor}
                                                     </td>
                                                     <td>
                                                         {item.paymentModes}

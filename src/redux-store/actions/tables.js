@@ -26,7 +26,7 @@ export const getTablesStatus = payload => {
 export const addTableCover = payload => {
     const { params, onSuccess, dispatch } = payload;
     dispatch(switchTablesLoader({ status: true }));
-
+    
     return {
         type: types.tables.ADD_TABLE_COVER,
         payload: {

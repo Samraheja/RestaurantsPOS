@@ -30,6 +30,20 @@ const SettleBill = (props) => {
                     <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.billingDetails.netAmount || 0.00}</span>
                 </Col>
             </Row>
+            <Row>
+                <Col lg="4">
+                    <span className="p-1 pl-4 font-weight-bold small">Remaining:</span>
+                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.remainingAmount || 0.00}</span>
+                </Col>
+                <Col lg="4">
+                    <span className="p-1 pl-4 font-weight-bold small">Tendered:</span>
+                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.tenderedAmount || 0.00}</span>
+                </Col>
+                <Col lg="4">
+                    <span className="p-1 pl-4 font-weight-bold small">Return To Customer:</span>
+                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.returnToCustomer || 0.00}</span>
+                </Col>
+            </Row>
             <hr />
             <Row>
                 <Col lg="5">
@@ -123,6 +137,7 @@ const SettleBill = (props) => {
                                     value={props.amount}
                                     onChange={props.onChange}
                                     error={props.errorMessages.amount}
+                                    disabled={props.vendor !== "Self" ? true : props.paymentMode === "Payment Due" ? true : false}
                                 />
                             </FormGroup>
                         </Col>
