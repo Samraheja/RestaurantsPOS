@@ -8,6 +8,7 @@ const BillSummary = (props) => {
             discount={props.discount}
             discountAmount={props.discountAmount}
             netAmount={props.netAmount}
+            buttonText={props.buttonText}
             onChange={props.onChange}
             billingDetails={props.billingDetails}
             onCompleteOrder={props.onCompleteOrder}

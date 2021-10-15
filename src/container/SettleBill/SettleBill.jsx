@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SettleBillComp from "../../components/SettleBill/SettleBill";
 import { AlertTypes, BillSettlementDefaults, ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
 import { getVendors, getPaymentModes, settleBill, settleBillDetails } from "../../redux-store/actions/settleBill";
-import { doesHaveValue, isDigitsOnly, isValidDigits } from "../../utils/functions";
+import { doesHaveValue, isDigitsOnly, isValidAlphaNumeric, isValidDecimalOnly, isValidDigits } from "../../utils/functions";
 import { addAlert } from "../../redux-store/actions/alert";
 import { toggleModal } from "../../redux-store/actions/modal";
 import { getOrderItemsList } from "../../redux-store/actions/order";
@@ -124,11 +124,18 @@ const SettleBill = (props) => {
         const finalErrorMessages = {}
 
         const amount = id && id === "amount" ? value : state.amount;
+        const transactionNumber = id && id === "transactionNumber" ? value : state.transactionNumber;
+
+        if (doesHaveValue(transactionNumber)) {
+            if (!isValidAlphaNumeric(transactionNumber)) {
+                finalErrorMessages.transactionNumber = ErrorMessages.ValidAlphanumeric;
+            }
+        }
 
         if (!doesHaveValue(amount)) {
             finalErrorMessages.amount = ErrorMessages.AmountRequired;
         }
-        else if (!isDigitsOnly(amount)) {
+        else if (!isValidDecimalOnly(amount)) {
             finalErrorMessages.amount = ErrorMessages.DigitsOnly;
         }
         else if (!isValidDigits(amount)) {
@@ -143,7 +150,7 @@ const SettleBill = (props) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
-            const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseInt(curr.amount), 0) + parseInt(state.amount);
+            const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseFloat(curr.amount), 0) + parseFloat(state.amount);
 
             const details = {};
             details.vendor = state.vendor;
@@ -161,9 +168,9 @@ const SettleBill = (props) => {
                 paymentMode: paymentModes[0].mode,
                 transactionNumber: "",
                 amount: 0,
-                remainingAmount: billingDetails.netAmount - totalAmount,
-                tenderedAmount: totalAmount,
-                returnToCustomer: totalAmount > billingDetails.netAmount ? totalAmount - billingDetails.netAmount : 0,
+                remainingAmount: billingDetails.netAmount < totalAmount ? 0 : parseFloat(billingDetails.netAmount - totalAmount).toFixed(2),
+                tenderedAmount: parseFloat(totalAmount),
+                returnToCustomer: parseFloat(totalAmount) > parseFloat(billingDetails.netAmount) ? parseFloat(totalAmount - billingDetails.netAmount).toFixed(2) : 0,
                 paymentDetails: [
                     ...state.paymentDetails,
                     details
@@ -182,66 +189,59 @@ const SettleBill = (props) => {
         if (state.paymentDetails.length > 0) {
             const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseInt(curr.amount), 0);
 
-            if (totalAmount <= billingDetails.netAmount) {
-                for (var i = 0; i < state.paymentDetails.length; i++) {
+            for (var i = 0; i < state.paymentDetails.length; i++) {
+                const payload = {
+                    "CollectionName": "BillSettlement",
+                    "BillSettlement": {
+                        "BillId": parseInt(state.billId),
+                        "VendorId": parseInt(state.paymentDetails[i].vendorId),
+                        "PaymentModeId": parseInt(state.paymentDetails[i].paymentModeId),
+                        "TransactionNumber": state.paymentDetails[i].transactionNumber,
+                        "Amount": parseFloat(state.paymentDetails[i].amount),
+                        "ReturnedAmount": parseFloat(state.returnToCustomer)
+                    }
+                };
+
+                const successMessage = SuccessMessages.BillSettled;
+
+                const onSuccess = (response) => {
                     const payload = {
-                        "CollectionName": "BillSettlement",
-                        "BillSettlement": {
-                            "BillId": parseInt(state.billId),
-                            "VendorId": parseInt(state.paymentDetails[i].vendorId),
-                            "PaymentModeId": parseInt(state.paymentDetails[i].paymentModeId),
-                            "TransactionNumber": state.paymentDetails[i].transactionNumber,
-                            "Amount": parseFloat(state.paymentDetails[i].amount)
-                        }
+                        CollectionName: "Tables"
                     };
 
-                    const successMessage = SuccessMessages.BillSettled;
-
-                    const onSuccess = (response) => {
-                        const payload = {
-                            CollectionName: "Tables"
-                        };
-
-                        dispatch(getTablesStatus({
-                            params: payload,
-                            dispatch
-                        }));
-
-                        const result = parseInt(response.data);
-
-                        if (result < 0) {
-                            dispatch(addAlert({
-                                alertType: AlertTypes.Danger,
-                                message: ErrorMessages.NotSettled
-                            }));
-                        }
-
-                        const payloadSale = {
-                            CollectionName: "DailySales"
-                        }
-
-                        dispatch(getDailySaleDetails({
-                            params: payloadSale,
-                            dispatch
-                        }));
-                    }
-
-                    dispatch(settleBillDetails({
+                    dispatch(getTablesStatus({
                         params: payload,
-                        successMessage,
-                        onSuccess,
                         dispatch
                     }));
 
-                    dispatch(toggleModal());
-                };
-            }
-            else {
-                dispatch(addAlert({
-                    alertType: AlertTypes.Danger,
-                    message: ErrorMessages.AmountCheck
+                    const result = parseInt(response.data);
+
+                    if (result < 0) {
+                        dispatch(addAlert({
+                            alertType: AlertTypes.Danger,
+                            message: ErrorMessages.NotSettled
+                        }));
+                    }
+
+                    const payloadSale = {
+                        CollectionName: "DailySales"
+                    }
+
+                    dispatch(getDailySaleDetails({
+                        params: payloadSale,
+                        dispatch
+                    }));
+                }
+
+                dispatch(settleBillDetails({
+                    params: payload,
+                    successMessage,
+                    onSuccess,
+                    dispatch
                 }));
-            }
+
+                dispatch(toggleModal());
+            };
         }
         else {
             dispatch(addAlert({

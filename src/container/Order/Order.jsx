@@ -22,7 +22,8 @@ const Order = (props) => {
         if (billId) {
             setState((prevState) => ({
                 ...prevState,
-                billId: parseInt(billId)
+                billId: parseInt(billId),
+                buttonText: billingDetails.isKOTDone === false ? "Print KOT" : "Print Bill"
             }));
 
             if (billId > 0) {
@@ -116,19 +117,22 @@ const Order = (props) => {
     }
 
     const onCompleteOrder = () => {
-        if (Object.keys(customerInfo).length > 0) {
+        if (Object.keys(customerInfo).length > 0 || !billingDetails.isKOTDone) {
             const payload = {
                 CollectionName: "Billing",
+                "Operation": billingDetails.isKOTDone === false ? "Print KOT" : "",
                 "Billing": {
                     "ID": parseInt(billingDetails.id),
                     "Discount": state.discount === "" ? 0 : parseFloat(state.discount)
                 }
             };
 
-            const successMessage = SuccessMessages.OrderCompleted;
+            const successMessage = billingDetails.isKOTDone === true ? SuccessMessages.OrderCompleted : "";
 
             const onSuccess = () => {
-                props.history.push("/admin/order");
+                if (billingDetails.isKOTDone) {
+                    props.history.push("/admin/order");
+                }
             }
 
             dispatch(completeOrder({
@@ -170,6 +174,7 @@ const Order = (props) => {
                 onQuantityUpdate={onQuantityUpdate}
                 onCompleteOrder={onCompleteOrder}
                 customerInfo={customerInfo}
+                buttonText={state.buttonText}
                 paymentMode={state.paymentMode}
                 discount={state.discount}
                 discountAmount={state.discountAmount}

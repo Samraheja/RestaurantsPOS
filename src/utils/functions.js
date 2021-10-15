@@ -50,6 +50,16 @@ export const isDigitsOnly = (value) => {
     }
 };
 
+export const isValidDecimalOnly = (value) => {
+    var pattern = new RegExp(/^\d*\.?\d*$/);
+
+    if (!pattern.test(value)) {
+        return false;
+    } else {
+        return true;
+    }
+};
+
 export const isValidMobileNumber = (value) => {
     if (value.length !== 10) {
         return false;

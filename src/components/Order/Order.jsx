@@ -59,6 +59,7 @@ const Order = (props) => {
                                             discount={props.discount}
                                             discountAmount={props.discountAmount}
                                             netAmount={props.netAmount}
+                                            buttonText={props.buttonText}
                                             onChange={props.onChange}
                                             onCompleteOrder={props.onCompleteOrder}
                                         />

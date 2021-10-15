@@ -47,6 +47,7 @@ const BillSummary = (props) => {
                         max="99"
                         maxLength="2"
                         value={props.discount}
+                        disabled={props.billingDetails.isKOTDone === false ? true : false}
                         onChange={props.onChange}
                     />
                 </Col>
@@ -76,7 +77,7 @@ const BillSummary = (props) => {
                         className="btn-block"
                         onClick={() => props.onCompleteOrder()}
                     >
-                        Complete Order
+                        {props.buttonText}
                     </Button>
                 </Col>
             </Row>

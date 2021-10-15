@@ -16160,7 +16160,7 @@ button:focus, :focus {
 
 #sidenav-main li.nav-item {
   border-bottom: 1px solid #edd1d1;
-  background-color: honeydew;
+  background-color: #f6f9fc;
 }
 
 #sidenav-main ul.navbar-nav {
@@ -16282,4 +16282,10 @@ button:focus, :focus {
 
 #sidenav-main.navbar-vertical.navbar-expand-md.fixed-left + .main-content {
     margin-left: 210px;
+}
+
+.avatar img {
+ 	width: 36px;
+  height: 36px;
+ 	border-radius: 50%;
 }

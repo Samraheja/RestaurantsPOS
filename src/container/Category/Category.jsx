@@ -28,7 +28,7 @@ const Category = (props) => {
             params: payload,
             dispatch
         }));
-    }, [dispatch]);
+    }, [state, dispatch]);
 
     const switchModal = () => {
         dispatch(toggleModal());

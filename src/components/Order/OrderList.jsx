@@ -25,8 +25,9 @@ const OrderList = (props) => {
                             {
                                 props.orderedItems &&
                                 props.orderedItems.map((item, index) => {
+                                    console.log(item);
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index}  className={item.isKOTPrinted === false ? "text-danger": ""}>
                                             <td>
                                                 {index + 1}
                                             </td>

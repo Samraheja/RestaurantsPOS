@@ -183,7 +183,8 @@ export const OrdersDefault = {
     billId: 0,
     discount: "",
     discountAmount: 0,
-    netAmount: 0
+    netAmount: 0,
+    buttonText: "Print KOT"
 }
 
 export const CustomerSummaryDefault = {
@@ -212,9 +213,9 @@ export const BillSettlementDefaults = {
     paymentMode: "",
     transactionNumber: "",
     amount: 0,
-    tenderedAmount: 0,
-    remainingAmount: 0,
-    returnToCustomer: 0,
+    tenderedAmount: 0.00,
+    remainingAmount: 0.00,
+    returnToCustomer: 0.00,
     errorMessages: {},
     paymentDetails: []
 }
