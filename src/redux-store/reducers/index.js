@@ -11,6 +11,7 @@ import mostOrdered from "./mostOrdered";
 import order from "./order";
 import customer from "./customer";
 import settleBill from "./settleBill";
+import report from "./report";
 
 export default combineReducers({
     login,
@@ -24,5 +25,6 @@ export default combineReducers({
     mostOrdered,
     order,
     customer,
-    settleBill
+    settleBill,
+    report
 });

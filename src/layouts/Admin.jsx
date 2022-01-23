@@ -39,7 +39,7 @@ const Admin = (props) => {
       params: payloadSale,
       dispatch
     }));
-  }, []);
+  }, [dispatch]);
 
   const openOrCloseDay = (operation) => {
     const payload = {
@@ -47,7 +47,7 @@ const Admin = (props) => {
       "Operation": operation
     }
 
-    const successMessage = operation == "Open" ? SuccessMessages.DayOpened : SuccessMessages.DayClosed;
+    const successMessage = operation === "Open" ? SuccessMessages.DayOpened : SuccessMessages.DayClosed;
 
     const onSuccess = (response) => {
       const result = response.data;
@@ -58,7 +58,7 @@ const Admin = (props) => {
         alertType = "Success";
         message = successMessage;
 
-        const status = operation == "Open" ? true : false;
+        const status = operation === "Open" ? true : false;
 
         dispatch(updateDayOpenCloseStatus({
           status

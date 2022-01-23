@@ -1,6 +1,7 @@
 import types from "../actions/types";
 
 const initialState = {
+    billingDetails: {},
     vendors: [],
     paymentModes: [],
     settledBills: [],
@@ -21,6 +22,12 @@ const SettleBill = ((state = initialState, actions = {}) => {
             return {
                 ...state,
                 paymentModes: actions.payload.data.data.response
+            }
+        }
+        case types.settleBill.GET_BILL_TO_SETTLE: {
+            return {
+                ...state,
+                billingDetails: actions.payload.data.data
             }
         }
         case types.settleBill.GET_SETTLED_BILL: {

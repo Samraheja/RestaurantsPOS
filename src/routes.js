@@ -10,6 +10,7 @@ import AddMenu from "./container/Menu/AddMenu";
 import Tables from "./container/Tables/Tables";
 import Order from "./container/Order/Order";
 import SettledBills from "./container/SettleBill/SettledBills";
+import DailySaleReport from "./container/Reports/DailySaleReport";
 
 var routes = [
   {
@@ -90,10 +91,17 @@ var routes = [
     layout: "/admin"
   },
   {
-    path: "/settledBills",
+    path: "/settledbills",
     name: "Settled Bills",
-    icon: "fas fa-utensils icon-color",
+    icon: "fas fa-list-alt icon-color",
     component: SettledBills,
+    layout: "/admin",
+  },
+  {
+    path: "/dailysalereport",
+    name: "Daily Sale Report",
+    icon: "fas fa-list-alt icon-color",
+    component: DailySaleReport,
     layout: "/admin",
   },
 ];

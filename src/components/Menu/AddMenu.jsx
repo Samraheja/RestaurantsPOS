@@ -47,7 +47,6 @@ const AddMenu = (props) => {
                                                             className="form-control form-control-alternative"
                                                             value={props.categoryId}
                                                             onChange={props.onChange}
-                                                            disabled={props.id > 0 ? true : false}
                                                             error={props.errorMessages.categoryId}
                                                             showDefault={true}
                                                             options={props.categories.map((category) => ({
@@ -76,7 +75,6 @@ const AddMenu = (props) => {
                                                             className="form-control form-control-alternative"
                                                             value={props.categoryId}
                                                             onChange={props.onChange}
-                                                            disabled={props.id > 0 ? true : false}
                                                             error={props.errorMessages.subCategoryId}
                                                             showDefault={false}
                                                             options={props.subCategories.map((subCategory) => ({

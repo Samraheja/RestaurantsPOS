@@ -9,11 +9,14 @@ import {
     Input,
     Col
 } from "reactstrap";
-import ShowModal from "../AppComponents/Modal/Modal";
 import Pagination from "../AppComponents/Pagination/Pagination";
-import SettleBill from "../../container/SettleBill/SettleBill";
+import Select from "../AppComponents/select/SelectComp";
+import { Months, Years } from "../../constants/apiConstants";
 
-const SettledBills = (props) => {
+const yearsList = Years();
+
+const DailySaleReport = (props) => {
+    debugger
     return (
         <>
             <div className="header bg-gradient-info pb-8 pt-5 pt-md-7">
@@ -25,24 +28,31 @@ const SettledBills = (props) => {
                             <CardHeader className="border-0">
                                 <Row>
                                     <Col lg="6">
-                                        <span className="font-weight-bold">Settled Bills</span>
+                                        <span className="font-weight-bold">Daily Sale Report By Payment Modes</span>
                                     </Col>
-                                    <Col lg="2" className="text-right pt-2">
-                                        <label
-                                            className="form-control-label"
-                                            htmlFor="billDate"
-                                        >
-                                            Bill Date:
-                                        </label>
-                                    </Col>
-                                    <Col lg="4">
-                                        <Input
-                                            className="form-control-alternative"
-                                            id="billDate"
-                                            type="date"
-                                            value={props.billDate}
+                                    <Col lg="3">
+                                        <Select
+                                            id="month"
+                                            className="form-control form-control-alternative"
+                                            value={props.month}
                                             onChange={props.onChange}
-                                        />
+                                            options={Months.map((month) => ({
+                                                text: month.name,
+                                                value: month.value
+                                            }))}
+                                        >
+                                        </Select>
+                                    </Col>
+                                    <Col lg="3">
+                                        <Select
+                                            id="year"
+                                            className="form-control form-control-alternative"
+                                            value={props.year}
+                                            onChange={props.onChange}
+                                            showDefault={false}
+                                            options={yearsList}
+                                        >
+                                        </Select>
                                     </Col>
                                 </Row>
                             </CardHeader>
@@ -51,19 +61,20 @@ const SettledBills = (props) => {
                                     <tr>
                                         <th scope="col" className="Header">Sr. No. </th>
                                         <th scope="col" className="Header" onClick={() => props.SortRecords("BillDate")}>Bill Date</th>
-                                        <th scope="col" className="Header" onClick={() => props.SortRecords("BillNumber")}>Bill Number</th>
-                                        <th scope="col" className="Header" onClick={() => props.SortRecords("Name")}>Customer Name</th>
-                                        <th scope="col" className="Header" onClick={() => props.SortRecords("Vendor")}>Vendor</th>
-                                        <th scope="col" className="Header" onClick={() => props.SortRecords("PaymentMode")}>Payment Mode</th>
-                                        <th scope="col" className="Header" onClick={() => props.SortRecords("Amount")}>Amount</th>
-                                        <th scope="col" className="Header" onClick={() => props.SortRecords("SettledAmount")}>Settled Amount</th>
-                                        <th scope="col" className="Header" />
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("BillAmount")}>Bill Amount</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("Cash")}>Cash</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("Paytm")}>Paytm</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("PhonePe")}>PhonePe</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("GooglePay")}>Google Pay</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("COD")}>COD</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("OnlinePayment")}>Online Payment</th>
+                                        <th scope="col" className="Header" onClick={() => props.SortRecords("PaymentDue")}>Payment Due</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        props.settledBills &&
-                                        props.settledBills.map((item, index) => {
+                                        props.dailySales &&
+                                        props.dailySales.map((item, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <td>
@@ -73,25 +84,28 @@ const SettledBills = (props) => {
                                                         {item.billDate}
                                                     </td>
                                                     <td>
-                                                        {item.billNumber}
+                                                        {item.billAmount}
                                                     </td>
                                                     <td>
-                                                        {item.name}
+                                                        {item.cash}
                                                     </td>
                                                     <td>
-                                                        {item.vendor}
+                                                        {item.paytm}
                                                     </td>
                                                     <td>
-                                                        {item.paymentModes}
+                                                        {item.phonePe}
                                                     </td>
                                                     <td>
-                                                        {item.amount}
+                                                        {item.googlePay}
                                                     </td>
                                                     <td>
-                                                        {item.settledAmount}
+                                                        {item.cod}
                                                     </td>
                                                     <td>
-                                                        <span className="p-1 pr-4 text-right cursor-pointer" onClick={(e) => { e.preventDefault(); props.onEditSettlement(item.id); }}><i className="fas fa-edit"></i></span>
+                                                        {item.onlinePayment}
+                                                    </td>
+                                                    <td>
+                                                        {item.paymentDue}
                                                     </td>
                                                 </tr>
                                             )
@@ -110,22 +124,8 @@ const SettledBills = (props) => {
                     </div>
                 </Row>
             </Container>
-
-            {
-                props.showSettleBill &&
-                <ShowModal
-                    title="Settle Bill"
-                    className="modal-xl modal-dialog-centered"
-                    switchModal={props.switchModal}
-                    formComponent={
-                        <SettleBill
-                            billId={props.billId}
-                        />
-                    }
-                />
-            }
         </>
     )
 };
 
-export default SettledBills;
+export default DailySaleReport;

@@ -1,6 +1,6 @@
 export const GlobalConstants = {
-    //API_BASE_URL: "https://localhost:44375/api/POS",
-    API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
+    API_BASE_URL: "https://localhost:44375/api/POS",
+    //API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
     ACCESS_TOKEN_NAME: 'login_access_token',
     EXPIRY_DATE_NAME: 'ExpiryDate',
     REFRESH_TOKEN_NAME: 'RefreshToken',
@@ -87,7 +87,7 @@ export const ErrorMessages = {
     ValidAmount: "Amount must be greater than 0",
     NotSettled: "Unable to settle bill",
     AddPayment: "Please add payment details",
-    AmountCheck: "Settlement amount can not be greater than bill amount"
+    AmountCheck: "Settlement amount can not be less than bill amount"
 }
 
 export const AlertTypes = {
@@ -224,5 +224,79 @@ export const SettledBillsDefaults = {
     pageNo: 1,
     sortBy: "BillDate",
     order: "asc",
-    billDate: ""
+    billDate: "",
+    billId: 0,
+    showSettleBill: false
+}
+
+export const Months = [
+    {
+        "name": "January",
+        "value": 1
+    },
+    {
+        "name": "February",
+        "value": 2
+    },
+    {
+        "name": "March",
+        "value": 3
+    },
+    {
+        "name": "April",
+        "value": 4
+    },
+    {
+        "name": "May",
+        "value": 5
+    },
+    {
+        "name": "June",
+        "value": 6
+    },
+    {
+        "name": "July",
+        "value": 7
+    },
+    {
+        "name": "August",
+        "value": 8
+    },
+    {
+        "name": "September",
+        "value": 9
+    },
+    {
+        "name": "October",
+        "value": 10
+    },
+    {
+        "name": "November",
+        "value": 11
+    },
+    {
+        "name": "December",
+        "value": 12
+    }
+]
+
+export const Years = () => {
+    const year = [];
+    for(let i = new Date().getFullYear(); i >= 2021; i--) {
+        year.push({
+            "text": i,
+            "value": i
+        });
+    };
+    return year;
+};
+
+
+export const DailySaleReportDefaults = {
+    pageNo: 1,
+    sortBy: "Id",
+    order: "desc",
+    searchValue: "",
+    month: (new Date().getMonth() + 1),
+    year: new Date().getFullYear()
 }

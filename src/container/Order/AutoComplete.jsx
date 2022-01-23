@@ -4,7 +4,7 @@ import Loader from "../../components/AppComponents/Loader/Loader";
 import AutoCompleteComp from "../../components/Order/AutoComplete";
 import { AutoCompleteDefaults, ErrorMessages, GlobalConstants } from "../../constants/apiConstants";
 import { getMenu } from "../../redux-store/actions/menu";
-import { doesHaveValue, isValidAlphabets, isValidAlphaNumeric, isValidQuantity } from "../../utils/functions";
+import { doesHaveValue, isValidAlphaNumeric, isValidQuantity } from "../../utils/functions";
 
 const MostOrdered = (props) => {
     const [state, setState] = useState({
@@ -27,7 +27,7 @@ const MostOrdered = (props) => {
                 dispatch
             }));
         }
-    }, [dispatch]);
+    }, [menu.length, dispatch]);
 
     const onChange = (e) => {
         const { id, value } = e.target;

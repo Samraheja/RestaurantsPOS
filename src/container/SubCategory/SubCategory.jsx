@@ -28,7 +28,7 @@ const SubCategory = (props) => {
             params: payload,
             dispatch
         }));
-    }, [dispatch]);
+    }, [state.pageNo, state.sortBy, state.order, state.searchValue, dispatch]);
 
     const switchModal = () => {
         dispatch(toggleModal());

@@ -23,7 +23,7 @@ const ShowAlert = (props) => {
 
             dispatch(deleteAlert());
         }, 5000);
-    }, [state.visible]);
+    }, [state.visible, dispatch]);
 
     const Type = {
         [AlertTypes.Success]: {

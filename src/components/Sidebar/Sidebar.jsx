@@ -25,10 +25,7 @@ import {
 
 const Sidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
-  // verifies if routeName is the one active (in browser input)
-  const activeRoute = (routeName) => {
-    return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  };
+  
   // toggles collapse between opened and closed (true/false)
   const toggleCollapse = () => {
     setCollapseOpen((data) => !data);
@@ -39,27 +36,26 @@ const Sidebar = (props) => {
   };
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <NavItem key={key}>
-            <NavLink
-              to={prop.layout + prop.path}
-              tag={NavLinkRRD}
-              onClick={closeCollapse}
-              activeClassName="active"
-              className={prop.className}
-            >
-              <i className={prop.icon} />
-              {prop.name}
-            </NavLink>
-          </NavItem>
-        );
-      }
+    return routes.filter(x => x.layout === "/admin")
+    .map((prop, key) => {
+      return (
+        <NavItem key={key}>
+          <NavLink
+            to={prop.layout + prop.path}
+            tag={NavLinkRRD}
+            onClick={closeCollapse}
+            activeClassName="active"
+            className={prop.className}
+          >
+            <i className={prop.icon} />
+            {prop.name}
+          </NavLink>
+        </NavItem>
+      );
     });
   };
 
-  const { bgColor, routes, logo } = props;
+  const { routes, logo } = props;
   let navbarBrandProps;
   if (logo && logo.innerLink) {
     navbarBrandProps = {
@@ -93,9 +89,8 @@ const Sidebar = (props) => {
           <NavbarBrand className="pt-0 pb-0" {...navbarBrandProps}>
             <img
               alt={logo.imgAlt}
-              className="navbar-brand-img"
+              className="navbar-brand-img LogoImgSidebar"
               src={logo.profilePic || logo.imgSrc}
-              className="LogoImgSidebar"
             />
           </NavbarBrand>
         ) : null}

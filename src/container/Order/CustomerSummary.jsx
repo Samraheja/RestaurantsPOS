@@ -25,7 +25,7 @@ const CustomerSummary = (props) => {
                 dispatch
             }));
         }
-    }, [props.customerId]);
+    }, [props.customerId, dispatch]);
 
     const switchModal = () => {
         dispatch(toggleModal());

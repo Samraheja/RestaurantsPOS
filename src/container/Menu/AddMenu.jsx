@@ -6,8 +6,8 @@ import AddMenuComp from "../../components/Menu/AddMenu";
 import { AddMenuDefaults, ErrorMessages, GlobalConstants, ImageTypes, SuccessMessages } from "../../constants/apiConstants";
 import { getCategories } from "../../redux-store/actions/category";
 import { getSubCategoriesByCategoryId } from "../../redux-store/actions/subCategory";
-import { getMenuById, saveMenu, updateMenu, updateMenuPic } from "../../redux-store/actions/menu";
-import { doesHaveValue, isValidAlphabets, isValidAlphaNumeric, isValidPrice } from "../../utils/functions";
+import { saveMenu, updateMenu, updateMenuPic } from "../../redux-store/actions/menu";
+import { doesHaveValue, isValidAlphaNumeric, isValidPrice } from "../../utils/functions";
 
 const AddMenu = (props) => {
     const [state, setState] = useState({
@@ -40,7 +40,7 @@ const AddMenu = (props) => {
         if (menuId !== null && menuId !== undefined) {
             getMenuDetails(menuId);
         }
-    }, [menuId]);
+    }, [menuId, categories.length, dispatch]);
 
     const getSubCategories = (categoryId) => {
         const payload = {
@@ -67,22 +67,20 @@ const AddMenu = (props) => {
     };
 
     const getMenuDetails = (menuId) => {
-        menu.map((item) => {
-            if (item.id === menuId) {
-                editMenu = {
-                    "id": item.id,
-                    "categoryId": item.category.id,
-                    "subCategoryId": item.subCategoryId,
-                    "itemCode": item.itemCode,
-                    "name": item.name,
-                    "tablePrice": item.tablePrice,
-                    "takeAwayPrice": item.takeAwayPrice,
-                    "deliveryPrice": item.deliveryPrice,
-                    "gst": item.gst,
-                    "description": item.description,
-                    "isVeg": item.isVeg,
-                    "menuPic": item.menuPic
-                }
+        menu.filter(x => x.id === menuId).map((item) => {
+            editMenu = {
+                "id": item.id,
+                "categoryId": item.category.id,
+                "subCategoryId": item.subCategoryId,
+                "itemCode": item.itemCode,
+                "name": item.name,
+                "tablePrice": item.tablePrice,
+                "takeAwayPrice": item.takeAwayPrice,
+                "deliveryPrice": item.deliveryPrice,
+                "gst": item.gst,
+                "description": item.description,
+                "isVeg": item.isVeg,
+                "menuPic": item.menuPic
             }
         });
 

@@ -1,10 +1,6 @@
 import React from "react";
 import {
-    Container,
     Button,
-    Card,
-    CardHeader,
-    CardBody,
     FormGroup,
     Row,
     Col,
@@ -165,7 +161,8 @@ const SettleBill = (props) => {
                         <tbody>
                             {
                                 props.paymentDetails &&
-                                props.paymentDetails.map((details, index) => {
+                                props.paymentDetails.filter(x => x.isDeleted !== true)
+                                .map((details, index) => {
                                     return (
                                         <tr key={index}>
                                             <td>
@@ -184,7 +181,7 @@ const SettleBill = (props) => {
                                                 {details.amount}
                                             </td>
                                             <td className="text-right">
-
+                                                <span className="p-1 pr-4 text-right cursor-pointer" onClick={() => { props.onDeletePayment(index); }}><i className="fa fa-times cancel-icon-color"></i></span>
                                             </td>
                                         </tr>
                                     )
@@ -198,6 +195,9 @@ const SettleBill = (props) => {
                 <Col lg="12" className="text-right">
                     <Button color="success" type="button" onClick={props.onSettleBill}>
                         Settle Bill
+                    </Button>
+                    <Button color="info" type="button" onClick={props.onCancelSettlement}>
+                        Cancel
                     </Button>
                 </Col>
             </Row>

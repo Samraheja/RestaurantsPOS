@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import AddCustomerComp from "../../components/Customers/AddCustomer";
 import { AddCustomerDefault, ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
 import { saveCustomer } from "../../redux-store/actions/customer";
@@ -12,14 +12,13 @@ const AddCustomer = (props) => {
     });
 
     const dispatch = useDispatch();
-    const { customerInfo } = useSelector(state => state.customer);
 
     useEffect(() => {
         props.mobileNumber && setState(prevState => ({
             ...prevState,
             mobileNumber: props.mobileNumber
         }));
-    }, [])
+    }, [props.mobileNumber, dispatch])
 
     const onChange = (e) => {
         const { id, value } = e.target;

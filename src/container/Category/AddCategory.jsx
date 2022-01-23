@@ -18,7 +18,7 @@ const AddCategory = (props) => {
 
     useEffect(() => {
         const categoryDetails = props.editCategory;
-debugger;
+
         if (Object.keys(categoryDetails).length > 0) {
             setState(prevState => ({
                 ...prevState,
@@ -27,12 +27,12 @@ debugger;
                 buttonText: "Update"
             }));
         }
-    }, [dispatch])
+    }, [props.editCategory, dispatch])
 
     const onChange = (e) => {
         const { id, value } = e.target;
         const finalErrorMessages = Validate(id, value);
-debugger;
+
         setState(prevState => ({
             ...prevState,
             [id]: value,
@@ -100,7 +100,6 @@ debugger;
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
-            debugger;
             const payload = {
                 "CollectionName": "Category",
                 "Category": {

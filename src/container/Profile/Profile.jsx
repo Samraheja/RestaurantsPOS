@@ -98,7 +98,7 @@ const Profile = (props) => {
             minutes = "0" + minutes;
         }
 
-        var formatTime = hour + ":" + minutes + ":00";
+        var formatTime = hour + ":" + minutes;
         return formatTime;
     }
 

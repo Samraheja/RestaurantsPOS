@@ -1,5 +1,4 @@
 import { GlobalConstants } from "../../constants/apiConstants";
-import { toggleModal } from "./modal";
 import types from "./types";
 
 export const openCloseDay = payload => {

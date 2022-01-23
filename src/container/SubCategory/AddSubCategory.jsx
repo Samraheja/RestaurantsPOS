@@ -39,7 +39,7 @@ const AddCategory = (props) => {
             params: payload,
             dispatch
         }));
-    }, [state, props.editSubCategory]);
+    }, [state, props.editSubCategory, dispatch]);
 
     const onChange = (e) => {
         const { id, value } = e.target;

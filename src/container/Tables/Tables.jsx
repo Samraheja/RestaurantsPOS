@@ -31,7 +31,7 @@ const Tables = (props) => {
             params: payload,
             dispatch
         }));
-    }, [userDetails.isOpenedForDay]);
+    }, [userDetails.isOpenedForDay, dispatch]);
 
     const switchModal = () => {
         dispatch(toggleModal());

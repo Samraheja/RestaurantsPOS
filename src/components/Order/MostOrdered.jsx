@@ -44,7 +44,7 @@ const MostOrdered = (props) => {
                         return (
                             <Col lg="3" key={index} className="cursor-pointer p-1">
                                 <div
-                                    className="MostOrdered"
+                                    className="MostOrderedCategory"
                                     onClick={() => { props.getMostOrderedItems(item.id); }}
                                 >
                                     {item.subCategoryName}

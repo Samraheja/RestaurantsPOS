@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import SettledBillsComp from "../../components/SettleBill/SettledBills";
 import { GlobalConstants, SettledBillsDefaults } from "../../constants/apiConstants";
+import { toggleModal } from "../../redux-store/actions/modal";
 import { getSettledBills } from "../../redux-store/actions/settleBill";
 
 const SettledBills = (props) => {
@@ -13,13 +14,7 @@ const SettledBills = (props) => {
     const dispatch = useDispatch();
     const { totalRecords, totalPages, settledBills, isLoading } = useSelector(state => state.settleBill);
 
-    useEffect(() => {
-        if (state.billDate !== "") {
-            getSettledBillsDetails(state.billDate);
-        }
-    }, [state.billDate, state.sortBy, state.order, state.pageNo, dispatch]);
-
-    const getSettledBillsDetails = (date) => {
+    const getSettledBillsDetails = useCallback((date) => {
         const payload = {
             CollectionName: "BillSettlement",
             PageNo: state.pageNo,
@@ -34,7 +29,13 @@ const SettledBills = (props) => {
             params: payload,
             dispatch
         }));
-    };
+    }, [state.sortBy, state.order, state.pageNo, dispatch]);
+
+    useEffect(() => {
+        if (state.billDate !== "") {
+            getSettledBillsDetails(state.billDate);
+        }
+    }, [state.billDate, state.sortBy, state.order, state.pageNo, getSettledBillsDetails, dispatch]);
 
     const onChange = (e) => {
         const { id, value } = e.target;
@@ -62,6 +63,22 @@ const SettledBills = (props) => {
         }
     };
 
+    const switchModal = () => {
+        dispatch(toggleModal());
+    };
+
+    const onEditSettlement = (billId) => {
+        if (billId !== undefined && billId > 0) {
+            setState(prevState => ({
+                ...prevState,
+                billId: billId,
+                showSettleBill: true
+            }));
+
+            dispatch(toggleModal());
+        }
+    }
+
     if (isLoading) {
         return <Loader />
     }
@@ -76,6 +93,10 @@ const SettledBills = (props) => {
                 settledBills={settledBills}
                 onPageChange={onPageChange}
                 SortRecords={SortRecords}
+                onEditSettlement={onEditSettlement}
+                switchModal={switchModal}
+                billId={state.billId}
+                showSettleBill={state.showSettleBill}
             />
         );
     }

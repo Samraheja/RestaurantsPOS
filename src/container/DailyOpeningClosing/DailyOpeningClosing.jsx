@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import DailyOpeningClosingComp from "../../components/DailyOpeningClosing/DailyOpeningClosing";
-import { SuccessMessages, ErrorMessages, AlertTypes } from "../../constants/apiConstants";
+import { SuccessMessages, ErrorMessages } from "../../constants/apiConstants";
 import { addAlert } from "../../redux-store/actions/alert";
 import { toggleModal } from "../../redux-store/actions/modal";
 import { updateDayOpenCloseStatus } from "../../redux-store/actions/profile";
@@ -24,7 +24,7 @@ const DailyOpeningClosing = (props) => {
             "Operation": operation
         }
 
-        const successMessage = operation == "Open" ? SuccessMessages.DayOpened : SuccessMessages.DayClosed;
+        const successMessage = operation === "Open" ? SuccessMessages.DayOpened : SuccessMessages.DayClosed;
 
         const onSuccess = (response) => {
             dispatch(toggleModal());
@@ -37,7 +37,7 @@ const DailyOpeningClosing = (props) => {
                 alertType = "Success";
                 message = successMessage;
 
-                const status = operation == "Open" ? true : false;
+                const status = operation === "Open" ? true : false;
 
                 dispatch(updateDayOpenCloseStatus({
                     status

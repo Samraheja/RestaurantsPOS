@@ -2,7 +2,7 @@ import { GlobalConstants } from "../../constants/apiConstants";
 import types from "./types";
 
 export const getCustomerById = payload => {
-    const { params, onSuccess, dispatch } = payload;
+    const { params, dispatch } = payload;
     dispatch(switchCustomerLoader({ status: true }));
 
     return {

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SettleBillComp from "../../components/SettleBill/SettleBill";
 import { AlertTypes, BillSettlementDefaults, ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
-import { getVendors, getPaymentModes, settleBill, settleBillDetails } from "../../redux-store/actions/settleBill";
-import { doesHaveValue, isDigitsOnly, isValidAlphaNumeric, isValidDecimalOnly, isValidDigits } from "../../utils/functions";
+import { getVendors, getPaymentModes, GetBillToSetlle, settleBillDetails } from "../../redux-store/actions/settleBill";
+import { doesHaveValue, isValidAlphaNumeric, isValidDecimalOnly, isValidDigits } from "../../utils/functions";
 import { addAlert } from "../../redux-store/actions/alert";
 import { toggleModal } from "../../redux-store/actions/modal";
-import { getOrderItemsList } from "../../redux-store/actions/order";
 import { getTablesStatus } from "../../redux-store/actions/tables";
 import { getDailySaleDetails } from "../../redux-store/actions/profile";
 
@@ -16,16 +15,16 @@ const SettleBill = (props) => {
     });
 
     const dispatch = useDispatch();
-    const { vendors, paymentModes } = useSelector(state => state.settleBill);
-    const { billingDetails } = useSelector(state => state.order);
+    const { vendors, paymentModes, billingDetails } = useSelector(state => state.settleBill);
 
     useEffect(() => {
         bindVendors();
         bindPaymentModes();
-
+debugger;
         if (props.billId !== undefined && props.billId > 0) {
             const payload = {
                 "CollectionName": "Billing",
+                "Operation": "Settle Bill",
                 "Id": parseInt(props.billId)
             };
 
@@ -37,55 +36,62 @@ const SettleBill = (props) => {
                 }));
             }
 
-            dispatch(getOrderItemsList({
+            dispatch(GetBillToSetlle({
+                params: payload,
+                onSuccess,
+                dispatch
+            }));
+
+            if (billingDetails && billingDetails.isSettled) {
+            }
+        }
+        else {
+            dispatch(toggleModal());
+        }
+    }, [vendors, paymentModes, dispatch]);
+
+    const bindVendors = () => {
+        if (vendors.length === 0) {
+            const payload = {
+                CollectionName: "Vendors"
+            };
+
+            const onSuccess = (response) => {
+                setState((prevState) => ({
+                    ...prevState,
+                    vendorId: response.data.response[0].id,
+                    vendor: response.data.response[0].name
+                }));
+            };
+
+            dispatch(getVendors({
                 params: payload,
                 onSuccess,
                 dispatch
             }));
         }
-        else {
-            dispatch(toggleModal());
-        }
-    }, []);
-
-    const bindVendors = () => {
-        const payload = {
-            CollectionName: "Vendors"
-        };
-
-        const onSuccess = (response) => {
-            setState((prevState) => ({
-                ...prevState,
-                vendorId: response.data.response[0].id,
-                vendor: response.data.response[0].name
-            }));
-        };
-
-        dispatch(getVendors({
-            params: payload,
-            onSuccess,
-            dispatch
-        }));
     };
 
     const bindPaymentModes = () => {
-        const payload = {
-            CollectionName: "PaymentModes"
-        };
+        if (paymentModes.length === 0) {
+            const payload = {
+                CollectionName: "PaymentModes"
+            };
 
-        const onSuccess = (response) => {
-            setState((prevState) => ({
-                ...prevState,
-                paymentModeId: response.data.response[0].id,
-                paymentMode: response.data.response[0].mode
+            const onSuccess = (response) => {
+                setState((prevState) => ({
+                    ...prevState,
+                    paymentModeId: response.data.response[0].id,
+                    paymentMode: response.data.response[0].mode
+                }));
+            };
+
+            dispatch(getPaymentModes({
+                params: payload,
+                onSuccess,
+                dispatch
             }));
-        };
-
-        dispatch(getPaymentModes({
-            params: payload,
-            onSuccess,
-            dispatch
-        }));
+        }
     };
 
     const onChange = (e) => {
@@ -105,7 +111,7 @@ const SettleBill = (props) => {
                 ...prevState,
                 [id]: value,
                 "paymentMode": e.target.selectedOptions[0].text,
-                "amount": e.target.selectedOptions[0].text === "Payment Due" ? billingDetails.netAmount : "0"
+                "amount": e.target.selectedOptions[0].text === "Payment Due" ? state.remainingAmount : "0"
             }));
         }
         else {
@@ -150,15 +156,17 @@ const SettleBill = (props) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
-            const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseFloat(curr.amount), 0) + parseFloat(state.amount);
+            const totalAmount = state.paymentDetails.filter(x => x.isDeleted !== false).reduce((prev, curr) => prev = prev + parseFloat(curr.amount), 0) + parseFloat(state.amount);
 
             const details = {};
+            details.id = 0;
             details.vendor = state.vendor;
             details.vendorId = state.vendorId;
             details.paymentMode = state.paymentMode;
             details.paymentModeId = state.paymentModeId;
             details.transactionNumber = state.transactionNumber;
-            details.amount = state.amount
+            details.amount = state.amount;
+            details.isDeleted = false
 
             setState((prevState) => ({
                 ...prevState,
@@ -189,59 +197,24 @@ const SettleBill = (props) => {
         if (state.paymentDetails.length > 0) {
             const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseInt(curr.amount), 0);
 
-            for (var i = 0; i < state.paymentDetails.length; i++) {
-                const payload = {
-                    "CollectionName": "BillSettlement",
-                    "BillSettlement": {
-                        "BillId": parseInt(state.billId),
-                        "VendorId": parseInt(state.paymentDetails[i].vendorId),
-                        "PaymentModeId": parseInt(state.paymentDetails[i].paymentModeId),
-                        "TransactionNumber": state.paymentDetails[i].transactionNumber,
-                        "Amount": parseFloat(state.paymentDetails[i].amount),
-                        "ReturnedAmount": parseFloat(state.returnToCustomer)
+            if (totalAmount >= billingDetails.netAmount) {
+                for (var i = 0; i < state.paymentDetails.length; i++) {
+                    if (state.paymentDetails[i].id > 0) {
+                        UpdateSettlementDetails(state.paymentDetails[i]);
+                    }
+                    else {
+                        SaveSettlementDetails(state.paymentDetails[i], i);
                     }
                 };
 
-                const successMessage = SuccessMessages.BillSettled;
-
-                const onSuccess = (response) => {
-                    const payload = {
-                        CollectionName: "Tables"
-                    };
-
-                    dispatch(getTablesStatus({
-                        params: payload,
-                        dispatch
-                    }));
-
-                    const result = parseInt(response.data);
-
-                    if (result < 0) {
-                        dispatch(addAlert({
-                            alertType: AlertTypes.Danger,
-                            message: ErrorMessages.NotSettled
-                        }));
-                    }
-
-                    const payloadSale = {
-                        CollectionName: "DailySales"
-                    }
-
-                    dispatch(getDailySaleDetails({
-                        params: payloadSale,
-                        dispatch
-                    }));
-                }
-
-                dispatch(settleBillDetails({
-                    params: payload,
-                    successMessage,
-                    onSuccess,
-                    dispatch
-                }));
-
                 dispatch(toggleModal());
-            };
+            }
+            else {
+                dispatch(addAlert({
+                    alertType: AlertTypes.Danger,
+                    message: ErrorMessages.AmountCheck
+                }));
+            }
         }
         else {
             dispatch(addAlert({
@@ -249,6 +222,130 @@ const SettleBill = (props) => {
                 message: ErrorMessages.AddPayment
             }));
         }
+    };
+
+    const SaveSettlementDetails = (details, index) => {
+        const payload = {
+            "CollectionName": "BillSettlement",
+            "BillSettlement": {
+                "BillId": parseInt(state.billId),
+                "VendorId": parseInt(details.vendorId),
+                "PaymentModeId": parseInt(details.paymentModeId),
+                "TransactionNumber": details.transactionNumber,
+                "Amount": parseFloat(details.amount),
+                "IsDeleted": details.isDeleted,
+                "ReturnedAmount": index === 0 ? parseFloat(state.returnToCustomer) : 0
+            }
+        };
+
+        const successMessage = SuccessMessages.BillSettled;
+
+        const onSuccess = (response) => {
+            const payload = {
+                CollectionName: "Tables"
+            };
+
+            dispatch(getTablesStatus({
+                params: payload,
+                dispatch
+            }));
+
+            const result = parseInt(response.data);
+
+            if (result < 0) {
+                dispatch(addAlert({
+                    alertType: AlertTypes.Danger,
+                    message: ErrorMessages.NotSettled
+                }));
+            }
+
+            const payloadSale = {
+                CollectionName: "DailySales"
+            }
+
+            dispatch(getDailySaleDetails({
+                params: payloadSale,
+                dispatch
+            }));
+        }
+
+        dispatch(settleBillDetails({
+            params: payload,
+            successMessage,
+            onSuccess,
+            dispatch
+        }));
+    };
+
+    const UpdateSettlementDetails = (details) => {
+        const payload = {
+            "CollectionName": "BillSettlement",
+            "BillSettlement": {
+                "Id": parseInt(details.id),
+                "BillId": parseInt(state.billId),
+                "VendorId": parseInt(details.vendorId),
+                "PaymentModeId": parseInt(details.paymentModeId),
+                "TransactionNumber": details.transactionNumber,
+                "Amount": parseFloat(details.amount),
+                "IsDeleted": details.isDeleted,
+                "ReturnedAmount": parseFloat(state.returnToCustomer)
+            }
+        };
+
+        const successMessage = SuccessMessages.BillSettled;
+
+        const onSuccess = (response) => {
+            const payload = {
+                CollectionName: "Tables"
+            };
+
+            dispatch(getTablesStatus({
+                params: payload,
+                dispatch
+            }));
+
+            const result = parseInt(response.data);
+
+            if (result < 0) {
+                dispatch(addAlert({
+                    alertType: AlertTypes.Danger,
+                    message: ErrorMessages.NotSettled
+                }));
+            }
+
+            const payloadSale = {
+                CollectionName: "DailySales"
+            }
+
+            dispatch(getDailySaleDetails({
+                params: payloadSale,
+                dispatch
+            }));
+        }
+
+        dispatch(settleBillDetails({
+            params: payload,
+            successMessage,
+            onSuccess,
+            dispatch
+        }));
+    };
+
+    const onCancelSettlement = () => {
+        dispatch(toggleModal());
+    };
+
+    const onDeletePayment = (index) => {
+        alert(index);
+        setState((prevState) => ({
+            ...prevState,
+            paymentDetails: state.paymentDetails.map((details, i) =>
+                (i === index) ?
+                    details.isDeleted = true
+                    :
+                    details
+            )
+        }));
     };
 
     return (
@@ -270,6 +367,8 @@ const SettleBill = (props) => {
             paymentDetails={state.paymentDetails}
             onPaymentAdd={onPaymentAdd}
             onSettleBill={onSettleBill}
+            onCancelSettlement={onCancelSettlement}
+            onDeletePayment={onDeletePayment}
         />
     );
 };

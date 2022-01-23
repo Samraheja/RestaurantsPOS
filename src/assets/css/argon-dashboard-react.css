@@ -16289,3 +16289,33 @@ button:focus, :focus {
   height: 36px;
  	border-radius: 50%;
 }
+
+.MostOrderedCategory {
+  border: 1px solid lightgrey;
+  width: 100%;
+  padding: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  background-color: paleturquoise;
+  border-radius: 5px;
+  box-shadow: 2px 1px 5px 1px lightgrey;
+  min-height: 50px;
+  padding-top: 10%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cancel-icon-color {
+  color: red !important;
+}
+
+.tblSettle th {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.tblSettle td {
+  font-size: 12px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}

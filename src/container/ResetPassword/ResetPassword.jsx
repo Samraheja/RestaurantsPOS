@@ -24,7 +24,7 @@ const ResetPassword = (props) => {
             email: new URLSearchParams(props.location.search).get("email"),
             token: new URLSearchParams(props.location.search).get("token")
         }));
-    }, []);
+    }, [props.location.search]);
 
     const handleChange = (e) => {
         const { id, value } = e.target

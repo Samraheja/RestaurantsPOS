@@ -40,7 +40,7 @@ const MostOrdered = (props) => {
                 dispatch
             }));
         }
-    }, [state.subCategoryId, MostOrdered, dispatch])
+    }, [state.subCategoryId, subCategories.length, dispatch])
 
     const getMostOrderedItems = (subCategoryId) => {
         setState(prevState => ({
