@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ErrorMessages, SuccessMessages, AlertTypes, GlobalConstants } from '../../constants/apiConstants';
+import { ErrorMessages, SuccessMessages, AlertTypes, GlobalConstants } from '../../constants/constants';
 import ForgotPasswordComp from "../../components/ForgotPassword/ForgotPassword";
 import { doesHaveValue, isValidEmail } from "../../utils/functions";
 import { useDispatch, useSelector } from "react-redux";

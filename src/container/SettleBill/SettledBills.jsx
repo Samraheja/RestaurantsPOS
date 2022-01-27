@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import SettledBillsComp from "../../components/SettleBill/SettledBills";
-import { GlobalConstants, SettledBillsDefaults } from "../../constants/apiConstants";
+import { GlobalConstants, SettledBillsDefaults } from "../../constants/constants";
 import { toggleModal } from "../../redux-store/actions/modal";
 import { getSettledBills } from "../../redux-store/actions/settleBill";
 
@@ -32,9 +32,7 @@ const SettledBills = (props) => {
     }, [state.sortBy, state.order, state.pageNo, dispatch]);
 
     useEffect(() => {
-        if (state.billDate !== "") {
-            getSettledBillsDetails(state.billDate);
-        }
+        getSettledBillsDetails(state.billDate);
     }, [state.billDate, state.sortBy, state.order, state.pageNo, getSettledBillsDetails, dispatch]);
 
     const onChange = (e) => {
@@ -80,9 +78,8 @@ const SettledBills = (props) => {
     }
 
     if (isLoading) {
-        return <Loader />
-    }
-    else {
+        return <Loader/>
+    } else {
         return (
             <SettledBillsComp
                 billDate={state.billDate}

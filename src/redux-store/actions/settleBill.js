@@ -1,4 +1,4 @@
-import { GlobalConstants } from "../../constants/apiConstants";
+import { GlobalConstants } from "../../constants/constants";
 import { toggleModal } from "./modal";
 import types from "./types";
 

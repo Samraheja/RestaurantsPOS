@@ -7,6 +7,11 @@ import {
 } from "reactstrap";
 import Input from "../AppComponents/input/InputComp";
 import Select from "../AppComponents/select/SelectComp";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    categoryLabel, subcategoryLabel
+} = localizedStrings;
 
 const AddSubCategory = (props) => {
     return (
@@ -18,7 +23,7 @@ const AddSubCategory = (props) => {
                             className="form-control-label"
                             htmlFor="categoryId"
                         >
-                            Category
+                            {categoryLabel}
                         </label>
                         {
                             props.categories && Array.isArray(props.categories) &&
@@ -47,7 +52,7 @@ const AddSubCategory = (props) => {
                             className="form-control-label"
                             htmlFor="subCategory"
                         >
-                            Sub Category
+                            {subcategoryLabel}
                         </label>
                         <Input
                             className="form-control-alternative"

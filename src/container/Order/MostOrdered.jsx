@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import MostOrderedComp from "../../components/Order/MostOrdered";
-import { GlobalConstants, MostOrderedDefaults } from "../../constants/apiConstants";
+import { GlobalConstants, MostOrderedDefaults } from "../../constants/constants";
 import { getMostOrdered } from "../../redux-store/actions/mostOrdered";
 import { getSubCategories } from "../../redux-store/actions/subCategory";
 

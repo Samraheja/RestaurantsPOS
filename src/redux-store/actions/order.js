@@ -1,4 +1,4 @@
-import { GlobalConstants } from "../../constants/apiConstants";
+import { GlobalConstants } from "../../constants/constants";
 import types from "./types";
 import { clearCustomer } from "./customer";
 

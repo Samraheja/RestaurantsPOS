@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileComp from "../../components/Profile/Profile";
-import { ErrorMessages, SuccessMessages, ImageTypes } from "../../constants/apiConstants";
+import { ErrorMessages, SuccessMessages, ImageTypes } from "../../constants/constants";
 import { updateUserProfile, updateUserProfilePic } from "../../redux-store/actions/profile";
 import {
     doesHaveValue,

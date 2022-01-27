@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AddCustomerComp from "../../components/Customers/AddCustomer";
-import { AddCustomerDefault, ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
+import { AddCustomerDefault, ErrorMessages, SuccessMessages } from "../../constants/constants";
 import { saveCustomer } from "../../redux-store/actions/customer";
 import { toggleModal } from "../../redux-store/actions/modal";
 import { doesHaveValue, isDigitsOnly, isValidAlphabets, isValidAlphaNumeric, isValidEmail, isValidMobileNumber, isValidZipCode } from "../../utils/functions";

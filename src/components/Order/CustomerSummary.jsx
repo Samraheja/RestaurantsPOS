@@ -5,8 +5,13 @@ import {
     Col
 } from "reactstrap";
 import Input from "../AppComponents/input/InputComp";
-import Modal from "../AppComponents/Modal/Modal";
+import Modal from "../AppComponents/Modal";
 import AddCustomer from "../../container/Customers/AddCustomer";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    addCustomerLabel
+} = localizedStrings;
 
 const CustomerSummary = (props) => {
     return (
@@ -29,7 +34,7 @@ const CustomerSummary = (props) => {
                         type="button"
                         onClick={props.onCustomerSearch}
                     >
-                        <i className="fa fa-search"></i>
+                        <i className="fa fa-search"/>
                     </Button>
                 </Col>
             </Row>
@@ -38,25 +43,25 @@ const CustomerSummary = (props) => {
                 <Row>
                     <Col lg="12" className="pl-4">
                         <div className="h5 font-weight-400">
-                            <i className="ni business_briefcase-24 mr-2" />
+                            <i className="ni business_briefcase-24 mr-2"/>
                             {props.customerInfo.name}
                         </div>
                     </Col>
                     <Col lg="12" className="pl-4">
                         <div className="h5 font-weight-400">
-                            <i className="ni business_briefcase-24 mr-2" />
+                            <i className="ni business_briefcase-24 mr-2"/>
                             {props.customerInfo.mobileNumber}
                         </div>
                     </Col>
                     <Col lg="12" className="pl-4">
                         <div className="h5 font-weight-400">
-                            <i className="ni business_briefcase-24 mr-2" />
+                            <i className="ni business_briefcase-24 mr-2"/>
                             {props.customerInfo.emailID}
                         </div>
                     </Col>
                     <Col lg="12" className="pl-4 ">
                         <div className="h5 font-weight-400">
-                            <i className="ni business_briefcase-24 mr-2" />
+                            <i className="ni business_briefcase-24 mr-2"/>
                             <span className="pr-1">{props.customerInfo.address}</span>
                             <span className="pr-1">{props.customerInfo.city}</span>
                             <span className="pr-1">{props.customerInfo.state}</span>
@@ -65,15 +70,13 @@ const CustomerSummary = (props) => {
                     </Col>
                 </Row>
             }
-            {
-                <Modal
-                    title="Add Customer"
-                    className="modal-dialog-centered modal-popup-800"
-                    showModal={props.showModal}
-                    switchModal={props.switchModal}
-                    formComponent={<AddCustomer billId={props.billId} mobileNumber={props.mobileNumber} />}
-                />
-            }
+            <Modal
+                title={addCustomerLabel}
+                className="modal-dialog-centered modal-popup-800"
+                showModal={props.showModal}
+                switchModal={props.switchModal}
+                renderScene={<AddCustomer billId={props.billId} mobileNumber={props.mobileNumber}/>}
+            />
         </>
     )
 };

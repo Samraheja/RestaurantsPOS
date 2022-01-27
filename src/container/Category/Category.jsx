@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import CategoryComp from "../../components/Category/Categroy";
-import { GlobalConstants, CategoryDefaults, SuccessMessages } from "../../constants/apiConstants";
+import { GlobalConstants, CategoryDefaults, SuccessMessages } from "../../constants/constants";
 import { deleteCategory, getCategories } from "../../redux-store/actions/category";
-import { toggleModal } from "../../redux-store/actions/modal";
 
 const Category = (props) => {
     const [state, setState] = useState({
@@ -30,11 +29,17 @@ const Category = (props) => {
         }));
     }, [state, dispatch]);
 
-    const switchModal = () => {
-        dispatch(toggleModal());
+    const closeModal = () => {
         setState(prevState => ({
             ...prevState,
-            editCategory: {}
+            editCategory: {},
+            isAddCategoryActive: false
+        }));
+    };
+    const onAddCategory = () => {
+        setState(prevState => ({
+            ...prevState,
+            isAddCategoryActive: true
         }));
     };
 
@@ -58,12 +63,12 @@ const Category = (props) => {
     const onCategoryEdit = (Id, categoryName) => {
         setState(prevState => ({
             ...prevState,
+            isAddCategoryActive: true,
             editCategory: {
                 "Id": Id,
                 "categoryName": categoryName
             }
         }));
-        dispatch(toggleModal());
     };
 
     const onCategoryDelete = (Id) => {
@@ -82,17 +87,18 @@ const Category = (props) => {
     };
 
     if (isLoading) {
-        return <Loader />
-    }
-    else {
+        return <Loader/>
+    } else {
         return (
             <CategoryComp
+                isAddCategoryActive={state.isAddCategoryActive}
                 totalRecords={totalRecords}
                 totalPages={totalPages}
                 pageNo={state.pageNo}
+                onAddCategory={onAddCategory}
                 categories={categories}
                 onPageChange={onPageChange}
-                switchModal={switchModal}
+                closeModal={closeModal}
                 onCategoryEdit={onCategoryEdit}
                 onCategoryDelete={onCategoryDelete}
                 editCategory={state.editCategory}

@@ -8,39 +8,50 @@ import {
 } from "reactstrap";
 import Input from "../AppComponents/input/InputComp";
 import Select from "../AppComponents/select/SelectComp";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    tableNumberLabel, billNumberLabel, cancelButtonLabel, paymentModeLabel, transactionNumberLabel,
+    amountLabel, addPaymentLabel, serialNoTitle, paymentTypeLabel, settleBillButtonLabel,
+    vendorLabel, billAmountTitle, returnToCustomerLabel, tenderedLabel, remainingLabel
+} = localizedStrings;
 
 const SettleBill = (props) => {
     return (
         <>
             <Row>
                 <Col lg="4">
-                    <span className="p-1 pl-4 font-weight-bold small">Table Number:</span>
+                    <span className="p-1 pl-4 font-weight-bold small">{tableNumberLabel}</span>
                     <span className="p-1 pr-4 text-right small">{props.billingDetails.tableNumber || 0}</span>
                 </Col>
                 <Col lg="4">
-                    <span className="p-1 pl-4 font-weight-bold small">Bill Number:</span>
+                    <span className="p-1 pl-4 font-weight-bold small">{billNumberLabel}</span>
                     <span className="p-1 pr-4 text-right small">{props.billingDetails.billNumber || ""}</span>
                 </Col>
                 <Col lg="4">
-                    <span className="p-1 pl-4 font-weight-bold small">Bill Amount:</span>
-                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.billingDetails.netAmount || 0.00}</span>
+                    <span className="p-1 pl-4 font-weight-bold small">{billAmountTitle}</span>
+                    <span className="p-1 pr-4 text-right small"><i
+                        className="fa fa-rupee-sign"/> {props.billingDetails.netAmount || 0.00}</span>
                 </Col>
             </Row>
             <Row>
                 <Col lg="4">
-                    <span className="p-1 pl-4 font-weight-bold small">Remaining:</span>
-                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.remainingAmount || 0.00}</span>
+                    <span className="p-1 pl-4 font-weight-bold small">{remainingLabel}</span>
+                    <span className="p-1 pr-4 text-right small"><i
+                        className="fa fa-rupee-sign"/> {props.remainingAmount || 0.00}</span>
                 </Col>
                 <Col lg="4">
-                    <span className="p-1 pl-4 font-weight-bold small">Tendered:</span>
-                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.tenderedAmount || 0.00}</span>
+                    <span className="p-1 pl-4 font-weight-bold small">{tenderedLabel}</span>
+                    <span className="p-1 pr-4 text-right small"><i
+                        className="fa fa-rupee-sign"/> {props.tenderedAmount || 0.00}</span>
                 </Col>
                 <Col lg="4">
-                    <span className="p-1 pl-4 font-weight-bold small">Return To Customer:</span>
-                    <span className="p-1 pr-4 text-right small"><i className="fa fa-rupee-sign"></i> {props.returnToCustomer || 0.00}</span>
+                    <span className="p-1 pl-4 font-weight-bold small">{returnToCustomerLabel}</span>
+                    <span className="p-1 pr-4 text-right small"><i
+                        className="fa fa-rupee-sign"/> {props.returnToCustomer || 0.00}</span>
                 </Col>
             </Row>
-            <hr />
+            <hr/>
             <Row>
                 <Col lg="5">
                     <Row>
@@ -50,7 +61,7 @@ const SettleBill = (props) => {
                                     className="form-control-label"
                                     htmlFor="vendorId"
                                 >
-                                    Vendor
+                                    {vendorLabel}
                                 </label>
                                 {
                                     props.vendors && Array.isArray(props.vendors) &&
@@ -75,7 +86,7 @@ const SettleBill = (props) => {
                                     className="form-control-label"
                                     htmlFor="paymentModeId"
                                 >
-                                    Payment Mode
+                                    {paymentModeLabel}
                                 </label>
                                 {
                                     props.paymentModes && Array.isArray(props.paymentModes) &&
@@ -102,7 +113,7 @@ const SettleBill = (props) => {
                                     className="form-control-label"
                                     htmlFor="transactionNumber"
                                 >
-                                    Transaction Number
+                                    {transactionNumberLabel}
                                 </label>
                                 <Input
                                     className="form-control-alternative"
@@ -123,7 +134,7 @@ const SettleBill = (props) => {
                                     className="form-control-label"
                                     htmlFor="amount"
                                 >
-                                    Amount
+                                    {amountLabel}
                                 </label>
                                 <Input
                                     className="form-control-alternative"
@@ -133,7 +144,7 @@ const SettleBill = (props) => {
                                     value={props.amount}
                                     onChange={props.onChange}
                                     error={props.errorMessages.amount}
-                                    disabled={props.vendor !== "Self" ? true : props.paymentMode === "Payment Due" ? true : false}
+                                    disabled={props.vendor !== "Self" ? true : props.paymentMode === "Payment Due"}
                                 />
                             </FormGroup>
                         </Col>
@@ -141,7 +152,7 @@ const SettleBill = (props) => {
                     <Row>
                         <Col lg="12" className="text-center">
                             <Button color="success" type="button" onClick={props.onPaymentAdd}>
-                                Add Payment
+                                {addPaymentLabel}
                             </Button>
                         </Col>
                     </Row>
@@ -149,19 +160,19 @@ const SettleBill = (props) => {
                 <Col lg="7">
                     <Table className="align-items-center table-flush table-bordered" responsive>
                         <thead className="thead-light">
-                            <tr>
-                                <th scope="col" className="Header">Sr. No. </th>
-                                <th scope="col" className="Header">Vendor</th>
-                                <th scope="col" className="Header">Payment Type</th>
-                                <th scope="col" className="Header">Transaction Number</th>
-                                <th scope="col" className="Header">Amount</th>
-                                <th scope="col" className="Header"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col" className="Header">{serialNoTitle}</th>
+                            <th scope="col" className="Header">{vendorLabel}</th>
+                            <th scope="col" className="Header">{paymentTypeLabel}</th>
+                            <th scope="col" className="Header">{transactionNumberLabel}</th>
+                            <th scope="col" className="Header">{amountLabel}</th>
+                            <th scope="col" className="Header"/>
+                        </tr>
                         </thead>
                         <tbody>
-                            {
-                                props.paymentDetails &&
-                                props.paymentDetails.filter(x => x.isDeleted !== true)
+                        {
+                            props.paymentDetails &&
+                            props.paymentDetails.filter(x => x.isDeleted !== true)
                                 .map((details, index) => {
                                     return (
                                         <tr key={index}>
@@ -181,12 +192,14 @@ const SettleBill = (props) => {
                                                 {details.amount}
                                             </td>
                                             <td className="text-right">
-                                                <span className="p-1 pr-4 text-right cursor-pointer" onClick={() => { props.onDeletePayment(index); }}><i className="fa fa-times cancel-icon-color"></i></span>
+                                                <span className="p-1 pr-4 text-right cursor-pointer" onClick={() => {
+                                                    props.onDeletePayment(index);
+                                                }}><i className="fa fa-times cancel-icon-color"/></span>
                                             </td>
                                         </tr>
                                     )
                                 })
-                            }
+                        }
                         </tbody>
                     </Table>
                 </Col>
@@ -194,10 +207,10 @@ const SettleBill = (props) => {
             <Row>
                 <Col lg="12" className="text-right">
                     <Button color="success" type="button" onClick={props.onSettleBill}>
-                        Settle Bill
+                        {settleBillButtonLabel}
                     </Button>
                     <Button color="info" type="button" onClick={props.onCancelSettlement}>
-                        Cancel
+                        {cancelButtonLabel}
                     </Button>
                 </Col>
             </Row>

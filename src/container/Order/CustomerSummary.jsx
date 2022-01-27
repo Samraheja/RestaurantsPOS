@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import CustomerSummaryComp from "../../components/Order/CustomerSummary";
-import { CustomerSummaryDefault, ErrorMessages } from "../../constants/apiConstants";
+import { CustomerSummaryDefault, ErrorMessages } from "../../constants/constants";
 import { toggleModal } from "../../redux-store/actions/modal";
 import { getCustomerById, searchCustomer } from "../../redux-store/actions/customer";
 import { doesHaveValue, isDigitsOnly, isValidMobileNumber } from "../../utils/functions";

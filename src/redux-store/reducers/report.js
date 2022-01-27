@@ -10,7 +10,6 @@ const initialState = {
 const Reports = ((state = initialState, actions = {}) => {
     switch (actions.type) {
         case types.reports.GET_DAILY_SALES_REPORT: {
-            debugger;
             return {
                 ...state,
                 totalRecords: actions.payload.data.data.totalRecords,

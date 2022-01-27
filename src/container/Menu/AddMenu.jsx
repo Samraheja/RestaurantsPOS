@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import AddMenuComp from "../../components/Menu/AddMenu";
-import { AddMenuDefaults, ErrorMessages, GlobalConstants, ImageTypes, SuccessMessages } from "../../constants/apiConstants";
+import { AddMenuDefaults, ErrorMessages, GlobalConstants, ImageTypes, SuccessMessages } from "../../constants/constants";
 import { getCategories } from "../../redux-store/actions/category";
 import { getSubCategoriesByCategoryId } from "../../redux-store/actions/subCategory";
 import { saveMenu, updateMenu, updateMenuPic } from "../../redux-store/actions/menu";

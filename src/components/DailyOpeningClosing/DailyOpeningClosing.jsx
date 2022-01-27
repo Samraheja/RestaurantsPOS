@@ -4,6 +4,11 @@ import {
     Row,
     Col,
 } from "reactstrap";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    okButtonLabel, cancelButtonLabel
+} = localizedStrings;
 
 const DailyOpeningClosing = (props) => {
     return (
@@ -13,14 +18,14 @@ const DailyOpeningClosing = (props) => {
                     {props.message}
                 </Col>
             </Row>
-            <hr />
+            <hr/>
             <Row>
                 <Col className="text-right">
                     <Button color="primary" type="button" onClick={props.onDayOpenClose}>
-                        Ok
+                        {okButtonLabel}
                     </Button>
                     <Button color="danger" type="button" onClick={props.onCancel}>
-                        Cancel
+                        {cancelButtonLabel}
                     </Button>
                 </Col>
             </Row>

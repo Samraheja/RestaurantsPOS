@@ -1,4 +1,4 @@
-import { GlobalConstants } from "../../constants/apiConstants";
+import { GlobalConstants } from "../../constants/constants";
 import { toggleModal } from "./modal";
 import types from "./types";
 
@@ -46,7 +46,7 @@ export const getSubCategoriesByCategoryId = payload => {
 };
 
 export const saveSubCategory = payload => {
-    const { params, successMessage, dispatch } = payload;
+    const { params, successMessage, onSuccess, dispatch } = payload;
     dispatch(switchSubCategoryLoader({ status: true }));
 
     return {
@@ -57,7 +57,7 @@ export const saveSubCategory = payload => {
                 params,
                 successMessage,
                 onSuccess: () => {
-                    dispatch(toggleModal());
+                    onSuccess && onSuccess();
                     dispatch(switchSubCategoryLoader({ status: false }));
                 },
                 onError: () => {
@@ -90,7 +90,7 @@ export const getSubCategoryById = payload => {
 };
 
 export const updateSubCategory = payload => {
-    const { params, successMessage, dispatch } = payload;
+    const { params, successMessage, onSuccess, dispatch } = payload;
     dispatch(switchSubCategoryLoader({ status: true }));
 
     return {
@@ -101,7 +101,7 @@ export const updateSubCategory = payload => {
                 params,
                 successMessage,
                 onSuccess: () => {
-                    dispatch(toggleModal());
+                    onSuccess && onSuccess();
                     dispatch(switchSubCategoryLoader({ status: false }));
                 },
                 onError: () => {

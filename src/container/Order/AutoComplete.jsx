@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import AutoCompleteComp from "../../components/Order/AutoComplete";
-import { AutoCompleteDefaults, ErrorMessages, GlobalConstants } from "../../constants/apiConstants";
+import { AutoCompleteDefaults, ErrorMessages, GlobalConstants } from "../../constants/constants";
 import { getMenu } from "../../redux-store/actions/menu";
 import { doesHaveValue, isValidAlphaNumeric, isValidQuantity } from "../../utils/functions";
 

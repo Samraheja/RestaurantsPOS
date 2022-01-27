@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import AddCoverComp from "../../components/Tables/AddCover";
-import { AddCoverDefaults, ErrorMessages } from "../../constants/apiConstants";
+import { AddCoverDefaults, ErrorMessages } from "../../constants/constants";
 import { addTableCover } from "../../redux-store/actions/tables";
 import { doesHaveValue, isDigitsOnly, isValidDigits } from "../../utils/functions";
 

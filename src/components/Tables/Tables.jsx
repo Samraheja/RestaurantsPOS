@@ -11,10 +11,15 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import ShowModal from "../AppComponents/Modal/Modal";
+import Modal from "../AppComponents/Modal";
 import AddCover from "../../container/Tables/AddCover";
 import DailyOpeningClosing from "../../container/DailyOpeningClosing/DailyOpeningClosing";
 import SettleBill from "../../container/SettleBill/SettleBill";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    tablesLabel, settleBillButtonLabel, addCoverTitle, openForDayTitle
+} = localizedStrings;
 
 const Tables = (props) => {
     return (
@@ -26,7 +31,7 @@ const Tables = (props) => {
                     <div className="col">
                         <Card className="bg-secondary shadow">
                             <CardHeader className="border-0">
-                                <span className="font-weight-bold">Tables</span>
+                                <span className="font-weight-bold">{tablesLabel}</span>
                             </CardHeader>
                             <CardBody>
                                 <Row>
@@ -51,7 +56,8 @@ const Tables = (props) => {
                                                         </Col>
                                                         <Col lg="6" className="font-weight-bold small">
                                                             {
-                                                                props.tablesStatus[i + 1] && <i className="fa fa-rupee-sign"></i>
+                                                                props.tablesStatus[i + 1] &&
+                                                                <i className="fa fa-rupee-sign"/>
                                                             }
                                                             {
                                                                 props.tablesStatus[i + 1] && " " + props.tablesStatus[i + 1].netAmount
@@ -69,9 +75,11 @@ const Tables = (props) => {
                                                                         role="button"
                                                                         size="sm"
                                                                         color=""
-                                                                        onClick={(e) => { e.stopPropagation(); }}
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                        }}
                                                                     >
-                                                                        <i className="fas fa-ellipsis-v" />
+                                                                        <i className="fas fa-ellipsis-v"/>
                                                                     </DropdownToggle>
                                                                     <DropdownMenu className="dropdown-menu-arrow" right>
                                                                         {
@@ -79,7 +87,8 @@ const Tables = (props) => {
                                                                             <DropdownItem
                                                                                 href="#sahil"
                                                                                 onClick={(e) => {
-                                                                                    e.stopPropagation(); props.onVoidBill(
+                                                                                    e.stopPropagation();
+                                                                                    props.onVoidBill(
                                                                                         props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id
                                                                                     );
                                                                                 }}
@@ -93,12 +102,13 @@ const Tables = (props) => {
                                                                             <DropdownItem
                                                                                 href="#sahil"
                                                                                 onClick={(e) => {
-                                                                                    e.stopPropagation(); props.onSettleBill(
+                                                                                    e.stopPropagation();
+                                                                                    props.onSettleBill(
                                                                                         props.tablesStatus[i + 1].id
                                                                                     );
                                                                                 }}
                                                                             >
-                                                                                Settle Bill
+                                                                                {settleBillButtonLabel}
                                                                             </DropdownItem>
                                                                         }
                                                                     </DropdownMenu>
@@ -115,37 +125,35 @@ const Tables = (props) => {
                         </Card>
                     </div>
 
-                    {
-                        props.showCover &&
-                        <ShowModal
-                            title="Add Cover"
-                            switchModal={props.switchModal}
-                            formComponent={<AddCover tableNumber={props.tableNumber} orderType={props.orderType} history={props.history} />}
-                        />
-                    }
+                    <Modal
+                        isActive={props.showCover}
+                        title={addCoverTitle}
+                        switchModal={() => props.switchModal('showCover')}
+                        renderScene={<AddCover tableNumber={props.tableNumber} orderType={props.orderType}
+                                               history={props.history}/>}
+                    />
 
-                    {
-                        !props.isOpenedForDay &&
-                        <ShowModal
-                            title="Open for day"
-                            switchModal={props.switchModal}
-                            formComponent={<DailyOpeningClosing message="Would you like to open for the day?" />}
-                        />
-                    }
+                    <Modal
+                        isActive={props.isOpenForDayActive}
+                        title={openForDayTitle}
+                        switchModal={() => props.switchModal('isOpenForDayActive')}
+                        renderScene={<DailyOpeningClosing
+                            switchModal={_ => props.switchModal('isOpenForDayActive')}
+                            message="Would you like to open for the day?"
+                        />}
+                    />
 
-                    {
-                        props.showSettleBill &&
-                        <ShowModal
-                            title="Settle Bill"
-                            className="modal-xl modal-dialog-centered"
-                            switchModal={props.switchModal}
-                            formComponent={
-                                <SettleBill
-                                    billId={props.billId}
-                                />
-                            }
-                        />
-                    }
+                    <Modal
+                        isActive={props.showSettleBill}
+                        title={settleBillButtonLabel}
+                        className="modal-xl modal-dialog-centered"
+                        switchModal={() => props.switchModal('showSettleBill')}
+                        renderScene={
+                            <SettleBill
+                                billId={props.billId}
+                            />
+                        }
+                    />
                 </Row>
             </Container>
         </>

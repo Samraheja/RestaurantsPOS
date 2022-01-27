@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddSubCategoryComp from "../../components/SubCategory/AddSubCategory";
-import { AddSubCategoryDefaults, ErrorMessages, GlobalConstants, SuccessMessages } from "../../constants/apiConstants";
+import { AddSubCategoryDefaults, ErrorMessages, GlobalConstants, SuccessMessages } from "../../constants/constants";
 import { getCategories } from "../../redux-store/actions/category";
 import { saveSubCategory, updateSubCategory } from "../../redux-store/actions/subCategory";
 import { doesHaveValue, isValidAlphabets } from "../../utils/functions";
@@ -39,7 +39,7 @@ const AddCategory = (props) => {
             params: payload,
             dispatch
         }));
-    }, [state, props.editSubCategory, dispatch]);
+    }, [ dispatch]);
 
     const onChange = (e) => {
         const { id, value } = e.target;
@@ -67,8 +67,7 @@ const AddCategory = (props) => {
 
         if (!doesHaveValue(subCategory)) {
             finalErrorMessages.subCategory = ErrorMessages.SubCategoryRequired;
-        }
-        else if (!isValidAlphabets(subCategory)) {
+        } else if (!isValidAlphabets(subCategory)) {
             finalErrorMessages.subCategory = ErrorMessages.ValidAlphabets;
         }
 
@@ -77,17 +76,19 @@ const AddCategory = (props) => {
 
     const onSubCategorySave = (e) => {
         e.preventDefault();
+        const onSuccess = () => {
+            props.closeModal();
+        };
         if (state.id === 0) {
-            SaveSubCategory();
-        }
-        else {
-            UpdateSubCategory();
+            SaveSubCategory({ onSuccess });
+        } else {
+            UpdateSubCategory({ onSuccess });
         }
     };
 
-    const SaveSubCategory = () => {
+    const SaveSubCategory = ({ onSuccess }) => {
         const finalErrorMessages = Validate();
-        
+
         if (Object.keys(finalErrorMessages).length === 0) {
 
             const payload = {
@@ -106,10 +107,10 @@ const AddCategory = (props) => {
             dispatch(saveSubCategory({
                 params: payload,
                 successMessage,
+                onSuccess,
                 dispatch
             }));
-        }
-        else {
+        } else {
             setState(prevState => ({
                 ...prevState,
                 errorMessages: finalErrorMessages
@@ -117,7 +118,7 @@ const AddCategory = (props) => {
         }
     };
 
-    const UpdateSubCategory = () => {
+    const UpdateSubCategory = ({ onSuccess }) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
@@ -139,10 +140,10 @@ const AddCategory = (props) => {
             dispatch(updateSubCategory({
                 params: payload,
                 successMessage,
+                onSuccess,
                 dispatch
             }));
-        }
-        else {
+        } else {
             setState(prevState => ({
                 ...prevState,
                 errorMessages: finalErrorMessages

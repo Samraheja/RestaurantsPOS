@@ -1,5 +1,5 @@
 import types from "../actions/types";
-import { GlobalConstants } from '../../constants/apiConstants';
+import { GlobalConstants } from '../../constants/constants';
 
 const initialState = {
     isLoading: false,

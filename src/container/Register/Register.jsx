@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ErrorMessages, SuccessMessages, AlertTypes } from '../../constants/apiConstants';
+import { ErrorMessages, SuccessMessages, AlertTypes } from '../../constants/constants';
 import RegisterComp from "../../components/Register/Register";
 import {
     doesHaveValue,
