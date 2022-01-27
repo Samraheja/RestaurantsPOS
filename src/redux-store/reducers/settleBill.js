@@ -7,7 +7,8 @@ const initialState = {
     settledBills: [],
     totalRecords: 0,
     totalPages: 0,
-    isLoading: false
+    isLoading: false,
+    isSettledLoading: false
 };
 
 const SettleBill = ((state = initialState, actions = {}) => {
@@ -41,6 +42,11 @@ const SettleBill = ((state = initialState, actions = {}) => {
         case types.settleBill.SWITCH_BILL_SETTLEMENT_LOADER: {
             return {
                 ...state, isLoading: actions.payload.status
+            }
+        }
+        case types.settleBill.SWITCH_SETTLED_BILL_LOADER: {
+            return {
+                ...state, isSettledLoading: actions.payload.status
             }
         }
         default: {

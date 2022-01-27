@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SettleBillComp from "../../components/SettleBill/SettleBill";
 import { AlertTypes, BillSettlementDefaults, ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
-import { getVendors, getPaymentModes, GetBillToSetlle, settleBillDetails } from "../../redux-store/actions/settleBill";
+import { getVendors, getPaymentModes, GetBillToSetlle, settleBillDetails, getSettledPaymentDetails } from "../../redux-store/actions/settleBill";
 import { doesHaveValue, isValidAlphaNumeric, isValidDecimalOnly, isValidDigits } from "../../utils/functions";
 import { addAlert } from "../../redux-store/actions/alert";
 import { toggleModal } from "../../redux-store/actions/modal";
@@ -20,7 +20,7 @@ const SettleBill = (props) => {
     useEffect(() => {
         bindVendors();
         bindPaymentModes();
-debugger;
+
         if (props.billId !== undefined && props.billId > 0) {
             const payload = {
                 "CollectionName": "Billing",
@@ -43,6 +43,8 @@ debugger;
             }));
 
             if (billingDetails && billingDetails.isSettled) {
+                alert("Calling");
+                GetSettledPayments();
             }
         }
         else {
@@ -195,7 +197,7 @@ debugger;
 
     const onSettleBill = () => {
         if (state.paymentDetails.length > 0) {
-            const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseInt(curr.amount), 0);
+            const totalAmount = state.paymentDetails.reduce((prev, curr) => prev = prev + parseInt(curr.amount), 2);
 
             if (totalAmount >= billingDetails.netAmount) {
                 for (var i = 0; i < state.paymentDetails.length; i++) {
@@ -336,15 +338,32 @@ debugger;
     };
 
     const onDeletePayment = (index) => {
-        alert(index);
         setState((prevState) => ({
             ...prevState,
-            paymentDetails: state.paymentDetails.map((details, i) =>
-                (i === index) ?
-                    details.isDeleted = true
-                    :
-                    details
-            )
+            paymentDetails: state.paymentDetails.splice(index, 1)
+        }));
+
+        state.paymentDetails.splice(index, 1);
+    };
+
+    const GetSettledPayments = () => {
+        debugger;
+        const payload = {
+            "CollectionName": "BillSettlement",
+            "Operation": "Payment Details",
+            "BillSettlement": {
+                "Id": parseInt(props.billId),
+            }
+        };
+
+        const onSuccess = (response) => {
+            console.log(response);
+        }
+
+        dispatch(getSettledPaymentDetails({
+            params: payload,
+            onSuccess,
+            dispatch
         }));
     };
 
