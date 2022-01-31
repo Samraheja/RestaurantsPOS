@@ -40,7 +40,7 @@ const Order = (props) => {
                                     orderedItems={props.orderedItems}
                                     onQuantityUpdate={props.onQuantityUpdate}
                                 />
-                                <hr className="m-0" />
+                                <hr className="m-0"/>
                                 <Row>
                                     <Col lg="6" className="p-1 tblOrderSummary border-right">
                                         <CustomerSummary

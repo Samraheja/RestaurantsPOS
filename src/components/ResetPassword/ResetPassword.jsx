@@ -14,13 +14,18 @@ import {
 import Input from "../AppComponents/input/InputComp";
 import Loader from "../AppComponents/Loader/Loader";
 import PasswordPolicy from "../AppComponents/PasswordPolicy/PasswordPolicy";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    resetPasswordTitle, resetPasswordButtonTitle
+} = localizedStrings;
 
 const ResetPassword = (props) => {
 
     return (
         <>
             {
-                props.isLoading && <Loader />
+                props.isLoading && <Loader/>
             }
             <Col lg="6" md="8">
                 <Card className="bg-secondary shadow border-0">
@@ -37,14 +42,14 @@ const ResetPassword = (props) => {
                     </CardHeader>
                     <CardBody className="px-lg-5 py-lg-2 mb-5">
                         <div className="text-center text-muted mb-4">
-                            <small>Reset your password</small>
+                            <small>{resetPasswordTitle}</small>
                         </div>
                         <Form role="form">
                             <FormGroup>
                                 <InputGroup className="input-group-alternative mb-3">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
-                                            <i className="ni ni-email-83" />
+                                            <i className="ni ni-email-83"/>
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
@@ -61,7 +66,7 @@ const ResetPassword = (props) => {
                                 <InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
-                                            <i className="ni ni-lock-circle-open" />
+                                            <i className="ni ni-lock-circle-open"/>
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
@@ -78,7 +83,7 @@ const ResetPassword = (props) => {
                                 <InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
-                                            <i className="ni ni-lock-circle-open" />
+                                            <i className="ni ni-lock-circle-open"/>
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
@@ -91,10 +96,11 @@ const ResetPassword = (props) => {
                                     />
                                 </InputGroup>
                             </FormGroup>
-                            <PasswordPolicy />
+                            <PasswordPolicy/>
                             <div className="text-center">
-                                <Button className="mt-4" color="primary" type="button" onClick={props.handleSubmitClick}>
-                                    Reset Password
+                                <Button className="mt-4" color="primary" type="button"
+                                        onClick={props.handleSubmitClick}>
+                                    {resetPasswordButtonTitle}
                                 </Button>
                             </div>
                         </Form>

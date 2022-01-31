@@ -6,6 +6,9 @@ import {
     Col,
 } from "reactstrap";
 import Input from "../AppComponents/input/InputComp";
+import localizedStrings from '../../constants/localizations'
+
+const { categoryLabel } = localizedStrings;
 
 const AddCategory = (props) => {
     return (
@@ -17,7 +20,7 @@ const AddCategory = (props) => {
                             className="form-control-label"
                             htmlFor="category"
                         >
-                            Category
+                            {categoryLabel}
                         </label>
                         <Input
                             className="form-control-alternative"

@@ -3,14 +3,19 @@ import {
     Row,
     Col
 } from "reactstrap";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    tableNumberLabel, subcategoriesLabel
+} = localizedStrings;
 
 const MostOrdered = (props) => {
     return (
         <>
             <Row>
                 <Col lg="12" className="token bold">
-                    Table Number: {props.tableNumber}
-                    <hr className="m-0" />
+                    {tableNumberLabel}{props.tableNumber}
+                    <hr className="m-0"/>
                 </Col>
             </Row>
             <Row>
@@ -21,7 +26,9 @@ const MostOrdered = (props) => {
                             <Col lg="4" key={index} className="cursor-pointer p-1">
                                 <div
                                     className="MostOrdered"
-                                    onClick={() => { props.onMenuItemAdd(item.id, item.tablePrice, 1); }}
+                                    onClick={() => {
+                                        props.onMenuItemAdd(item.id, item.tablePrice, 1);
+                                    }}
                                 >
                                     {item.name}
                                 </div>
@@ -30,11 +37,11 @@ const MostOrdered = (props) => {
                     })
                 }
             </Row>
-            <div className="pt-5"></div>
+            <div className="pt-5"/>
             <Row>
                 <Col lg="12" className="token bold">
-                    Sub Categories
-                    <hr className="m-0" />
+                    {subcategoriesLabel}
+                    <hr className="m-0"/>
                 </Col>
             </Row>
             <Row>
@@ -45,7 +52,9 @@ const MostOrdered = (props) => {
                             <Col lg="3" key={index} className="cursor-pointer p-1">
                                 <div
                                     className="MostOrderedCategory"
-                                    onClick={() => { props.getMostOrderedItems(item.id); }}
+                                    onClick={() => {
+                                        props.getMostOrderedItems(item.id);
+                                    }}
                                 >
                                     {item.subCategoryName}
                                 </div>

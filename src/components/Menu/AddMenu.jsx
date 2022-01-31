@@ -11,6 +11,13 @@ import {
 } from "reactstrap";
 import Input from "../AppComponents/input/InputComp";
 import Select from "../AppComponents/select/SelectComp";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    addMenuItemLabel, categoryLabel, subcategoryLabel, deliveryPriceLabel,
+    gstLabel, isVegLabel, descriptionLabel, backLabel,
+    takeAwayPriceLabel, itemCodeLabel, nameLabel, tablePriceLabel
+} = localizedStrings;
 
 const AddMenu = (props) => {
     return (
@@ -24,7 +31,7 @@ const AddMenu = (props) => {
                             <CardHeader className="bg-white border-0">
                                 <Row className="align-items-center">
                                     <Col xs="8">
-                                        <h3 className="mb-0">Add Menu Item</h3>
+                                        <h3 className="mb-0">{addMenuItemLabel}</h3>
                                     </Col>
                                 </Row>
                             </CardHeader>
@@ -38,7 +45,7 @@ const AddMenu = (props) => {
                                                         className="form-control-label"
                                                         htmlFor="categoryId"
                                                     >
-                                                        Category
+                                                        {categoryLabel}
                                                     </label>
                                                     {
                                                         props.categories && Array.isArray(props.categories) &&
@@ -66,7 +73,7 @@ const AddMenu = (props) => {
                                                         className="form-control-label"
                                                         htmlFor="subCategoryId"
                                                     >
-                                                        Sub Category
+                                                        {subcategoryLabel}
                                                     </label>
                                                     {
                                                         props.subCategories && Array.isArray(props.subCategories) &&
@@ -94,8 +101,8 @@ const AddMenu = (props) => {
                                                 alt="..."
                                                 className="rounded-circle cursor-pointer"
                                                 src={props.menuPic ||
-                                                    require("../../assets/img/theme/UploadMenuBlank.png")
-                                                        .default
+                                                require("../../assets/img/theme/UploadMenuBlank.png")
+                                                    .default
                                                 }
                                                 onClick={props.onEditMenuPic}
                                             />
@@ -115,7 +122,7 @@ const AddMenu = (props) => {
                                                 className="form-control-label"
                                                 htmlFor="itemCode"
                                             >
-                                                Item Code
+                                                {itemCodeLabel}
                                             </label>
                                             <Input
                                                 id="itemCode"
@@ -134,7 +141,7 @@ const AddMenu = (props) => {
                                                 className="form-control-label"
                                                 htmlFor="name"
                                             >
-                                                Name
+                                                {nameLabel}
                                             </label>
                                             <Input
                                                 id="name"
@@ -155,7 +162,7 @@ const AddMenu = (props) => {
                                                 className="form-control-label"
                                                 htmlFor="tablePrice"
                                             >
-                                                Table Price
+                                                {tablePriceLabel}
                                             </label>
                                             <Input
                                                 id="tablePrice"
@@ -174,7 +181,7 @@ const AddMenu = (props) => {
                                                 className="form-control-label"
                                                 htmlFor="takeAwayPrice"
                                             >
-                                                Take Away Price
+                                                {takeAwayPriceLabel}
                                             </label>
                                             <Input
                                                 id="takeAwayPrice"
@@ -193,7 +200,7 @@ const AddMenu = (props) => {
                                                 className="form-control-label"
                                                 htmlFor="deliveryPrice"
                                             >
-                                                Delivery Price
+                                                {deliveryPriceLabel}
                                             </label>
                                             <Input
                                                 id="deliveryPrice"
@@ -214,7 +221,7 @@ const AddMenu = (props) => {
                                                 className="form-control-label"
                                                 htmlFor="gst"
                                             >
-                                                GST(%)
+                                                {gstLabel}
                                             </label>
                                             <Input
                                                 id="gst"
@@ -233,9 +240,9 @@ const AddMenu = (props) => {
                                                 className="form-control-label"
                                                 htmlFor="IsVeg"
                                             >
-                                                Is Veg
+                                                {isVegLabel}
                                             </label>
-                                            <br />
+                                            <br/>
                                             <label className="custom-toggle">
                                                 <Input
                                                     type="checkbox"
@@ -243,7 +250,7 @@ const AddMenu = (props) => {
                                                     checked={props.isVeg}
                                                     onChange={props.onChange}
                                                 />
-                                                <span className="custom-toggle-slider rounded-circle" />
+                                                <span className="custom-toggle-slider rounded-circle"/>
                                             </label>
                                         </FormGroup>
                                     </Col>
@@ -255,7 +262,7 @@ const AddMenu = (props) => {
                                                 className="form-control-label"
                                                 htmlFor="description"
                                             >
-                                                Description
+                                                {descriptionLabel}
                                             </label>
                                             <Input
                                                 id="description"
@@ -269,14 +276,14 @@ const AddMenu = (props) => {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                <hr className="my-4" />
+                                <hr className="my-4"/>
                                 <Row>
                                     <Col className="text-center">
                                         <Button color="primary" type="button" onClick={props.onMenuSave}>
                                             {props.buttonText}
                                         </Button>
                                         <Button color="warning" type="button" onClick={props.onMenuBack}>
-                                            Back
+                                            {backLabel}
                                         </Button>
                                     </Col>
                                 </Row>

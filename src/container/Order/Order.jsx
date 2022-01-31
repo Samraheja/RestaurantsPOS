@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import OrderComp from "../../components/Order/Order";
-import { AlertTypes, ErrorMessages, OrdersDefault, SuccessMessages } from "../../constants/apiConstants";
+import { AlertTypes, ErrorMessages, OrdersDefault, SuccessMessages } from "../../constants/constants";
 import { completeOrder, getOrderItemsList, saveOrderItem, updateQuantity } from "../../redux-store/actions/order"
 import { addAlert } from "../../redux-store/actions/alert";
 import { getDailySaleDetails } from "../../redux-store/actions/profile";

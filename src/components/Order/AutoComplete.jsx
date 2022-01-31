@@ -5,6 +5,11 @@ import {
     Col
 } from "reactstrap";
 import Input from "../AppComponents/input/InputComp";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    addButtonLabel
+} = localizedStrings;
 
 const AutoComplete = (props) => {
     return (
@@ -27,7 +32,9 @@ const AutoComplete = (props) => {
                                 return (
                                     <div
                                         className={props.suggestionBoxClass}
-                                        onClick={() => { props.onItemClick(item.id, item.name, item.tablePrice) }}
+                                        onClick={() => {
+                                            props.onItemClick(item.id, item.name, item.tablePrice)
+                                        }}
                                     >
                                         <span key={index}>{item.name}</span>
                                     </div>
@@ -57,7 +64,7 @@ const AutoComplete = (props) => {
                             props.onAddButtonClick();
                         }}
                     >
-                        Add
+                        {addButtonLabel}
                         <i className="fa fa-plus-circle pl-2"></i>
                     </Button>
                 </Col>

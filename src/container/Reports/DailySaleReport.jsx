@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import DailySaleReportComp from "../../components/Reports/DailySaleReport";
-import { GlobalConstants, DailySaleReportDefaults } from "../../constants/apiConstants";
+import { GlobalConstants, DailySaleReportDefaults } from "../../constants/constants";
 import { getDailySaleReport } from "../../redux-store/actions/reports";
 
 const DailySaleReport = (props) => {

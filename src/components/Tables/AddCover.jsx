@@ -6,16 +6,21 @@ import {
     Col,
 } from "reactstrap";
 import Input from "../AppComponents/input/InputComp";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    tableNumberLabel, coverLabel, addButtonLabel
+} = localizedStrings;
 
 const AddCover = (props) => {
     return (
         <>
             <Row>
                 <Col lg="12" className="token bold">
-                    Table Number: {props.tableNumber}
+                    {tableNumberLabel}{props.tableNumber}
                 </Col>
             </Row>
-            <br />
+            <br/>
             <Row>
                 <Col lg="12">
                     <FormGroup>
@@ -23,7 +28,7 @@ const AddCover = (props) => {
                             className="form-control-label"
                             htmlFor="cover"
                         >
-                            Cover
+                            {coverLabel}
                         </label>
                         <Input
                             className="form-control-alternative"
@@ -41,7 +46,7 @@ const AddCover = (props) => {
             <Row>
                 <Col className="text-right">
                     <Button color="primary" type="button" onClick={props.onAddCover}>
-                        Add
+                        {addButtonLabel}
                     </Button>
                 </Col>
             </Row>

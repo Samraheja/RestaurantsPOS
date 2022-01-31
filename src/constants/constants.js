@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const GlobalConstants = {
     //API_BASE_URL: "https://localhost:44375/api/POS",
     API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
@@ -106,14 +108,16 @@ export const CategoryDefaults = {
     pageNo: 1,
     sortBy: "Id",
     order: "desc",
-    searchValue: ""
+    searchValue: "",
+    isAddCategoryActive: false
 }
 
 export const SubCategoryDefaults = {
     pageNo: 1,
     sortBy: "Id",
     order: "desc",
-    searchValue: ""
+    searchValue: "",
+    isAddSubCategoryActive: false
 }
 
 export const AddSubCategoryDefaults = {
@@ -155,7 +159,8 @@ export const TablesDefaults = {
     tableNumber: 0,
     orderType: "Dine-in",
     showCover: false,
-    showSettleBill: false
+    showSettleBill: false,
+    isOpenForDayActive: false
 }
 
 export const AddCoverDefaults = {
@@ -219,12 +224,11 @@ export const BillSettlementDefaults = {
     errorMessages: {},
     paymentDetails: []
 }
-
 export const SettledBillsDefaults = {
     pageNo: 1,
     sortBy: "BillDate",
     order: "asc",
-    billDate: "",
+    billDate: moment(new Date()).format('YYYY-MM-DD'),
     billId: 0,
     showSettleBill: false
 }
@@ -282,12 +286,13 @@ export const Months = [
 
 export const Years = () => {
     const year = [];
-    for(let i = new Date().getFullYear(); i >= 2021; i--) {
+    for (let i = new Date().getFullYear(); i >= 2021; i--) {
         year.push({
             "text": i,
             "value": i
         });
-    };
+    }
+    ;
     return year;
 };
 

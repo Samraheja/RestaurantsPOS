@@ -1,7 +1,7 @@
 import axios from "axios";
 import { addAlert } from "../../redux-store/actions/alert";
-import { GlobalConstants, ErrorMessages } from '../../constants/apiConstants';
-import { AlertTypes } from "../../constants/apiConstants";
+import { GlobalConstants, ErrorMessages } from '../../constants/constants';
+import { AlertTypes } from "../../constants/constants";
 import history from "../../utils/history";
 
 const middleware = (store => function (next) {
@@ -46,7 +46,6 @@ const middleware = (store => function (next) {
                     }
                 })
                 .catch(function (error) {
-                    debugger;
                     onError && onError(error);
 
                     if (error.response !== undefined) {

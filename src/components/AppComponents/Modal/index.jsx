@@ -6,13 +6,11 @@ import {
 
 const ShowModal = (props) => {
 
-    const { showModal } = useSelector(state => state.modal);
-
     return (
         <Modal
             className={props.className || "modal-dialog-centered" }
-            isOpen={showModal}
-            toggle={() => props.switchModal()}
+            isOpen={props.isActive}
+            toggle={props.switchModal}
         >
             <div className="modal-header bg-lighter">
                 <h4 className="modal-title pt-2">
@@ -23,13 +21,13 @@ const ShowModal = (props) => {
                     className="close"
                     data-dismiss="modal"
                     type="button"
-                    onClick={() => props.switchModal()}
+                    onClick={props.switchModal}
                 >
                     <span aria-hidden={true}>×</span>
                 </button>
             </div>
             <div className="modal-body">
-                {props.formComponent}
+                {props.renderScene}
             </div>
         </Modal>
     )

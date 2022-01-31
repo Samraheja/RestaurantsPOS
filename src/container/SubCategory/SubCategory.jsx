@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SubCategoryComp from "../../components/SubCategory/SubCategory";
-import { GlobalConstants, SubCategoryDefaults, SuccessMessages } from "../../constants/apiConstants";
+import { GlobalConstants, SubCategoryDefaults, SuccessMessages } from "../../constants/constants";
 import { deleteSubCategory, getSubCategories } from "../../redux-store/actions/subCategory";
-import { toggleModal } from "../../redux-store/actions/modal";
 import Loader from "../../components/AppComponents/Loader/Loader";
 
 const SubCategory = (props) => {
@@ -30,14 +29,19 @@ const SubCategory = (props) => {
         }));
     }, [state.pageNo, state.sortBy, state.order, state.searchValue, dispatch]);
 
-    const switchModal = () => {
-        dispatch(toggleModal());
+    const closeModal = () => {
         setState(prevState => ({
             ...prevState,
-            editSubCategory: {}
+            editSubCategory: {},
+            isAddSubCategoryActive: false
         }));
     };
-
+    const onAddSubCategory = () => {
+        setState(prevState => ({
+            ...prevState,
+            isAddSubCategoryActive: true
+        }));
+    };
     const SortRecords = (column) => {
         setState(prevState => ({
             ...prevState,
@@ -63,9 +67,9 @@ const SubCategory = (props) => {
                 "categoryId": categoryId,
                 "categoryName": categoryName,
                 "subCategoryName": subCategoryName
-            }
+            },
+            isAddSubCategoryActive: true
         }));
-        dispatch(toggleModal());
     };
 
     const onSubCategoryDelete = (Id) => {
@@ -84,17 +88,18 @@ const SubCategory = (props) => {
     };
 
     if (isLoading) {
-        return <Loader />
-    }
-    else {
+        return <Loader/>
+    } else {
         return (
             <SubCategoryComp
+                onAddSubCategory={onAddSubCategory}
+                isAddSubCategoryActive={state.isAddSubCategoryActive}
                 totalRecords={totalRecords}
                 totalPages={totalPages}
                 pageNo={state.pageNo}
                 subCategories={subCategories}
                 onPageChange={onPageChange}
-                switchModal={switchModal}
+                closeModal={closeModal}
                 onSubCategoryEdit={onSubCategoryEdit}
                 onSubCategoryDelete={onSubCategoryDelete}
                 editSubCategory={state.editSubCategory}

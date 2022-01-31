@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import MenuComp from "../../components/Menu/Menu";
-import { GlobalConstants, MenuDefaults, SuccessMessages } from "../../constants/apiConstants";
+import { GlobalConstants, MenuDefaults, SuccessMessages } from "../../constants/constants";
 import { deleteMenu, getMenu } from "../../redux-store/actions/menu"
 
 const Menu = (props) => {

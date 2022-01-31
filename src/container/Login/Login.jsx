@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AlertTypes, ErrorMessages } from '../../constants/apiConstants';
+import { AlertTypes, ErrorMessages } from '../../constants/constants';
 import { loginUser } from "../../redux-store/actions/login";
 import LoginComp from "../../components/Login/Login";
 import { doesHaveValue, isValidEmail } from "../../utils/functions";

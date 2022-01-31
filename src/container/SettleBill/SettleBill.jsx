@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SettleBillComp from "../../components/SettleBill/SettleBill";
-import { AlertTypes, BillSettlementDefaults, ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
+import { AlertTypes, BillSettlementDefaults, ErrorMessages, SuccessMessages } from "../../constants/constants";
 import { getVendors, getPaymentModes, GetBillToSetlle, settleBillDetails, getSettledPaymentDetails } from "../../redux-store/actions/settleBill";
 import { doesHaveValue, isValidAlphaNumeric, isValidDecimalOnly, isValidDigits } from "../../utils/functions";
 import { addAlert } from "../../redux-store/actions/alert";
@@ -43,7 +43,6 @@ const SettleBill = (props) => {
             }));
 
             if (billingDetails && billingDetails.isSettled) {
-                alert("Calling");
                 GetSettledPayments();
             }
         }

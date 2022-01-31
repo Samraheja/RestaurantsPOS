@@ -9,7 +9,7 @@ import {
     Input,
     Col
 } from "reactstrap";
-import ShowModal from "../AppComponents/Modal/Modal";
+import Modal from "../AppComponents/Modal";
 import Pagination from "../AppComponents/Pagination/Pagination";
 import SettleBill from "../../container/SettleBill/SettleBill";
 
@@ -113,11 +113,11 @@ const SettledBills = (props) => {
 
             {
                 props.showSettleBill &&
-                <ShowModal
+                <Modal
                     title="Settle Bill"
                     className="modal-xl modal-dialog-centered"
                     switchModal={props.switchModal}
-                    formComponent={
+                    renderScene={
                         <SettleBill
                             billId={props.billId}
                         />

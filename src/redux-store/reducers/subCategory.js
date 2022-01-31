@@ -43,9 +43,7 @@ const SubCategory = ((state = initialState, actions = {}) => {
                 ...state,
                 subCategories: state.subCategories.map((subCategory) =>
                     (subCategory.id === actions.payload.fetchConfig.params.SubCategory.ID) ?
-                        actions.payload.data.data
-                        :
-                        SubCategory
+                        actions.payload.data.data : subCategory
                 )
             }
         }

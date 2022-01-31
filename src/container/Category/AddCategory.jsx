@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import AddCategoryComp from "../../components/Category/AddCategory";
-import { ErrorMessages, SuccessMessages } from "../../constants/apiConstants";
+import { ErrorMessages, SuccessMessages } from "../../constants/constants";
 import { saveCategory, updateCategory } from "../../redux-store/actions/category";
 import { doesHaveValue, isValidAlphabets } from "../../utils/functions";
 
@@ -60,15 +60,18 @@ const AddCategory = (props) => {
 
     const onCategorySave = (e) => {
         e.preventDefault();
+        const onSuccess=()=>{
+            props.switchModal();
+        }
         if (state.id === 0) {
-            SaveCategory();
+            SaveCategory({onSuccess});
         }
         else {
-            UpdateCategory();
+            UpdateCategory({onSuccess});
         }
     };
 
-    const SaveCategory = () => {
+    const SaveCategory = ({onSuccess}) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
@@ -85,7 +88,8 @@ const AddCategory = (props) => {
             dispatch(saveCategory({
                 params: payload,
                 successMessage,
-                dispatch
+                dispatch,
+                onSuccess
             }));
         }
         else {
@@ -96,7 +100,7 @@ const AddCategory = (props) => {
         }
     };
 
-    const UpdateCategory = () => {
+    const UpdateCategory = ({onSuccess}) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
@@ -113,7 +117,8 @@ const AddCategory = (props) => {
             dispatch(updateCategory({
                 params: payload,
                 successMessage,
-                dispatch
+                dispatch,
+                onSuccess
             }));
         }
         else {

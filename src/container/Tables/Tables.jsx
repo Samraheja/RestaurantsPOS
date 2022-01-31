@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import TablesComp from "../../components/Tables/Tables";
-import { AlertTypes, SuccessMessages, TablesDefaults } from "../../constants/apiConstants";
+import { AlertTypes, SuccessMessages, TablesDefaults } from "../../constants/constants";
 import { addAlert } from "../../redux-store/actions/alert";
 import { toggleModal } from "../../redux-store/actions/modal";
 import { voidOrder } from "../../redux-store/actions/tables";
@@ -20,7 +20,7 @@ const Tables = (props) => {
 
     useEffect(() => {
         if (!userDetails.isOpenedForDay) {
-            dispatch(toggleModal());
+            switchModal('isOpenForDayActive')
         }
 
         const payload = {
@@ -33,8 +33,11 @@ const Tables = (props) => {
         }));
     }, [userDetails.isOpenedForDay, dispatch]);
 
-    const switchModal = () => {
-        dispatch(toggleModal());
+    const switchModal = (key) => {
+        setState(prevState => ({
+            ...prevState,
+            [key]:!state[key]
+        }))
     };
 
     const onTableClick = (billId, tableNumber, isOrderCompleted) => {
@@ -43,11 +46,9 @@ const Tables = (props) => {
                 alertType: AlertTypes.Info,
                 message: "Bill has been printed for this table. Please settle bill and view bill details on order report"
             }));
-        }
-        else if (billId !== undefined && billId > 0) {
+        } else if (billId !== undefined && billId > 0) {
             props.history.push("/admin/order", billId);
-        }
-        else {
+        } else {
             if (userDetails.isOpenedForDay) {
                 setState(prevState => ({
                     ...prevState,
@@ -55,8 +56,6 @@ const Tables = (props) => {
                     tableNumber: tableNumber
                 }));
             }
-
-            dispatch(toggleModal());
         }
     }
 
@@ -67,8 +66,6 @@ const Tables = (props) => {
                 showSettleBill: true,
                 billId: billId
             }));
-
-            dispatch(toggleModal());
         }
     }
 
@@ -117,9 +114,10 @@ const Tables = (props) => {
     return (
         <>
             {
-                isLoading && <Loader />
+                isLoading && <Loader/>
             }
             <TablesComp
+                isOpenForDayActive={state.isOpenForDayActive}
                 noOfTables={userDetails.noOfTables}
                 billId={state.billId}
                 tableNumber={state.tableNumber}

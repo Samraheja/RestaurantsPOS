@@ -10,16 +10,22 @@ import {
     Col,
 } from "reactstrap";
 import Input from "../AppComponents/input/InputComp";
+import localizedStrings from '../../constants/localizations'
+
+const {
+    customerInfoLabel, contactInfoLabel, saveButtonLabel, cityLabel, stateLabel, zipCodeLabel,
+    addressLabel, emailLabel, nameLabel, mobileNoLabel, altMobileNoLabel
+} = localizedStrings;
 
 const AddCustomer = (props) => {
-    
+
     return (
         <>
             <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                     <Row className="align-items-center">
                         <Col xs="8">
-                            <h3 className="mb-0">Customer information</h3>
+                            <h3 className="mb-0">{customerInfoLabel}</h3>
                         </Col>
                     </Row>
                 </CardHeader>
@@ -33,7 +39,7 @@ const AddCustomer = (props) => {
                                             className="form-control-label"
                                             htmlFor="name"
                                         >
-                                            Name
+                                            {nameLabel}
                                         </label>
                                         <Input
                                             className="form-control-alternative"
@@ -52,7 +58,7 @@ const AddCustomer = (props) => {
                                             className="form-control-label"
                                             htmlFor="email"
                                         >
-                                            Email address
+                                            {emailLabel}
                                         </label>
                                         <Input
                                             className="form-control-alternative"
@@ -73,7 +79,7 @@ const AddCustomer = (props) => {
                                             className="form-control-label"
                                             htmlFor="mobileNumber"
                                         >
-                                            Mobile Number
+                                            {mobileNoLabel}
                                         </label>
                                         <Input
                                             className="form-control-alternative"
@@ -93,7 +99,7 @@ const AddCustomer = (props) => {
                                             className="form-control-label"
                                             htmlFor="phoneNumber"
                                         >
-                                            Alternate Mobile Number
+                                            {altMobileNoLabel}
                                         </label>
                                         <Input
                                             className="form-control-alternative"
@@ -108,10 +114,9 @@ const AddCustomer = (props) => {
                                 </Col>
                             </Row>
                         </div>
-                        <hr className="my-4" />
-                        {/* Address */}
+                        <hr className="my-4"/>
                         <h6 className="heading-small text-muted mb-4">
-                            Contact information
+                            {contactInfoLabel}
                         </h6>
                         <div className="pl-lg-4">
                             <Row>
@@ -121,7 +126,7 @@ const AddCustomer = (props) => {
                                             className="form-control-label"
                                             htmlFor="address"
                                         >
-                                            Address
+                                            {addressLabel}
                                         </label>
                                         <Input
                                             className="form-control-alternative"
@@ -142,7 +147,7 @@ const AddCustomer = (props) => {
                                             className="form-control-label"
                                             htmlFor="city"
                                         >
-                                            City
+                                            {cityLabel}
                                         </label>
                                         <Input
                                             className="form-control-alternative"
@@ -161,7 +166,7 @@ const AddCustomer = (props) => {
                                             className="form-control-label"
                                             htmlFor="states"
                                         >
-                                            State
+                                            {stateLabel}
                                         </label>
                                         <Input
                                             className="form-control-alternative"
@@ -180,7 +185,7 @@ const AddCustomer = (props) => {
                                             className="form-control-label"
                                             htmlFor="zipCode"
                                         >
-                                            Zip Code
+                                            {zipCodeLabel}
                                         </label>
                                         <Input
                                             className="form-control-alternative"
@@ -195,12 +200,12 @@ const AddCustomer = (props) => {
                                 </Col>
                             </Row>
                         </div>
-                        <hr className="my-4" />
+                        <hr className="my-4"/>
                         <div className="pl-lg-4">
                             <Row>
                                 <Col md="12" className="text-center">
                                     <Button className="my-4" color="danger" type="button" onClick={props.onSubmitClick}>
-                                        Save
+                                        {saveButtonLabel}
                                     </Button>
                                 </Col>
                             </Row>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AlertTypes } from "../../../constants/apiConstants";
+import { AlertTypes } from "../../../constants/constants";
 import {
     Alert
 } from "reactstrap";
