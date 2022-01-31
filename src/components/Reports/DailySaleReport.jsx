@@ -90,45 +90,45 @@ const DailySaleReport = (props) => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {
-                                    props.dailySales &&
-                                    props.dailySales.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>
-                                                    {index + 1}
-                                                </td>
-                                                <td>
-                                                    {item.billDate}
-                                                </td>
-                                                <td>
-                                                    {item.billAmount}
-                                                </td>
-                                                <td>
-                                                    {item.cash}
-                                                </td>
-                                                <td>
-                                                    {item.paytm}
-                                                </td>
-                                                <td>
-                                                    {item.phonePe}
-                                                </td>
-                                                <td>
-                                                    {item.googlePay}
-                                                </td>
-                                                <td>
-                                                    {item.cod}
-                                                </td>
-                                                <td>
-                                                    {item.onlinePayment}
-                                                </td>
-                                                <td>
-                                                    {item.paymentDue}
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
+                                    {
+                                        props.dailySales &&
+                                        props.dailySales.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>
+                                                        {index + 1}
+                                                    </td>
+                                                    <td>
+                                                        {item.date}
+                                                    </td>
+                                                    <td>
+                                                        {item.billAmount}
+                                                    </td>
+                                                    <td>
+                                                        {item.cash}
+                                                    </td>
+                                                    <td>
+                                                        {item.paytm}
+                                                    </td>
+                                                    <td>
+                                                        {item.phonePe}
+                                                    </td>
+                                                    <td>
+                                                        {item.googlePay}
+                                                    </td>
+                                                    <td>
+                                                        {item.cod}
+                                                    </td>
+                                                    <td>
+                                                        {item.onlinePayment}
+                                                    </td>
+                                                    <td>
+                                                        {item.paymentDue}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
                                 </tbody>
                             </Table>
                             <CardFooter className="py-4">

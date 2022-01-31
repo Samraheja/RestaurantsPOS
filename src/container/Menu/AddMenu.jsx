@@ -80,6 +80,7 @@ const AddMenu = (props) => {
                 "gst": item.gst,
                 "description": item.description,
                 "isVeg": item.isVeg,
+                "isDiscountApplicable": item.isDiscountApplicable,
                 "menuPic": item.menuPic
             }
         });
@@ -100,6 +101,7 @@ const AddMenu = (props) => {
                 "gst": editMenu.gst,
                 "description": editMenu.description,
                 "isVeg": editMenu.isVeg,
+                "isDiscountApplicable": editMenu.isDiscountApplicable,
                 "menuPic": editMenu.menuPic,
                 "buttonText": "Update"
             }));
@@ -117,7 +119,7 @@ const AddMenu = (props) => {
 
         setState(prevState => ({
             ...prevState,
-            [id]: id !== "isVeg" ? value : e.target.checked,
+            [id]: id !== "isVeg" && id !== "isDiscountApplicable" ? value : e.target.checked,
             errorMessages: {
                 ...prevState.errorMessages,
                 [id]: finalErrorMessages[id]
@@ -252,6 +254,7 @@ const AddMenu = (props) => {
                     "GST": parseFloat(state.gst),
                     "Description": state.description,
                     "IsVeg": state.isVeg,
+                    "IsDiscountApplicable": state.isDiscountApplicable,
                     "MenuPic": state.menuPic
                 }
             };
@@ -294,7 +297,8 @@ const AddMenu = (props) => {
                     "DeliveryPrice": parseFloat(state.deliveryPrice),
                     "GST": parseFloat(state.gst),
                     "Description": state.description,
-                    "IsVeg": state.isVeg
+                    "IsVeg": state.isVeg,
+                    "IsDiscountApplicable": state.isDiscountApplicable
                 }
             };
 
@@ -341,6 +345,7 @@ const AddMenu = (props) => {
                 gst={state.gst}
                 description={state.description}
                 isVeg={state.isVeg}
+                isDiscountApplicable={state.isDiscountApplicable}
                 menuPic={state.menuPic}
                 buttonText={state.buttonText}
                 errorMessages={state.errorMessages}

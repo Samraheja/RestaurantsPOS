@@ -144,7 +144,7 @@ const SettleBill = (props) => {
                                     value={props.amount}
                                     onChange={props.onChange}
                                     error={props.errorMessages.amount}
-                                    disabled={props.vendor !== "Self" ? true : props.paymentMode === "Payment Due"}
+                                    disabled={props.vendor !== "Self" || props.paymentMode === "Payment Due"}
                                 />
                             </FormGroup>
                         </Col>

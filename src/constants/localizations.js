@@ -113,5 +113,6 @@ export default {
     "signInTitle": 'Sign in with your credentials',
     "signUpTitle": 'Sign up with credentials',
     "restaurantUpdatePolicy": 'You can update your restaurant details from here and also you can manage your subscription plan.',
-    "addMenuItemLabel": 'Add Menu Item'
+    "addMenuItemLabel": 'Add Menu Item',
+    "isDiscountApplicableLabel": 'Is Discount Applicable'
 }

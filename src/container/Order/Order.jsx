@@ -151,7 +151,14 @@ const Order = (props) => {
     }
 
     const CalculateAmount = (discount) => {
-        const discountAmount = ((billingDetails.totalAmount * discount) / 100).toFixed(2);
+        var discountAmount = 0;
+        billingDetails.itemsList.forEach(item => {
+            if(item.menu.isDiscountApplicable) {
+                discountAmount += ((item.amount * discount) / 100);
+            }
+        });
+
+        discountAmount = discountAmount.toFixed(2);
         const netAmount = (billingDetails.totalAmount - discountAmount).toFixed(2);
 
         setState(prevState => ({

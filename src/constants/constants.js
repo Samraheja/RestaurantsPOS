@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 export const GlobalConstants = {
-    //API_BASE_URL: "https://localhost:44375/api/POS",
-    API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
+    API_BASE_URL: "https://localhost:44375/api/POS",
+    //API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
     ACCESS_TOKEN_NAME: 'login_access_token',
     EXPIRY_DATE_NAME: 'ExpiryDate',
     REFRESH_TOKEN_NAME: 'RefreshToken',
@@ -149,6 +149,7 @@ export const AddMenuDefaults = {
     description: "",
     gst: 0,
     isVeg: true,
+    isDiscountApplicable: false,
     menuPic: "",
     buttonText: "Save",
     errorMessages: {}

@@ -15,7 +15,7 @@ import localizedStrings from '../../constants/localizations'
 
 const {
     addMenuItemLabel, categoryLabel, subcategoryLabel, deliveryPriceLabel,
-    gstLabel, isVegLabel, descriptionLabel, backLabel,
+    gstLabel, isVegLabel, isDiscountApplicableLabel, descriptionLabel, backLabel,
     takeAwayPriceLabel, itemCodeLabel, nameLabel, tablePriceLabel
 } = localizedStrings;
 
@@ -234,7 +234,7 @@ const AddMenu = (props) => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    <Col lg="6">
+                                    <Col lg="3">
                                         <FormGroup>
                                             <label
                                                 className="form-control-label"
@@ -248,6 +248,26 @@ const AddMenu = (props) => {
                                                     type="checkbox"
                                                     id="isVeg"
                                                     checked={props.isVeg}
+                                                    onChange={props.onChange}
+                                                />
+                                                <span className="custom-toggle-slider rounded-circle"/>
+                                            </label>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col lg="3">
+                                        <FormGroup>
+                                            <label
+                                                className="form-control-label"
+                                                htmlFor="isDiscountApplicable"
+                                            >
+                                                {isDiscountApplicableLabel}
+                                            </label>
+                                            <br/>
+                                            <label className="custom-toggle">
+                                                <Input
+                                                    type="checkbox"
+                                                    id="isDiscountApplicable"
+                                                    checked={props.isDiscountApplicable}
                                                     onChange={props.onChange}
                                                 />
                                                 <span className="custom-toggle-slider rounded-circle"/>
