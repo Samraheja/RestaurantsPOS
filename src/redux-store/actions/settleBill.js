@@ -4,7 +4,7 @@ import types from "./types";
 
 export const getVendors = payload => {
     const { params, onSuccess, dispatch } = payload;
-    dispatch(switchbillSattlementLoader({ status: true }));
+    dispatch(switchbillSettlementLoader({ status: true }));
 
     return {
         type: types.settleBill.BIND_VENDORS,
@@ -14,10 +14,10 @@ export const getVendors = payload => {
                 params,
                 onSuccess: (response) => {
                     onSuccess && onSuccess(response)
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 },
                 onError: () => {
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 }
             }
         }
@@ -26,7 +26,7 @@ export const getVendors = payload => {
 
 export const getPaymentModes = payload => {
     const { params, onSuccess, dispatch } = payload;
-    dispatch(switchbillSattlementLoader({ status: true }));
+    dispatch(switchbillSettlementLoader({ status: true }));
 
     return {
         type: types.settleBill.BIND_PAYMENT_MODES,
@@ -36,10 +36,10 @@ export const getPaymentModes = payload => {
                 params,
                 onSuccess: (response) => {
                     onSuccess && onSuccess(response);
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 },
                 onError: () => {
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 }
             }
         }
@@ -48,7 +48,7 @@ export const getPaymentModes = payload => {
 
 export const GetBillToSetlle = payload => {
     const { params, onSuccess, dispatch } = payload;
-    dispatch(switchbillSattlementLoader({ status: true }));
+    dispatch(switchbillSettlementLoader({ status: true }));
 
     return {
         type: types.settleBill.GET_BILL_TO_SETTLE,
@@ -58,10 +58,10 @@ export const GetBillToSetlle = payload => {
                 params,
                 onSuccess: (response) => {
                     onSuccess && onSuccess(response);
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 },
                 onError: () => {
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 }
             }
         }
@@ -70,7 +70,7 @@ export const GetBillToSetlle = payload => {
 
 export const settleBillDetails = payload => {
     const { params, onSuccess, dispatch } = payload;
-    dispatch(switchbillSattlementLoader({ status: true }));
+    dispatch(switchbillSettlementLoader({ status: true }));
 
     return {
         type: types.settleBill.SETTLE_BILL,
@@ -81,10 +81,10 @@ export const settleBillDetails = payload => {
                 onSuccess: (response) => {
                     dispatch(toggleModal());
                     onSuccess && onSuccess(response);
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 },
                 onError: () => {
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 }
             }
         }
@@ -93,7 +93,7 @@ export const settleBillDetails = payload => {
 
 export const getSettledPaymentDetails = payload => {
     const { params, onSuccess, dispatch } = payload;
-    dispatch(switchbillSattlementLoader({ status: true }));
+    dispatch(switchbillSettlementLoader({ status: true }));
 
     return {
         type: types.settleBill.GET_SETTLED_PAYMENT_DETAILS,
@@ -103,10 +103,10 @@ export const getSettledPaymentDetails = payload => {
                 params,
                 onSuccess: (response) => {
                     onSuccess && onSuccess(response);
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 },
                 onError: () => {
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 }
             }
         }
@@ -115,7 +115,7 @@ export const getSettledPaymentDetails = payload => {
 
 export const updateSettledBillDetails = payload => {
     const { params, onSuccess, dispatch } = payload;
-    dispatch(switchbillSattlementLoader({ status: true }));
+    dispatch(switchbillSettlementLoader({ status: true }));
 
     return {
         type: types.settleBill.UPDATE_SETTLED_BILL,
@@ -126,10 +126,10 @@ export const updateSettledBillDetails = payload => {
                 onSuccess: (response) => {
                     dispatch(toggleModal());
                     onSuccess && onSuccess(response);
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 },
                 onError: () => {
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchbillSettlementLoader({ status: false }));
                 }
             }
         }
@@ -138,7 +138,7 @@ export const updateSettledBillDetails = payload => {
 
 export const getSettledBills= payload => {
     const { params, dispatch } = payload;
-    dispatch(switchbillSattlementLoader({ status: true }));
+    dispatch(switchSettledBillLoader({ status: true }));
     
     return {
         type: types.settleBill.GET_SETTLED_BILL,
@@ -147,19 +147,26 @@ export const getSettledBills= payload => {
                 path: GlobalConstants.API_BASE_URL + "/Get",
                 params,
                 onSuccess: () => {
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchSettledBillLoader({ status: false }));
                 },
                 onError: () => {
-                    dispatch(switchbillSattlementLoader({ status: false }));
+                    dispatch(switchSettledBillLoader({ status: false }));
                 }
             }
         }
     }
 };
 
-export const switchbillSattlementLoader = payload => {
+export const switchbillSettlementLoader = payload => {
     return {
         type: types.settleBill.SWITCH_BILL_SETTLEMENT_LOADER,
+        payload
+    }
+};
+
+export const switchSettledBillLoader = payload => {
+    return {
+        type: types.settleBill.SWITCH_SETTLED_BILL_LOADER,
         payload
     }
 };

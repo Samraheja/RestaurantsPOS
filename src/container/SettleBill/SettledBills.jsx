@@ -12,7 +12,7 @@ const SettledBills = (props) => {
     });
 
     const dispatch = useDispatch();
-    const { totalRecords, totalPages, settledBills, isLoading } = useSelector(state => state.settleBill);
+    const { totalRecords, totalPages, settledBills, isSettledLoading } = useSelector(state => state.settleBill);
 
     const getSettledBillsDetails = useCallback((date) => {
         const payload = {
@@ -77,9 +77,10 @@ const SettledBills = (props) => {
         }
     }
 
-    if (isLoading) {
-        return <Loader/>
-    } else {
+    if (isSettledLoading) {
+        return <Loader />
+    }
+    else {
         return (
             <SettledBillsComp
                 billDate={state.billDate}
