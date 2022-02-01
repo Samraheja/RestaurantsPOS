@@ -1,54 +1,71 @@
 import React from 'react';
-import { Input } from 'reactstrap';
+import {Input} from 'reactstrap';
 
 const InputComp = (props) => {
+    const {
+        type, error, min, checked, max,
+        maxLength, onKeyPress, autoFocus, id, value, onChange, className, disabled, placeholder
+    } = props;
     return (
         <>
             {
-                props.type && props.type !== "checkbox" && props.type !== "number" ?
+                (type !== "checkbox" && type !== "number") ?
                     <Input
-                        type={props.type}
-                        id={props.id}
-                        placeholder={props.placeholder}
-                        value={props.value}
-                        className={props.className}
-                        onChange={props.onChange}
-                        disabled={props.disabled ?? false}
+                        type={type}
+                        id={id}
+                        placeholder={placeholder}
+                        value={value}
+                        className={className}
+                        onChange={onChange}
+                        disabled={disabled}
+                        onKeyPress={onKeyPress}
+                        autoFocus={autoFocus}
                     />
                     :
-                    props.type === "number" ?
+                    (type === "number" ?
                         <Input
-                            type={props.type}
-                            id={props.id}
-                            placeholder={props.placeholder}
-                            min={props.min ?? 0}
-                            max={props.max ?? 1000000000000}
-                            maxLength={props.maxLength ?? 18}
-                            value={props.value}
-                            className={props.className}
-                            onChange={props.onChange}
-                            disabled={props.disabled ?? false}
+                            type={type}
+                            id={id}
+                            placeholder={placeholder}
+                            min={min}
+                            max={max}
+                            maxLength={maxLength}
+                            value={value}
+                            className={className}
+                            onChange={onChange}
+                            disabled={disabled}
+                            onKeyPress={onKeyPress}
+                            autoFocus={autoFocus}
                         />
                         :
                         <Input
-                            type={props.type}
-                            id={props.id}
-                            className={props.className}
-                            placeholder={props.placeholder}
-                            checked={props.checked}
-                            onChange={props.onChange}
-                        />
+                            type={type}
+                            id={id}
+                            className={className}
+                            placeholder={placeholder}
+                            checked={checked}
+                            onChange={onChange}
+                            onKeyPress={onKeyPress}
+                            autoFocus={autoFocus}
+                        />)
             }
-            {
-                props.error &&
-                <div className="w-100 pl-3">
+            {error &&
+            <div className="w-100 pl-3">
                     <span className="text-red error">
-                        {props.error}
+                        {error}
                     </span>
-                </div>
+            </div>
             }
         </>
     );
 }
-
+InputComp.defaultProps = {
+    min: 0,
+    maxLength: 18,
+    max: 1000000000000,
+    autoFocus: false,
+    onKeyPress: () => {
+    },
+    disabled: false
+}
 export default InputComp;

@@ -11,6 +11,7 @@ const ShowModal = (props) => {
             className={props.className || "modal-dialog-centered" }
             isOpen={props.isActive}
             toggle={props.switchModal}
+            autoFocus={false}
         >
             <div className="modal-header bg-lighter">
                 <h4 className="modal-title pt-2">

@@ -13,6 +13,14 @@ const {
 } = localizedStrings;
 
 const AddCover = (props) => {
+    const onAddCoverPress = (e) => {
+        props.onAddCover(e)
+    };
+    const onKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            onAddCoverPress(e)
+        }
+    };
     return (
         <>
             <Row>
@@ -31,6 +39,8 @@ const AddCover = (props) => {
                             {coverLabel}
                         </label>
                         <Input
+                            onKeyPress={onKeyPress}
+                            autoFocus={true}
                             className="form-control-alternative"
                             id="cover"
                             placeholder="Enter Cover"
@@ -45,7 +55,7 @@ const AddCover = (props) => {
             </Row>
             <Row>
                 <Col className="text-right">
-                    <Button color="primary" type="button" onClick={props.onAddCover}>
+                    <Button color="primary" type="button" onClick={onAddCoverPress}>
                         {addButtonLabel}
                     </Button>
                 </Col>

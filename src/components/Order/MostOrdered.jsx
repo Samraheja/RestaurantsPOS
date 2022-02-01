@@ -19,8 +19,8 @@ const {
 const MostOrdered = (props) => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [subCategoryIndex, setSubCategoryIndex] = useState(0)
-    const mostOrderedItemChunks = chunk(get(props, 'mostOrdered'), 9)
-    const subCategoriesChunks = chunk(get(props, 'subCategories'), 16)
+    const mostOrderedItemChunks = chunk(get(props, 'mostOrdered', []), 9)
+    const subCategoriesChunks = chunk(get(props, 'subCategories', []), 16)
 
     const updateActiveIndex = (prop) => {
         setActiveIndex((prop === 'inc' && mostOrderedItemChunks.length > (activeIndex + 1)) ? (activeIndex + 1) : ((prop === 'dec' && (activeIndex > 0)) ? (activeIndex - 1) : activeIndex))
@@ -39,8 +39,6 @@ const MostOrdered = (props) => {
 
             <Carousel
                 activeIndex={activeIndex}
-                // next={next}
-                // previous={previous}
             >
                 {mostOrderedItemChunks.map((items = []) => {
                     return (
@@ -68,14 +66,15 @@ const MostOrdered = (props) => {
                         </CarouselItem>
                     );
                 })}
-                <CarouselControl className={'carousel-left'} direction="prev"
-                                 onClickHandler={() => {
-                                     updateActiveIndex('dec')
-                                 }}/>
+                {activeIndex > 0 && <CarouselControl className={'carousel-left'} direction="prev"
+                                                     onClickHandler={() => {
+                                                         updateActiveIndex('dec')
+                                                     }}/>}
+                {activeIndex < (mostOrderedItemChunks.length - 1) &&
                 <CarouselControl className={'carousel-right'} direction="next"
                                  onClickHandler={() => {
                                      updateActiveIndex('inc')
-                                 }}/>
+                                 }}/>}
             </Carousel>
 
             <div className="pt-5"/>
@@ -116,14 +115,16 @@ const MostOrdered = (props) => {
                         </CarouselItem>
                     );
                 })}
-                <CarouselControl className={'carousel-left'} direction="prev"
-                                 onClickHandler={() => {
-                                     updateActiveSubCategoryIndex('dec')
-                                 }}/>
+                {subCategoryIndex > 0 && <CarouselControl className={'carousel-left'} direction="prev"
+                                                          onClickHandler={() => {
+                                                              updateActiveSubCategoryIndex('dec')
+                                                          }}/>}
+                {subCategoryIndex < (subCategoriesChunks.length - 1) &&
                 <CarouselControl className={'carousel-right'} direction="next"
                                  onClickHandler={() => {
                                      updateActiveSubCategoryIndex('inc')
-                                 }}/>
+                                 }}/>}
+
             </Carousel>
         </>
     )
