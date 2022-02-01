@@ -4,7 +4,7 @@ import {Input} from 'reactstrap';
 const InputComp = (props) => {
     const {
         type, error, min, checked, max,
-        maxLength, onKeyPress, autoFocus, autocomplete, id, value, onChange, className, disabled, placeholder
+        maxLength, onKeyPress, onKeyDown, autoFocus, autocomplete, id, value, onChange, className, disabled, placeholder
     } = props;
     return (
         <>
@@ -13,6 +13,7 @@ const InputComp = (props) => {
                     <Input
                         autocomplete={autocomplete}
                         type={type}
+                        onKeyDown={onKeyDown}
                         id={id}
                         placeholder={placeholder}
                         value={value}
@@ -26,6 +27,7 @@ const InputComp = (props) => {
                     (type === "number" ?
                         <Input
                             type={type}
+                            onKeyPress={onKeyPress}
                             id={id}
                             placeholder={placeholder}
                             min={min}
@@ -63,6 +65,8 @@ InputComp.defaultProps = {
     autoFocus: false,
     autocomplete: true,
     onKeyPress: () => {
+    },
+    onKeyDown: () => {
     },
     disabled: false
 }

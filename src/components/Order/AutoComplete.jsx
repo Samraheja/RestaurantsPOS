@@ -12,13 +12,24 @@ const {
 } = localizedStrings;
 
 const AutoComplete = (props) => {
-    const [activeItemIndex, updateActiveItemIndex] = useState(0)
+    const [selectedItemIndex, setSelectedItemIndex] = useState();
     const onAddClick = (e) => {
         e.preventDefault();
         props.onAddButtonClick();
     };
-    const onSearchKeyPress = (e) => {
-        updateActiveItemIndex(1)
+    const onItemSelect = ({item}) => {
+        setSelectedItemIndex(undefined);
+        props.onItemClick(item.id, item.name, item.tablePrice)
+    };
+    const onKeyDown = (e) => {
+        if (e.code === "ArrowDown") {
+            setSelectedItemIndex((selectedItemIndex === undefined) ? 0 : (selectedItemIndex < (props.filteredMenu.length - 1) ? (selectedItemIndex + 1) : selectedItemIndex))
+        } else if (e.code === "ArrowUp") {
+            setSelectedItemIndex(selectedItemIndex > 0 ? (selectedItemIndex - 1) : selectedItemIndex)
+        }
+        if (e.code === "Enter") {
+            onItemSelect({item: props.filteredMenu[selectedItemIndex]})
+        }
     };
     const onQuantityKeyPress = (e) => {
         if (e.key === 'Enter') {
@@ -30,9 +41,10 @@ const AutoComplete = (props) => {
             <Row>
                 <Col lg="7" className="p-1 position-relative">
                     <Input
-                        autoFocus={activeItemIndex === 0}
+                        autoFocus={true}
                         autocomplete={'off'}
-                        onKeyPress={onSearchKeyPress}
+                        onKeyDown={onKeyDown}
+                        // onKeyPress={onSearchKeyPress}
                         id="searchItem"
                         placeholder="Search Item..."
                         type="text"
@@ -42,26 +54,22 @@ const AutoComplete = (props) => {
                         error={props.errorMessages.searchItem}
                     />
                     <div className="autoComplete">
-                        {
-                            props.filteredMenu &&
-                            props.filteredMenu.map((item, index) => {
-                                return (
-                                    <div
-                                        className={props.suggestionBoxClass}
-                                        onClick={() => {
-                                            props.onItemClick(item.id, item.name, item.tablePrice)
-                                        }}
-                                    >
-                                        <span key={index}>{item.name}</span>
-                                    </div>
-                                )
-                            })
+                        {props.filteredMenu.map((item, index) => {
+                            return (
+                                <div
+                                    style={{backgroundColor: index === selectedItemIndex ? 'yellow' : 'transparent'}}
+                                    className={props.suggestionBoxClass}
+                                    onClick={() => onItemSelect({item})}
+                                >
+                                    <span key={index}>{item.name}</span>
+                                </div>
+                            )
+                        })
                         }
                     </div>
                 </Col>
                 <Col lg="2" className="p-1">
                     <Input
-                        autoFocus={activeItemIndex === 1}
                         onKeyPress={onQuantityKeyPress}
                         id="quantity"
                         placeholder="Qty"
@@ -87,5 +95,7 @@ const AutoComplete = (props) => {
         </>
     )
 };
-
+AutoComplete.defaultProps = {
+    filteredMenu: []
+}
 export default AutoComplete;
