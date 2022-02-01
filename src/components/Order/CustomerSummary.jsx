@@ -14,11 +14,20 @@ const {
 } = localizedStrings;
 
 const CustomerSummary = (props) => {
+    const onSearchClick = (e) => {
+        props.onCustomerSearch(e)
+    };
+    const onKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            onSearchClick(e)
+        }
+    };
     return (
         <>
             <Row>
                 <Col lg="8" className="p-1 pl-4">
                     <Input
+                        onKeyPress={onKeyPress}
                         id="mobileNumber"
                         placeholder="Mobile Number"
                         type="text"
@@ -32,7 +41,7 @@ const CustomerSummary = (props) => {
                     <Button
                         color="danger"
                         type="button"
-                        onClick={props.onCustomerSearch}
+                        onClick={onSearchClick}
                     >
                         <i className="fa fa-search"/>
                     </Button>
