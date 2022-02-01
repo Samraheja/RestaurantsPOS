@@ -7,10 +7,13 @@ import AdminFooter from "../components/Footers/AdminFooter";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux-store/actions/login";
-import { getDailySaleDetails, getUserProfile } from "../redux-store/actions/profile";
+import { getDailySaleDetails, getUserProfile, updateDayOpenCloseStatus } from "../redux-store/actions/profile";
+import { addAlert } from "../redux-store/actions/alert";
 import { openCloseDay } from "../redux-store/actions/openCloseDay";
 import ShowAlert from "../components/AppComponents/Alerts/ShowAlert";
 import Loader from "../components/AppComponents/Loader/Loader";
+import { SuccessMessages, ErrorMessages } from '../constants/constants';
+
 
 const Admin = (props) => {
     const dispatch = useDispatch();
@@ -43,9 +46,47 @@ const Admin = (props) => {
         const payload = {
             "CollectionName": "DailyOpening",
             "Operation": operation
+        }
+
+        const successMessage = operation === "Open" ? SuccessMessages.DayOpened : SuccessMessages.DayClosed;
+
+        const onSuccess = (response) => {
+            const result = response.data;
+            var alertType = "Danger";
+            var message = "";
+
+            if (result === 1) {
+                alertType = "Success";
+                message = successMessage;
+
+                const status = operation === "Open";
+
+                dispatch(updateDayOpenCloseStatus({
+                    status
+                }));
+            } else if (result === 0) {
+                message = ErrorMessages.CommonError;
+            } else if (result === -1) {
+                message = ErrorMessages.NotOpenned;
+            } else if (result === -2) {
+                message = ErrorMessages.AlreadyOpened;
+            } else if (result === -3) {
+                message = ErrorMessages.AlreadyClosed;
+            } else if (result === -4) {
+                message = ErrorMessages.UnsettledBills;
+            }
+
+            dispatch(addAlert({
+                alertType,
+                message
+            }));
+
+            props.history.push("/admin/tables")
         };
+
         dispatch(openCloseDay({
             params: payload,
+            onSuccess,
             dispatch
         }));
     }
@@ -53,7 +94,8 @@ const Admin = (props) => {
     const Logout = () => {
         const onSuccess = (response) => {
             props.history.push('/auth/login');
-        };
+        }
+
         dispatch(logoutUser({
             onSuccess,
             dispatch
@@ -78,10 +120,7 @@ const Admin = (props) => {
 
     const getBrandText = (path) => {
         for (let i = 0; i < routes.length; i++) {
-            if (
-                props.location.pathname.indexOf(routes[i].layout + routes[i].path) !==
-                -1
-            ) {
+            if (props.location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
                 return routes[i].name;
             }
         }

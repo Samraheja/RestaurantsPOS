@@ -346,7 +346,6 @@ const SettleBill = (props) => {
     };
 
     const GetSettledPayments = () => {
-        debugger;
         const payload = {
             "CollectionName": "BillSettlement",
             "Operation": "Payment Details",

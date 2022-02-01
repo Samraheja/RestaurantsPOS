@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import get from 'lodash/get';
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import {
@@ -42,7 +43,7 @@ const Sidebar = (props) => {
     };
     // creates the links that appear in the left menu / Sidebar
     const createLinks = (routes) => {
-        return routes.filter(x => x.layout === "/admin")
+        return routes.filter(x => (x.layout === "/admin" && get(x, 'isMenuItem', true)))
             .map((prop, key) => {
                 return (
                     <NavItem key={key}>
