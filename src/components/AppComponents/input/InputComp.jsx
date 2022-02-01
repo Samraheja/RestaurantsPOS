@@ -4,13 +4,14 @@ import {Input} from 'reactstrap';
 const InputComp = (props) => {
     const {
         type, error, min, checked, max,
-        maxLength, onKeyPress, autoFocus, id, value, onChange, className, disabled, placeholder
+        maxLength, onKeyPress, autoFocus, autocomplete, id, value, onChange, className, disabled, placeholder
     } = props;
     return (
         <>
             {
                 (type !== "checkbox" && type !== "number") ?
                     <Input
+                        autocomplete={autocomplete}
                         type={type}
                         id={id}
                         placeholder={placeholder}
@@ -34,8 +35,6 @@ const InputComp = (props) => {
                             className={className}
                             onChange={onChange}
                             disabled={disabled}
-                            onKeyPress={onKeyPress}
-                            autoFocus={autoFocus}
                         />
                         :
                         <Input
@@ -45,8 +44,6 @@ const InputComp = (props) => {
                             placeholder={placeholder}
                             checked={checked}
                             onChange={onChange}
-                            onKeyPress={onKeyPress}
-                            autoFocus={autoFocus}
                         />)
             }
             {error &&
@@ -64,6 +61,7 @@ InputComp.defaultProps = {
     maxLength: 18,
     max: 1000000000000,
     autoFocus: false,
+    autocomplete: true,
     onKeyPress: () => {
     },
     disabled: false

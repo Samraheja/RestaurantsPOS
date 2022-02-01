@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     Button,
     Row,
@@ -12,11 +12,27 @@ const {
 } = localizedStrings;
 
 const AutoComplete = (props) => {
+    const [activeItemIndex, updateActiveItemIndex] = useState(0)
+    const onAddClick = (e) => {
+        e.preventDefault();
+        props.onAddButtonClick();
+    };
+    const onSearchKeyPress = (e) => {
+        updateActiveItemIndex(1)
+    };
+    const onQuantityKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            onAddClick(e)
+        }
+    };
     return (
         <>
             <Row>
                 <Col lg="7" className="p-1 position-relative">
                     <Input
+                        autoFocus={activeItemIndex === 0}
+                        autocomplete={'off'}
+                        onKeyPress={onSearchKeyPress}
                         id="searchItem"
                         placeholder="Search Item..."
                         type="text"
@@ -45,6 +61,8 @@ const AutoComplete = (props) => {
                 </Col>
                 <Col lg="2" className="p-1">
                     <Input
+                        autoFocus={activeItemIndex === 1}
+                        onKeyPress={onQuantityKeyPress}
                         id="quantity"
                         placeholder="Qty"
                         type="number"
@@ -59,13 +77,10 @@ const AutoComplete = (props) => {
                     <Button
                         color="danger"
                         type="button"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            props.onAddButtonClick();
-                        }}
+                        onClick={onAddClick}
                     >
                         {addButtonLabel}
-                        <i className="fa fa-plus-circle pl-2"></i>
+                        <i className="fa fa-plus-circle pl-2"/>
                     </Button>
                 </Col>
             </Row>
