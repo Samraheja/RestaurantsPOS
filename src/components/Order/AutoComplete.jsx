@@ -57,7 +57,7 @@ const AutoComplete = (props) => {
                         {props.filteredMenu.map((item, index) => {
                             return (
                                 <div
-                                    style={{backgroundColor: index === selectedItemIndex ? 'yellow' : 'transparent'}}
+                                    style={{backgroundColor: index === selectedItemIndex ? 'rgba(0,0,0,5%)' : 'transparent'}}
                                     className={props.suggestionBoxClass}
                                     onClick={() => onItemSelect({item})}
                                 >
