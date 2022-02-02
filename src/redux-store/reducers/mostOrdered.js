@@ -18,6 +18,11 @@ const MostOrdered = ((state = initialState, actions = {}) => {
                 ...state, isLoading: actions.payload.status
             }
         }
+        case types.login.LOGOUT_USER: {
+            localStorage.clear();
+
+            return initialState
+        }
         default: {
             return state;
         }

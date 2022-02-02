@@ -49,6 +49,11 @@ const SettleBill = ((state = initialState, actions = {}) => {
                 ...state, isSettledLoading: actions.payload.status
             }
         }
+        case types.login.LOGOUT_USER: {
+            localStorage.clear();
+
+            return initialState
+        }
         default: {
             return state;
         }

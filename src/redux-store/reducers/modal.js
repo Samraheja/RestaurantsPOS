@@ -12,6 +12,11 @@ const Modal = ((state = initialState, actions = {}) => {
                 showModal: !state.showModal
             }
         }
+        case types.login.LOGOUT_USER: {
+            localStorage.clear();
+
+            return initialState
+        }
         default: {
             return state;
         }

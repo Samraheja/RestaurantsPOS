@@ -113,13 +113,6 @@ export const logoutUser = payload => {
     }
 };
 
-export const saveUserInfo = payload => {
-    return {
-        type: types.login.SAVE_USER_INFO,
-        payload
-    }
-};
-
 export const switchLoadingStatus = payload => {
 
     return {

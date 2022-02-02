@@ -19,17 +19,15 @@ const Login = ((state = initialState, actions = {}) => {
                 ...state, token: response.data.token
             }
         }
-        case types.login.LOGOUT_USER: {
-            localStorage.clear();
-
-            return {
-                ...state, token: {}
-            }
-        }
         case types.login.SWITCH_LOADING_STATUS: {
             return {
                 ...state, isLoading: actions.payload.status
             }
+        }
+        case types.login.LOGOUT_USER: {
+            localStorage.clear();
+
+            return initialState
         }
         default: {
             return state;

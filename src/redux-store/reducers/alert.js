@@ -8,8 +8,7 @@ const initialState = {
 const Alert = ((state = initialState, actions = {}) => {
     switch (actions.type) {
         case types.alert.ADD_ALERT: {
-            const { alertType, message } = actions.payload
-
+            const { alertType, message } = actions.payload;
             return {
                 ...state, 
                 alertType, 
@@ -22,6 +21,11 @@ const Alert = ((state = initialState, actions = {}) => {
                 alertType: null,
                 message: null
             }
+        }
+        case types.login.LOGOUT_USER: {
+            localStorage.clear();
+
+            return initialState
         }
         default: {
             return state;
