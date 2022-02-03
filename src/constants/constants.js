@@ -89,7 +89,8 @@ export const ErrorMessages = {
     ValidAmount: "Amount must be greater than 0",
     NotSettled: "Unable to settle bill",
     AddPayment: "Please add payment details",
-    AmountCheck: "Settlement amount can not be less than bill amount"
+    AmountCheck: "Settlement amount can not be less than bill amount",
+    CheckValidMenuItem: "Please select valid menu item"
 }
 
 export const AlertTypes = {
@@ -172,9 +173,9 @@ export const AddCoverDefaults = {
 }
 
 export const AutoCompleteDefaults = {
-    itemId: 0,
+    itemId: undefined,
     searchItem: "",
-    quantity: "",
+    quantity: undefined,
     price: 0.00,
     filteredMenu: [],
     suggestionBoxClass: "autoCompleteItemBox",

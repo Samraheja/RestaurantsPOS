@@ -27,6 +27,7 @@ const InputComp = (props) => {
                     (type === "number" ?
                         <Input
                             type={type}
+                            onKeyDown={onKeyDown}
                             onKeyPress={onKeyPress}
                             id={id}
                             placeholder={placeholder}
@@ -37,6 +38,7 @@ const InputComp = (props) => {
                             className={className}
                             onChange={onChange}
                             disabled={disabled}
+                            autoFocus={autoFocus}
                         />
                         :
                         <Input

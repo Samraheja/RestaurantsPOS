@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import AutoCompleteComp from "../../components/Order/AutoComplete";
-import { AutoCompleteDefaults, ErrorMessages, GlobalConstants } from "../../constants/constants";
-import { getMenu } from "../../redux-store/actions/menu";
-import { doesHaveValue, isValidAlphaNumeric, isValidQuantity } from "../../utils/functions";
+import {AutoCompleteDefaults, ErrorMessages, GlobalConstants} from "../../constants/constants";
+import {getMenu} from "../../redux-store/actions/menu";
+import {doesHaveValue, isValidAlphaNumeric, isValidQuantity} from "../../utils/functions";
 
 const MostOrdered = (props) => {
     const [state, setState] = useState({
@@ -12,7 +12,7 @@ const MostOrdered = (props) => {
     });
 
     const dispatch = useDispatch();
-    const { menu, isLoading } = useSelector(state => state.menu);
+    const {menu, isLoading} = useSelector(state => state.menu);
 
     useEffect(() => {
         if (menu.length === 0) {
@@ -30,12 +30,11 @@ const MostOrdered = (props) => {
     }, [menu.length, dispatch]);
 
     const onChange = (e) => {
-        const { id, value } = e.target;
+        const {id, value} = e.target;
 
         if (id === "searchItem") {
             filterMenu(id, value);
-        }
-        else {
+        } else {
             setState(prevState => ({
                 ...prevState,
                 [id]: value
@@ -60,15 +59,13 @@ const MostOrdered = (props) => {
 
         if (!doesHaveValue(searchItem)) {
             finalErrorMessages.searchItem = ErrorMessages.MenuNameRequired;
-        }
-        else if (!isValidAlphaNumeric(searchItem)) {
+        } else if (!isValidAlphaNumeric(searchItem)) {
             finalErrorMessages.searchItem = ErrorMessages.ValidAlphanumeric;
         }
 
         if (!doesHaveValue(quantity)) {
             finalErrorMessages.quantity = ErrorMessages.QuantityRequired;
-        }
-        else if (!isValidQuantity(quantity)) {
+        } else if (!isValidQuantity(quantity)) {
             finalErrorMessages.quantity = ErrorMessages.ValidQuantity;
         }
 
@@ -92,15 +89,14 @@ const MostOrdered = (props) => {
         if (Object.keys(finalErrorMessages).length === 0) {
             setState((prevState) => ({
                 ...prevState,
-                itemId: 0,
-                searchItem: "",
-                quantity: "",
-                price: 0.00
+                itemId: AutoCompleteDefaults.itemId,
+                searchItem: AutoCompleteDefaults.searchItem,
+                quantity: AutoCompleteDefaults.quantity,
+                price: AutoCompleteDefaults.price
             }));
 
             props.onMenuItemAdd(state.itemId, state.price, state.quantity);
-        }
-        else {
+        } else {
             setState(prevState => ({
                 ...prevState,
                 errorMessages: finalErrorMessages
@@ -109,9 +105,8 @@ const MostOrdered = (props) => {
     }
 
     if (isLoading) {
-        return <Loader />
-    }
-    else {
+        return <Loader/>
+    } else {
         return (
             <AutoCompleteComp
                 itemId={state.itemId}

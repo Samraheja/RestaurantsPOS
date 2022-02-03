@@ -47,47 +47,14 @@ const Admin = (props) => {
             "CollectionName": "DailyOpening",
             "Operation": operation
         }
-
-        const successMessage = operation === "Open" ? SuccessMessages.DayOpened : SuccessMessages.DayClosed;
-
-        const onSuccess = (response) => {
-            const result = response.data;
-            var alertType = "Danger";
-            var message = "";
-
-            if (result === 1) {
-                alertType = "Success";
-                message = successMessage;
-
-                const status = operation === "Open";
-
-                dispatch(updateDayOpenCloseStatus({
-                    status
-                }));
-            } else if (result === 0) {
-                message = ErrorMessages.CommonError;
-            } else if (result === -1) {
-                message = ErrorMessages.NotOpenned;
-            } else if (result === -2) {
-                message = ErrorMessages.AlreadyOpened;
-            } else if (result === -3) {
-                message = ErrorMessages.AlreadyClosed;
-            } else if (result === -4) {
-                message = ErrorMessages.UnsettledBills;
-            }
-
-            dispatch(addAlert({
-                alertType,
-                message
-            }));
-
+        const onSuccess = () => {
             props.history.push("/admin/tables")
         };
-
         dispatch(openCloseDay({
             params: payload,
             onSuccess,
-            dispatch
+            dispatch,
+            operation
         }));
     }
 

@@ -17,7 +17,8 @@ const DailyOpeningClosing = (props) => {
         dispatch(openCloseDay({
             params: payload,
             onSuccess: props.switchModal,
-            dispatch
+            dispatch,
+            operation
         }));
     };
 

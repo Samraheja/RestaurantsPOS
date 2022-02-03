@@ -28,7 +28,11 @@ const AutoComplete = (props) => {
             setSelectedItemIndex(selectedItemIndex > 0 ? (selectedItemIndex - 1) : selectedItemIndex)
         }
         if (e.code === "Enter") {
-            onItemSelect({item: props.filteredMenu[selectedItemIndex]})
+            if (selectedItemIndex === undefined) {
+                onAddClick(e)
+            } else {
+                onItemSelect({item: props.filteredMenu[selectedItemIndex]})
+            }
         }
     };
     const onQuantityKeyPress = (e) => {

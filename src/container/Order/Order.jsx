@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import OrderComp from "../../components/Order/Order";
-import { AlertTypes, ErrorMessages, OrdersDefault, SuccessMessages } from "../../constants/constants";
-import { completeOrder, getOrderItemsList, saveOrderItem, updateQuantity } from "../../redux-store/actions/order"
-import { addAlert } from "../../redux-store/actions/alert";
-import { getDailySaleDetails } from "../../redux-store/actions/profile";
+import {AlertTypes, ErrorMessages, OrdersDefault, SuccessMessages} from "../../constants/constants";
+import {completeOrder, getOrderItemsList, saveOrderItem, updateQuantity} from "../../redux-store/actions/order"
+import {addAlert} from "../../redux-store/actions/alert";
+import {getDailySaleDetails} from "../../redux-store/actions/profile";
 
 const Order = (props) => {
     const [state, setState] = useState({
@@ -13,8 +13,8 @@ const Order = (props) => {
     });
 
     const dispatch = useDispatch();
-    const { billingDetails, orderedItems, isLoading } = useSelector(state => state.order);
-    const { customerInfo } = useSelector(state => state.customer);
+    const {billingDetails, orderedItems, isLoading} = useSelector(state => state.order);
+    const {customerInfo} = useSelector(state => state.customer);
 
     useEffect(() => {
         const billId = props.history.location.state;
@@ -36,58 +36,64 @@ const Order = (props) => {
                     params: payload,
                     dispatch
                 }));
-            };
-        }
-        else {
+            }
+            ;
+        } else {
             props.history.push("/admin/tables")
         }
     }, [customerInfo, orderedItems && orderedItems.length]);
 
     const onChange = (e) => {
-        const { id, value } = e.target;
+        const {id, value} = e.target;
 
         if (id !== "discount") {
             setState(prevState => ({
                 ...prevState,
                 [id]: value
             }));
-        }
-        else {
+        } else {
             CalculateAmount(value);
         }
     };
 
     const onMenuItemAdd = (menuId, price, quantity) => {
-        const payload = {
-            CollectionName: "Orders",
-            "Orders": {
-                "BillId": parseInt(billingDetails.id),
-                "MenuId": parseInt(menuId),
-                "Price": parseFloat(price),
-                "Quantity": parseInt(quantity)
-            }
-        };
+        if (menuId) {
+            const payload = {
+                CollectionName: "Orders",
+                "Orders": {
+                    "BillId": parseInt(billingDetails.id),
+                    "MenuId": parseInt(menuId),
+                    "Price": parseFloat(price),
+                    "Quantity": parseInt(quantity)
+                }
+            };
 
-        const successMessage = SuccessMessages.ItemAdded;
+            const successMessage = SuccessMessages.ItemAdded;
 
-        const onSuccess = () => {
-            const payloadSale = {
-                CollectionName: "DailySales"
-            }
+            const onSuccess = () => {
+                const payloadSale = {
+                    CollectionName: "DailySales"
+                };
 
-            dispatch(getDailySaleDetails({
-                params: payloadSale,
+                dispatch(getDailySaleDetails({
+                    params: payloadSale,
+                    dispatch
+                }));
+            };
+
+            dispatch(saveOrderItem({
+                params: payload,
+                successMessage,
+                onSuccess,
                 dispatch
             }));
+        } else {
+            dispatch(addAlert({
+                alertType: AlertTypes.Danger,
+                message: ErrorMessages.CheckValidMenuItem
+            }))
         }
-
-        dispatch(saveOrderItem({
-            params: payload,
-            successMessage,
-            onSuccess,
-            dispatch
-        }));
-    }
+    };
 
     const onQuantityUpdate = (id, quantity, operation) => {
         const payload = {
@@ -141,8 +147,7 @@ const Order = (props) => {
                 onSuccess,
                 dispatch
             }));
-        }
-        else {
+        } else {
             dispatch(addAlert({
                 alertType: AlertTypes.Danger,
                 message: ErrorMessages.SelectCustomer
@@ -153,7 +158,7 @@ const Order = (props) => {
     const CalculateAmount = (discount) => {
         var discountAmount = 0;
         billingDetails.itemsList.forEach(item => {
-            if(item.menu.isDiscountApplicable) {
+            if (item.menu.isDiscountApplicable) {
                 discountAmount += ((item.amount * discount) / 100);
             }
         });
@@ -172,7 +177,7 @@ const Order = (props) => {
     return (
         <>
             {
-                isLoading && <Loader />
+                isLoading && <Loader/>
             }
             <OrderComp
                 billingDetails={billingDetails}
