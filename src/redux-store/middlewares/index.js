@@ -59,7 +59,7 @@ const middleware = (store => function (next) {
                         else {
                             store.dispatch(addAlert({
                                 alertType: AlertTypes.Danger,
-                                message: error.response.data
+                                message: (typeof error.response.data === 'string' ? error.response.data : ErrorMessages.SomethingWentWrong)
                             }));
 
                             if (error.response.status === 401) {

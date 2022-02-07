@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import CustomerSummaryComp from "../../components/Order/CustomerSummary";
 import { CustomerSummaryDefault, ErrorMessages } from "../../constants/constants";
-import { toggleModal } from "../../redux-store/actions/modal";
 import { getCustomerById, searchCustomer } from "../../redux-store/actions/customer";
 import { doesHaveValue, isDigitsOnly, isValidMobileNumber } from "../../utils/functions";
 
@@ -28,7 +27,10 @@ const CustomerSummary = (props) => {
     }, [props.customerId, dispatch]);
 
     const switchModal = () => {
-        dispatch(toggleModal());
+        setState(prevState => ({
+            ...prevState,
+            isAddCustomerVisible:!prevState.isAddCustomerVisible
+        }));
     };
 
     const onChange = (e) => {
@@ -106,6 +108,7 @@ const CustomerSummary = (props) => {
 
     return (
         <CustomerSummaryComp
+            isAddCustomerVisible={state.isAddCustomerVisible}
             customerId={props.customerId}
             billId={props.billId}
             mobileNumber={state.mobileNumber}

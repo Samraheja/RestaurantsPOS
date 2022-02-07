@@ -9,10 +9,11 @@ import {
 import Input from "../AppComponents/input/InputComp";
 import Select from "../AppComponents/select/SelectComp";
 import localizedStrings from '../../constants/localizations'
+import { paymentModes, vendorType } from '../../constants/constants'
 
 const {
     tableNumberLabel, billNumberLabel, cancelButtonLabel, paymentModeLabel, transactionNumberLabel,
-    amountLabel, addPaymentLabel, serialNoTitle, paymentTypeLabel, settleBillButtonLabel,
+    amountLabel, addPaymentLabel, serialNoTitle, amountPlaceholder, paymentTypeLabel, settleBillButtonLabel,
     vendorLabel, billAmountTitle, returnToCustomerLabel, tenderedLabel, remainingLabel
 } = localizedStrings;
 
@@ -139,12 +140,12 @@ const SettleBill = (props) => {
                                 <Input
                                     className="form-control-alternative"
                                     id="amount"
-                                    placeholder="Enter Amount"
+                                    placeholder={amountPlaceholder}
                                     type="text"
                                     value={props.amount}
                                     onChange={props.onChange}
                                     error={props.errorMessages.amount}
-                                    disabled={props.vendor !== "Self" || props.paymentMode === "Payment Due"}
+                                    disabled={props.vendor !== vendorType.self|| props.paymentMode === paymentModes.paymentDue}
                                 />
                             </FormGroup>
                         </Col>

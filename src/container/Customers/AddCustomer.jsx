@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import AddCustomerComp from "../../components/Customers/AddCustomer";
 import { AddCustomerDefault, ErrorMessages, SuccessMessages } from "../../constants/constants";
 import { saveCustomer } from "../../redux-store/actions/customer";
-import { toggleModal } from "../../redux-store/actions/modal";
 import { doesHaveValue, isDigitsOnly, isValidAlphabets, isValidAlphaNumeric, isValidEmail, isValidMobileNumber, isValidZipCode } from "../../utils/functions";
 
 const AddCustomer = (props) => {
@@ -134,7 +133,7 @@ const AddCustomer = (props) => {
             const successMessage = SuccessMessages.CustomerRegistered;
 
             const onSuccess = () => {
-                dispatch(toggleModal());
+                props.switchModal()
             }
 
             dispatch(saveCustomer({

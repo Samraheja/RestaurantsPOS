@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SettleBillComp from "../../components/SettleBill/SettleBill";
 import { AlertTypes, BillSettlementDefaults, ErrorMessages, SuccessMessages } from "../../constants/constants";
-import { getVendors, getPaymentModes, GetBillToSetlle, settleBillDetails, getSettledPaymentDetails } from "../../redux-store/actions/settleBill";
+import {
+    getVendors,
+    getPaymentModes,
+    GetBillToSetlle,
+    settleBillDetails,
+    getSettledPaymentDetails
+} from "../../redux-store/actions/settleBill";
 import { doesHaveValue, isValidAlphaNumeric, isValidDecimalOnly, isValidDigits } from "../../utils/functions";
 import { addAlert } from "../../redux-store/actions/alert";
-import { toggleModal } from "../../redux-store/actions/modal";
 import { getTablesStatus } from "../../redux-store/actions/tables";
 import { getDailySaleDetails } from "../../redux-store/actions/profile";
+import { paymentModes, vendorType } from "../../constants/constants";
 
 const SettleBill = (props) => {
     const [state, setState] = useState({
@@ -45,24 +51,26 @@ const SettleBill = (props) => {
             if (billingDetails && billingDetails.isSettled) {
                 GetSettledPayments();
             }
-        }
-        else {
-            dispatch(toggleModal());
+        } else {
+            props.switchModal && props.switchModal();
         }
     }, [vendors, paymentModes, dispatch]);
+
+    const setVendorDetails = ({vendor}) => {
+        setState((prevState) => ({
+            ...prevState,
+            vendorId: vendor.id,
+            vendor: vendor.name
+        }));
+    }
 
     const bindVendors = () => {
         if (vendors.length === 0) {
             const payload = {
                 CollectionName: "Vendors"
             };
-
             const onSuccess = (response) => {
-                setState((prevState) => ({
-                    ...prevState,
-                    vendorId: response.data.response[0].id,
-                    vendor: response.data.response[0].name
-                }));
+                setVendorDetails({vendor:response.data.response[0]});
             };
 
             dispatch(getVendors({
@@ -70,6 +78,8 @@ const SettleBill = (props) => {
                 onSuccess,
                 dispatch
             }));
+        }else{
+            setVendorDetails({vendor:vendors[0]});
         }
     };
 
@@ -104,18 +114,16 @@ const SettleBill = (props) => {
                 ...prevState,
                 [id]: value,
                 "vendor": e.target.selectedOptions[0].text,
-                "amount": e.target.selectedOptions[0].text !== "Self" ? billingDetails.netAmount : "0"
+                "amount": e.target.selectedOptions[0].text !== vendorType.self ? billingDetails.netAmount : "0"
             }));
-        }
-        else if (id === "paymentModeId") {
+        } else if (id === "paymentModeId") {
             setState(prevState => ({
                 ...prevState,
                 [id]: value,
                 "paymentMode": e.target.selectedOptions[0].text,
-                "amount": e.target.selectedOptions[0].text === "Payment Due" ? state.remainingAmount : "0"
+                "amount": e.target.selectedOptions[0].text === paymentModes.paymentDue ? state.remainingAmount : "0"
             }));
-        }
-        else {
+        } else {
             setState(prevState => ({
                 ...prevState,
                 [id]: value,
@@ -141,11 +149,9 @@ const SettleBill = (props) => {
 
         if (!doesHaveValue(amount)) {
             finalErrorMessages.amount = ErrorMessages.AmountRequired;
-        }
-        else if (!isValidDecimalOnly(amount)) {
+        } else if (!isValidDecimalOnly(amount)) {
             finalErrorMessages.amount = ErrorMessages.DigitsOnly;
-        }
-        else if (!isValidDigits(amount)) {
+        } else if (!isValidDigits(amount)) {
             finalErrorMessages.amount = ErrorMessages.ValidAmount;
         }
 
@@ -185,8 +191,7 @@ const SettleBill = (props) => {
                     details
                 ]
             }));
-        }
-        else {
+        } else {
             setState(prevState => ({
                 ...prevState,
                 errorMessages: finalErrorMessages
@@ -202,22 +207,19 @@ const SettleBill = (props) => {
                 for (var i = 0; i < state.paymentDetails.length; i++) {
                     if (state.paymentDetails[i].id > 0) {
                         UpdateSettlementDetails(state.paymentDetails[i]);
-                    }
-                    else {
+                    } else {
                         SaveSettlementDetails(state.paymentDetails[i], i);
                     }
-                };
-
-                dispatch(toggleModal());
-            }
-            else {
+                }
+                ;
+                props.switchModal && props.switchModal();
+            } else {
                 dispatch(addAlert({
                     alertType: AlertTypes.Danger,
                     message: ErrorMessages.AmountCheck
                 }));
             }
-        }
-        else {
+        } else {
             dispatch(addAlert({
                 alertType: AlertTypes.Danger,
                 message: ErrorMessages.AddPayment
@@ -333,7 +335,7 @@ const SettleBill = (props) => {
     };
 
     const onCancelSettlement = () => {
-        dispatch(toggleModal());
+        props.switchModal && props.switchModal();
     };
 
     const onDeletePayment = (index) => {
@@ -364,7 +366,6 @@ const SettleBill = (props) => {
             dispatch
         }));
     };
-
     return (
         <SettleBillComp
             vendorId={state.vendorId}

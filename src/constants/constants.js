@@ -90,7 +90,16 @@ export const ErrorMessages = {
     NotSettled: "Unable to settle bill",
     AddPayment: "Please add payment details",
     AmountCheck: "Settlement amount can not be less than bill amount",
-    CheckValidMenuItem: "Please select valid menu item"
+    CheckValidMenuItem: "Please select valid menu item",
+    SomethingWentWrong: "Something went wrong"
+}
+
+export const paymentModes = {
+    paymentDue: "Payment Due"
+}
+
+export const vendorType = {
+    self: "Self"
 }
 
 export const AlertTypes = {
@@ -196,7 +205,8 @@ export const OrdersDefault = {
 
 export const CustomerSummaryDefault = {
     mobileNumber: "",
-    errorMessages: {}
+    errorMessages: {},
+    isAddCustomerVisible:false
 }
 
 export const AddCustomerDefault = {
@@ -231,8 +241,7 @@ export const SettledBillsDefaults = {
     sortBy: "BillDate",
     order: "asc",
     billDate: moment(new Date()).format('YYYY-MM-DD'),
-    billId: 0,
-    showSettleBill: false
+    billId: 0
 }
 
 export const Months = [

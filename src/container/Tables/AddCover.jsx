@@ -33,11 +33,9 @@ const AddCover = (props) => {
 
         if (!doesHaveValue(cover)) {
             finalErrorMessages.cover = ErrorMessages.CoverRequired;
-        }
-        else if (!isDigitsOnly(cover)) {
+        } else if (!isDigitsOnly(cover)) {
             finalErrorMessages.cover = ErrorMessages.DigitsOnly;
-        }
-        else if (!isValidDigits(cover)) {
+        } else if (!isValidDigits(cover)) {
             finalErrorMessages.cover = ErrorMessages.ValidDigits;
         }
 
@@ -57,20 +55,20 @@ const AddCover = (props) => {
                     "Cover": parseInt(state.cover),
                     "OrderType": props.orderType
                 }
-            }
+            };
 
             const onSuccess = (response) => {
                 const billId = response.data.id;
+                props.switchModal && props.switchModal();
                 props.history.push("/admin/order", billId);
-            }
+            };
 
             dispatch(addTableCover({
                 params: payload,
                 onSuccess,
                 dispatch
             }));
-        }
-        else {
+        } else {
             setState(prevState => ({
                 ...prevState,
                 errorMessages: finalErrorMessages

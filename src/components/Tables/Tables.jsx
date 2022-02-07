@@ -129,8 +129,11 @@ const Tables = (props) => {
                         isActive={props.showCover}
                         title={addCoverTitle}
                         switchModal={() => props.switchModal('showCover')}
-                        renderScene={<AddCover tableNumber={props.tableNumber} orderType={props.orderType}
-                                               history={props.history}/>}
+                        renderScene={<AddCover
+                            switchModal={() => props.switchModal('showCover')}
+                            tableNumber={props.tableNumber}
+                            orderType={props.orderType}
+                            history={props.history}/>}
                     />
 
                     <Modal
@@ -151,6 +154,7 @@ const Tables = (props) => {
                         renderScene={
                             <SettleBill
                                 billId={props.billId}
+                                switchModal={_ => props.switchModal('showSettleBill')}
                             />
                         }
                     />

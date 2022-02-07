@@ -75,6 +75,7 @@ export default {
     "subscriptionStatusLabel": 'Subscription Status: ',
     "registrationDateLabel": 'Registration Date: ',
     "amountLabel": 'Amount',
+    "amountPlaceholder": 'Enter Amount',
     "addPaymentLabel": ' Add Payment',
     "taxLabel": 'Tax:',
     "addButtonLabel": 'Add',

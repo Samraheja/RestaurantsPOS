@@ -10,7 +10,7 @@ const SettledBills = (props) => {
     const [state, setState] = useState({
         ...SettledBillsDefaults
     });
-
+    const [isSettleBillVisible,toggleSettleBill]=useState(false);
     const dispatch = useDispatch();
     const { totalRecords, totalPages, settledBills, isSettledLoading } = useSelector(state => state.settleBill);
 
@@ -62,7 +62,7 @@ const SettledBills = (props) => {
     };
 
     const switchModal = () => {
-        dispatch(toggleModal());
+        toggleSettleBill(!isSettleBillVisible)
     };
 
     const onEditSettlement = (billId) => {
@@ -73,7 +73,7 @@ const SettledBills = (props) => {
                 showSettleBill: true
             }));
 
-            dispatch(toggleModal());
+            toggleSettleBill(true)
         }
     }
 
@@ -83,6 +83,7 @@ const SettledBills = (props) => {
     else {
         return (
             <SettledBillsComp
+                isSettleBillVisible={isSettleBillVisible}
                 billDate={state.billDate}
                 onChange={onChange}
                 totalRecords={totalRecords}

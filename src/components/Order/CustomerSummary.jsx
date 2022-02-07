@@ -80,11 +80,12 @@ const CustomerSummary = (props) => {
                 </Row>
             }
             <Modal
+                isActive={props.isAddCustomerVisible}
                 title={addCustomerLabel}
                 className="modal-dialog-centered modal-popup-800"
-                showModal={props.showModal}
                 switchModal={props.switchModal}
-                renderScene={<AddCustomer billId={props.billId} mobileNumber={props.mobileNumber}/>}
+                renderScene={<AddCustomer switchModal={props.switchModal} billId={props.billId}
+                                          mobileNumber={props.mobileNumber}/>}
             />
         </>
     )
