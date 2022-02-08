@@ -10,7 +10,7 @@ const SettledBills = (props) => {
     const [state, setState] = useState({
         ...SettledBillsDefaults
     });
-    const [isSettleBillVisible,toggleSettleBill]=useState(false);
+    const [isSettleBillVisible, toggleSettleBill] = useState(false);
     const dispatch = useDispatch();
     const { totalRecords, totalPages, settledBills, isSettledLoading } = useSelector(state => state.settleBill);
 

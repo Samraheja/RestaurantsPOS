@@ -51,73 +51,73 @@ const SettledBills = (props) => {
                             </CardHeader>
                             <Table className="align-items-center table-flush tblSettle" responsive>
                                 <thead className="thead-light">
-                                <tr>
-                                    <th scope="col" className="Header">Sr. No.</th>
-                                    <th scope="col" className="Header"
-                                        onClick={() => props.SortRecords("BillDate")}>Bill Date
-                                    </th>
-                                    <th scope="col" className="Header"
-                                        onClick={() => props.SortRecords("BillNumber")}>Bill Number
-                                    </th>
-                                    <th scope="col" className="Header"
-                                        onClick={() => props.SortRecords("Name")}>Customer Name
-                                    </th>
-                                    <th scope="col" className="Header"
-                                        onClick={() => props.SortRecords("Vendor")}>Vendor
-                                    </th>
-                                    <th scope="col" className="Header"
-                                        onClick={() => props.SortRecords("PaymentMode")}>Payment Mode
-                                    </th>
-                                    <th scope="col" className="Header"
-                                        onClick={() => props.SortRecords("Amount")}>Amount
-                                    </th>
-                                    <th scope="col" className="Header"
-                                        onClick={() => props.SortRecords("SettledAmount")}>Settled Amount
-                                    </th>
-                                    <th scope="col" className="Header"/>
-                                </tr>
+                                    <tr>
+                                        <th scope="col" className="Header">Sr. No.</th>
+                                        <th scope="col" className="Header"
+                                            onClick={() => props.SortRecords("BillDate")}>Bill Date
+                                        </th>
+                                        <th scope="col" className="Header"
+                                            onClick={() => props.SortRecords("BillNumber")}>Bill Number
+                                        </th>
+                                        <th scope="col" className="Header"
+                                            onClick={() => props.SortRecords("Name")}>Customer Name
+                                        </th>
+                                        <th scope="col" className="Header"
+                                            onClick={() => props.SortRecords("Vendor")}>Vendor
+                                        </th>
+                                        <th scope="col" className="Header"
+                                            onClick={() => props.SortRecords("PaymentMode")}>Payment Mode
+                                        </th>
+                                        <th scope="col" className="Header"
+                                            onClick={() => props.SortRecords("Amount")}>Amount
+                                        </th>
+                                        <th scope="col" className="Header"
+                                            onClick={() => props.SortRecords("SettledAmount")}>Settled Amount
+                                        </th>
+                                        <th scope="col" className="Header" />
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {
-                                    props.settledBills &&
-                                    props.settledBills.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>
-                                                    {index + 1}
-                                                </td>
-                                                <td>
-                                                    {item.billDate}
-                                                </td>
-                                                <td>
-                                                    {item.billNumber}
-                                                </td>
-                                                <td>
-                                                    {item.name}
-                                                </td>
-                                                <td>
-                                                    {item.vendor}
-                                                </td>
-                                                <td>
-                                                    {item.paymentModes}
-                                                </td>
-                                                <td>
-                                                    {item.amount}
-                                                </td>
-                                                <td>
-                                                    {item.settledAmount}
-                                                </td>
-                                                <td>
-                                                    <span className="p-1 pr-4 text-right cursor-pointer"
-                                                          onClick={(e) => {
-                                                              e.preventDefault();
-                                                              props.onEditSettlement(item.id);
-                                                          }}><i className="fas fa-edit"></i></span>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
+                                    {
+                                        props.settledBills &&
+                                        props.settledBills.map((item, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>
+                                                        {index + 1}
+                                                    </td>
+                                                    <td>
+                                                        {item.billDate}
+                                                    </td>
+                                                    <td>
+                                                        {item.billNumber}
+                                                    </td>
+                                                    <td>
+                                                        {item.name}
+                                                    </td>
+                                                    <td>
+                                                        {item.vendor}
+                                                    </td>
+                                                    <td>
+                                                        {item.paymentModes}
+                                                    </td>
+                                                    <td>
+                                                        {item.amount}
+                                                    </td>
+                                                    <td>
+                                                        {item.settledAmount}
+                                                    </td>
+                                                    <td>
+                                                        <span className="p-1 pr-4 text-right cursor-pointer"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                props.onEditSettlement(item.id);
+                                                            }}><i className="fas fa-edit"></i></span>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
                                 </tbody>
                             </Table>
                             <CardFooter className="py-4">
@@ -132,19 +132,18 @@ const SettledBills = (props) => {
                 </Row>
             </Container>
 
-
-                <Modal
-                    isActive={props.isSettleBillVisible}
-                    title={settleBillButtonLabel}
-                    className="modal-xl modal-dialog-centered"
-                    switchModal={props.switchModal}
-                    renderScene={
-                        <SettleBill
-                            switchModal={props.switchModal}
-                            billId={props.billId}
-                        />
-                    }
-                />
+            <Modal
+                isActive={props.isSettleBillVisible}
+                title={settleBillButtonLabel}
+                className="modal-xl modal-dialog-centered"
+                switchModal={props.switchModal}
+                renderScene={
+                    <SettleBill
+                        switchModal={props.switchModal}
+                        billId={props.billId}
+                    />
+                }
+            />
         </>
     )
 };

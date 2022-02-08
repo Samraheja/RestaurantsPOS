@@ -163,7 +163,7 @@ const SettleBill = (props) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
-            const totalAmount = state.paymentDetails.filter(x => x.isDeleted !== false).reduce((prev, curr) => prev = prev + parseFloat(curr.amount), 0) + parseFloat(state.amount);
+            const totalAmount = state.paymentDetails.filter(x => x.isDeleted === false).reduce((prev, curr) => prev = prev + parseFloat(curr.amount), 0) + parseFloat(state.amount);
 
             const details = {};
             details.id = 0;
@@ -351,9 +351,7 @@ const SettleBill = (props) => {
         const payload = {
             "CollectionName": "BillSettlement",
             "Operation": "Payment Details",
-            "BillSettlement": {
-                "Id": parseInt(props.billId),
-            }
+            "Id": parseInt(props.billId)
         };
 
         const onSuccess = (response) => {
@@ -366,6 +364,7 @@ const SettleBill = (props) => {
             dispatch
         }));
     };
+
     return (
         <SettleBillComp
             vendorId={state.vendorId}
