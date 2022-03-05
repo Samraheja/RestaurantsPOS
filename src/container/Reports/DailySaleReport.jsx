@@ -58,6 +58,10 @@ const DailySaleReport = (props) => {
         }
     };
 
+    const onDateClick = (date) => {
+        props.history.push("/admin/SettledBills", date);
+    };
+
     if (isLoading) {
         return <Loader />
     }
@@ -73,6 +77,7 @@ const DailySaleReport = (props) => {
                 dailySales={dailySales}
                 onPageChange={onPageChange}
                 SortRecords={SortRecords}
+                onDateClick={onDateClick}
             />
         );
     }

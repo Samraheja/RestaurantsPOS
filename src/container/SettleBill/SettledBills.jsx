@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import SettledBillsComp from "../../components/SettleBill/SettledBills";
 import { GlobalConstants, SettledBillsDefaults } from "../../constants/constants";
-import { toggleModal } from "../../redux-store/actions/modal";
 import { getSettledBills } from "../../redux-store/actions/settleBill";
+import moment from 'moment';
 
 const SettledBills = (props) => {
     const [state, setState] = useState({
@@ -32,6 +32,17 @@ const SettledBills = (props) => {
     }, [state.sortBy, state.order, state.pageNo, dispatch]);
 
     useEffect(() => {
+        const date = props.history.location.state;
+
+        if (date) {
+            const dateParts = date.split("/");
+            const billDate = moment(new Date(dateParts[2], dateParts[1] - 1, dateParts[0])).format('YYYY-MM-DD');
+
+            setState(prevState => ({
+                ...prevState,
+                billDate: billDate
+            }));
+        }
         getSettledBillsDetails(state.billDate);
     }, [state.billDate, state.sortBy, state.order, state.pageNo, getSettledBillsDetails, dispatch]);
 

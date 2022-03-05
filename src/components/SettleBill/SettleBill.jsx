@@ -9,7 +9,7 @@ import {
 import Input from "../AppComponents/input/InputComp";
 import Select from "../AppComponents/select/SelectComp";
 import localizedStrings from '../../constants/localizations'
-import { paymentModes, vendorType } from '../../constants/constants'
+import { paymentMode, vendorType } from '../../constants/constants'
 
 const {
     tableNumberLabel, billNumberLabel, cancelButtonLabel, paymentModeLabel, transactionNumberLabel,
@@ -145,7 +145,7 @@ const SettleBill = (props) => {
                                     value={props.amount}
                                     onChange={props.onChange}
                                     error={props.errorMessages.amount}
-                                    disabled={props.vendor !== vendorType.self|| props.paymentMode === paymentModes.paymentDue}
+                                    disabled={props.vendor !== vendorType.self|| props.paymentMode === paymentMode.paymentDue}
                                 />
                             </FormGroup>
                         </Col>

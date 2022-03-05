@@ -13,7 +13,7 @@ import { doesHaveValue, isValidAlphaNumeric, isValidDecimalOnly, isValidDigits }
 import { addAlert } from "../../redux-store/actions/alert";
 import { getTablesStatus } from "../../redux-store/actions/tables";
 import { getDailySaleDetails } from "../../redux-store/actions/profile";
-import { paymentModes, vendorType } from "../../constants/constants";
+import { paymentMode, vendorType } from "../../constants/constants";
 
 const SettleBill = (props) => {
     const [state, setState] = useState({
@@ -121,7 +121,7 @@ const SettleBill = (props) => {
                 ...prevState,
                 [id]: value,
                 "paymentMode": e.target.selectedOptions[0].text,
-                "amount": e.target.selectedOptions[0].text === paymentModes.paymentDue ? state.remainingAmount : "0"
+                "amount": e.target.selectedOptions[0].text === paymentMode.paymentDue ? state.remainingAmount : "0"
             }));
         } else {
             setState(prevState => ({

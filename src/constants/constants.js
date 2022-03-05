@@ -94,7 +94,7 @@ export const ErrorMessages = {
     SomethingWentWrong: "Something went wrong"
 }
 
-export const paymentModes = {
+export const paymentMode = {
     paymentDue: "Payment Due"
 }
 

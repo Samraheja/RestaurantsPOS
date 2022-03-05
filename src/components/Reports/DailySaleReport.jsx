@@ -98,7 +98,7 @@ const DailySaleReport = (props) => {
                                                     <td>
                                                         {index + 1}
                                                     </td>
-                                                    <td>
+                                                    <td className="cursor-pointer text-primary" onClick={() => props.onDateClick(item.date)}>
                                                         {item.date}
                                                     </td>
                                                     <td>
