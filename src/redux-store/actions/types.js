@@ -47,6 +47,7 @@ const types = {
         "UPDATE_MENU": "UPDATE_MENU",
         "UPDATE_MENU_PIC": "UPDATE_MENU_PIC",
         "DELETE_MENU": "DELETE_MENU",
+        "GET_MEASURING_UNITS": "GET_MEASURING_UNITS",
         "SWITCH_MENU_LOADER": "SWITCH_MENU_LOADER"
     },
     tables: {

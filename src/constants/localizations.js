@@ -4,6 +4,8 @@ export default {
     "billNumberLabel": 'Bill Number:',
     "categoryLabel": 'Category',
     "itemCodeLabel": 'Item Code',
+    "measuringUnitLabel": 'Measuring Unit',
+    "pricingLabel": 'Pricing',
     "gstLabel": 'GST(%)',
     "dailySalesReportTitle": 'Daily Sale Report By Payment Modes',
     "isVegLabel": 'Is Veg',

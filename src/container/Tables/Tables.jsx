@@ -42,10 +42,11 @@ const Tables = (props) => {
 
     const onTableClick = (billId, tableNumber, isOrderCompleted) => {
         if (isOrderCompleted) {
-            dispatch(addAlert({
-                alertType: AlertTypes.Info,
-                message: "Bill has been printed for this table. Please settle bill and view bill details on order report"
-            }));
+            // dispatch(addAlert({
+            //     alertType: AlertTypes.Info,
+            //     message: "Bill has been printed for this table. Please settle bill and view bill details on order report"
+            // }));
+            props.history.push("/admin/order", billId);
         } else if (billId !== undefined && billId > 0) {
             props.history.push("/admin/order", billId);
         } else {

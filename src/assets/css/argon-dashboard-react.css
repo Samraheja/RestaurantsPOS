@@ -16331,3 +16331,9 @@ button:focus, :focus {
 .carousel-control-next-icon {
   background-image: url(../img/icons/common/greater-than.png);
 }
+
+.pricingTable {
+  border: 1px solid #e9ecef;
+  background: white;
+  margin-bottom: 2% !important;
+}

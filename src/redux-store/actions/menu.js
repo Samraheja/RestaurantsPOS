@@ -135,6 +135,27 @@ export const deleteMenu = payload => {
     }
 };
 
+export const getMeasuringUnits = payload => {
+    const { params, dispatch } = payload;
+    dispatch(switchMenuLoader({ status: true }));
+    
+    return {
+        type: types.menu.GET_MEASURING_UNITS,
+        payload: {
+            fetchConfig: {
+                path: GlobalConstants.API_BASE_URL + "/Get",
+                params,
+                onSuccess: (Response) => {
+                    dispatch(switchMenuLoader({ status: false }));
+                },
+                onError: () => {
+                    dispatch(switchMenuLoader({ status: false }));
+                }
+            }
+        }
+    }
+};
+
 export const switchMenuLoader = payload => {
     return {
         type: types.menu.SWITCH_MENU_LOADER,

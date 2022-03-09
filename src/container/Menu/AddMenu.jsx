@@ -6,7 +6,7 @@ import AddMenuComp from "../../components/Menu/AddMenu";
 import { AddMenuDefaults, ErrorMessages, GlobalConstants, ImageTypes, SuccessMessages } from "../../constants/constants";
 import { getCategories } from "../../redux-store/actions/category";
 import { getSubCategoriesByCategoryId } from "../../redux-store/actions/subCategory";
-import { saveMenu, updateMenu, updateMenuPic } from "../../redux-store/actions/menu";
+import { saveMenu, updateMenu, updateMenuPic, getMeasuringUnits } from "../../redux-store/actions/menu";
 import { doesHaveValue, isValidAlphaNumeric, isValidPrice } from "../../utils/functions";
 
 const AddMenu = (props) => {
@@ -17,7 +17,7 @@ const AddMenu = (props) => {
     const inputMenuPic = useRef(null);
 
     const dispatch = useDispatch();
-    const { menu, isLoading } = useSelector(state => state.menu);
+    const { menu, measuringUnits, isLoading } = useSelector(state => state.menu);
     const { categories } = useSelector(state => state.category);
     const { subCategories } = useSelector(state => state.subCategory);
     const menuId = props.history.location.state;
@@ -32,6 +32,17 @@ const AddMenu = (props) => {
             };
 
             dispatch(getCategories({
+                params: payload,
+                dispatch
+            }));
+        };
+
+        if (measuringUnits.length === 0) {
+            const payload = {
+                CollectionName: "MeasuringUnits"
+            };
+
+            dispatch(getMeasuringUnits({
                 params: payload,
                 dispatch
             }));
@@ -74,19 +85,28 @@ const AddMenu = (props) => {
                 "subCategoryId": item.subCategoryId,
                 "itemCode": item.itemCode,
                 "name": item.name,
-                "tablePrice": item.tablePrice,
-                "takeAwayPrice": item.takeAwayPrice,
-                "deliveryPrice": item.deliveryPrice,
                 "gst": item.gst,
                 "description": item.description,
                 "isVeg": item.isVeg,
                 "isDiscountApplicable": item.isDiscountApplicable,
+                "measurementGroupId": item.measurementGroupId,
+                "pricing": item.pricing,
                 "menuPic": item.menuPic
             }
         });
 
         if (Object.keys(editMenu).length > 0) {
             getSubCategories(editMenu.categoryId);
+            bindUnits(editMenu.measurementGroupId);
+
+            const pricingValue = {};
+            editMenu.pricing.forEach((item) => {
+                pricingValue[item.unitId] = {
+                    "tablePrice": item.tablePrice,
+                    "takeAwayPrice": item.takeAwayPrice,
+                    "deliveryPrice": item.deliveryPrice
+                }
+            });
 
             setState(prevState => ({
                 ...prevState,
@@ -95,14 +115,13 @@ const AddMenu = (props) => {
                 "subCategoryId": editMenu.subCategoryId,
                 "itemCode": editMenu.itemCode,
                 "name": editMenu.name,
-                "tablePrice": parseInt(editMenu.tablePrice),
-                "takeAwayPrice": editMenu.takeAwayPrice,
-                "deliveryPrice": editMenu.deliveryPrice,
                 "gst": editMenu.gst,
                 "description": editMenu.description,
                 "isVeg": editMenu.isVeg,
                 "isDiscountApplicable": editMenu.isDiscountApplicable,
                 "menuPic": editMenu.menuPic,
+                "measurementGroupId": editMenu.measurementGroupId,
+                "pricing": pricingValue,
                 "buttonText": "Update"
             }));
         };
@@ -113,6 +132,9 @@ const AddMenu = (props) => {
 
         if (id === "categoryId") {
             getSubCategories(value);
+        }
+        else if (id === "measurementGroupId") {
+            bindUnits(value);
         }
 
         const finalErrorMessages = Validate(id, value);
@@ -127,16 +149,44 @@ const AddMenu = (props) => {
         }));
     };
 
+    const onPricingChange = (e, unitId) => {
+        const { id, value } = e.target;
+
+        setState(prevState => ({
+            ...prevState,
+            pricing: {
+                ...prevState.pricing,
+                [unitId]: {
+                    ...prevState.pricing[unitId],
+                    [id]: value
+                }
+            }
+        }));
+    };
+
+    const bindUnits = (measurementGroupId) => {
+        if (parseInt(measurementGroupId) > 0) {
+            const units = measuringUnits.filter((unit) =>
+                (unit.id === parseInt(measurementGroupId))
+            );
+
+            if (units.length > 0) {
+                setState(prevState => ({
+                    ...prevState,
+                    units: units[0].measuringUnit
+                }));
+            }
+        }
+    };
+
     const Validate = (id, value) => {
         const finalErrorMessages = {}
 
         const categoryId = id && id === "categoryId" ? value : state.categoryId;
         const itemCode = id && id === "itemCode" ? value : state.itemCode;
         const name = id && id === "name" ? value : state.name;
-        const tablePrice = id && id === "tablePrice" ? value : state.tablePrice;
-        const takeAwayPrice = id && id === "takeAwayPrice" ? value : state.takeAwayPrice
-        const deliveryPrice = id && id === "deliveryPrice" ? value : state.deliveryPrice;
         const gst = id && id === "gst" ? value : state.gst;
+        const measurementGroupId = id && id === "measurementGroupId" ? value : state.measurementGroupId;
 
         if (!doesHaveValue(categoryId)) {
             finalErrorMessages.categoryId = ErrorMessages.CategorySelectionRequired;
@@ -156,32 +206,15 @@ const AddMenu = (props) => {
             finalErrorMessages.name = ErrorMessages.ValidAlphanumeric;
         }
 
-        if (!doesHaveValue(tablePrice)) {
-            finalErrorMessages.tablePrice = ErrorMessages.TablePriceRequired;
-        }
-        else if (!isValidPrice(tablePrice)) {
-            finalErrorMessages.tablePrice = ErrorMessages.ValidPrice;
-        }
-
-        if (!doesHaveValue(takeAwayPrice)) {
-            finalErrorMessages.takeAwayPrice = ErrorMessages.TakeAwayPriceRequired;
-        }
-        else if (!isValidPrice(takeAwayPrice)) {
-            finalErrorMessages.takeAwayPrice = ErrorMessages.ValidPrice;
-        }
-
-        if (!doesHaveValue(deliveryPrice)) {
-            finalErrorMessages.deliveryPrice = ErrorMessages.DeliveryPriceRequired;
-        }
-        else if (!isValidPrice(deliveryPrice)) {
-            finalErrorMessages.deliveryPrice = ErrorMessages.ValidPrice;
-        }
-
         if (!doesHaveValue(gst)) {
             finalErrorMessages.gst = ErrorMessages.GSTRequired;
         }
         else if (!isValidPrice(gst)) {
             finalErrorMessages.gst = ErrorMessages.ValidGST;
+        }
+
+        if (!doesHaveValue(measurementGroupId)) {
+            finalErrorMessages.measurementGroupId = ErrorMessages.MeasuringUnitRequired;
         }
 
         return finalErrorMessages;
@@ -241,6 +274,17 @@ const AddMenu = (props) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
+            const finalPricing = [];
+            Object.keys(state.pricing).forEach((unitId) => {
+                if (state.pricing[unitId].tablePrice && state.pricing[unitId].takeAwayPrice && state.pricing[unitId].deliveryPrice) {
+                    finalPricing.push({
+                        "unitId": parseInt(unitId),
+                        "tablePrice": parseInt(state.pricing[unitId].tablePrice),
+                        "takeAwayPrice": parseInt(state.pricing[unitId].takeAwayPrice),
+                        "deliveryPrice": parseInt(state.pricing[unitId].deliveryPrice)
+                    });
+                }
+            });
 
             const payload = {
                 "CollectionName": "Menu",
@@ -248,14 +292,13 @@ const AddMenu = (props) => {
                     "SubCategoryId": parseInt(state.subCategoryId),
                     "ItemCode": state.itemCode,
                     "Name": state.name,
-                    "TablePrice": parseFloat(state.tablePrice),
-                    "TakeAwayPrice": parseFloat(state.takeAwayPrice),
-                    "DeliveryPrice": parseFloat(state.deliveryPrice),
                     "GST": parseFloat(state.gst),
                     "Description": state.description,
                     "IsVeg": state.isVeg,
                     "IsDiscountApplicable": state.isDiscountApplicable,
-                    "MenuPic": state.menuPic
+                    "MenuPic": state.menuPic,
+                    "MeasurementGroupId": parseInt(state.measurementGroupId),
+                    "Pricing": finalPricing
                 }
             };
 
@@ -285,6 +328,18 @@ const AddMenu = (props) => {
 
         if (Object.keys(finalErrorMessages).length === 0) {
 
+            const finalPricing = [];
+            Object.keys(state.pricing).forEach((unitId) => {
+                if (state.pricing[unitId].tablePrice && state.pricing[unitId].takeAwayPrice && state.pricing[unitId].deliveryPrice) {
+                    finalPricing.push({
+                        "unitId": parseInt(unitId),
+                        "tablePrice": parseInt(state.pricing[unitId].tablePrice),
+                        "takeAwayPrice": parseInt(state.pricing[unitId].takeAwayPrice),
+                        "deliveryPrice": parseInt(state.pricing[unitId].deliveryPrice)
+                    });
+                }
+            });
+
             const payload = {
                 "CollectionName": "Menu",
                 "Menu": {
@@ -292,13 +347,12 @@ const AddMenu = (props) => {
                     "SubCategoryId": parseInt(state.subCategoryId),
                     "ItemCode": state.itemCode,
                     "Name": state.name,
-                    "TablePrice": parseFloat(state.tablePrice),
-                    "TakeAwayPrice": parseFloat(state.takeAwayPrice),
-                    "DeliveryPrice": parseFloat(state.deliveryPrice),
                     "GST": parseFloat(state.gst),
                     "Description": state.description,
                     "IsVeg": state.isVeg,
-                    "IsDiscountApplicable": state.isDiscountApplicable
+                    "IsDiscountApplicable": state.isDiscountApplicable,
+                    "MeasurementGroupId": parseInt(state.measurementGroupId),
+                    "Pricing": finalPricing
                 }
             };
 
@@ -339,9 +393,7 @@ const AddMenu = (props) => {
                 subCategoryId={state.subCategoryId}
                 itemCode={state.itemCode}
                 name={state.name}
-                tablePrice={state.tablePrice}
-                takeAwayPrice={state.takeAwayPrice}
-                deliveryPrice={state.deliveryPrice}
+                measurementGroupId={state.measurementGroupId}
                 gst={state.gst}
                 description={state.description}
                 isVeg={state.isVeg}
@@ -350,8 +402,12 @@ const AddMenu = (props) => {
                 buttonText={state.buttonText}
                 errorMessages={state.errorMessages}
                 onChange={onChange}
+                onPricingChange={onPricingChange}
                 categories={categories}
                 subCategories={subCategories}
+                measuringUnits={measuringUnits}
+                units={state.units}
+                pricing={state.pricing}
                 inputMenuPic={inputMenuPic}
                 onEditMenuPic={onEditMenuPic}
                 onMenuPicSelect={onMenuPicSelect}

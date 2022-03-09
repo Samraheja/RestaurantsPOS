@@ -4,6 +4,7 @@ const initialState = {
     menu: [],
     totalRecords: 0,
     totalPages: 0,
+    measuringUnits: [],
     isLoading: false
 };
 
@@ -33,6 +34,7 @@ const Menu = ((state = initialState, actions = {}) => {
             }
         }
         case types.menu.UPDATE_MENU: {
+            debugger;
             return {
                 ...state,
                 menu: state.menu.map((item) =>
@@ -62,6 +64,12 @@ const Menu = ((state = initialState, actions = {}) => {
                 menu: state.menu.filter((item) =>
                     (item.id !== actions.payload.fetchConfig.params.Id)
                 )
+            }
+        }
+        case types.menu.GET_MEASURING_UNITS: {
+            return {
+                ...state,
+                measuringUnits: actions.payload.data.data
             }
         }
         case types.menu.SWITCH_MENU_LOADER: {

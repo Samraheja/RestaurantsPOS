@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 export const GlobalConstants = {
-    //API_BASE_URL: "https://localhost:44375/api/POS",
-    API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
+    API_BASE_URL: "https://localhost:44375/api/POS",
+    //API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
     ACCESS_TOKEN_NAME: 'login_access_token',
     EXPIRY_DATE_NAME: 'ExpiryDate',
     REFRESH_TOKEN_NAME: 'RefreshToken',
@@ -71,6 +71,7 @@ export const ErrorMessages = {
     DeliveryPriceRequired: "Please enter delivery price",
     GSTRequired: "Please enter applicable GST",
     DescriptionRequired: "Please enter description",
+    MeasuringUnitRequired: "Please select measuring unit",
     ValidPrice: "Price must be greater than 0",
     ValidGST: "Please enter a valid GST value",
     SelectCustomer: "Please select customer",
@@ -153,15 +154,15 @@ export const AddMenuDefaults = {
     subCategoryId: 0,
     itemCode: "",
     name: "",
-    tablePrice: 0,
-    takeAwayPrice: 0,
-    deliveryPrice: 0,
     description: "",
-    gst: 0,
+    gst: 5,
     isVeg: true,
-    isDiscountApplicable: false,
+    isDiscountApplicable: true,
     menuPic: "",
     buttonText: "Save",
+    measurementGroupId: 0,
+    units: [],
+    pricing: {},
     errorMessages: {}
 }
 
