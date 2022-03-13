@@ -16176,11 +16176,11 @@ button:focus, :focus {
   background-image: url(../img/theme/Tables.jpg);
   background-size: cover;
   border: 1px solid lightgrey;
-  margin-bottom: 25px;
-  border-radius: 25px;
   box-shadow: 5px 6px 5px 4px #e6e6fa;
   text-align: center;
   color: #525f7f;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .occupiedTables {
@@ -16188,11 +16188,11 @@ button:focus, :focus {
   background-image: url(../img/theme/OccupiedTable.jpg);
   background-size: cover;
   border: 1px solid lightgrey;
-  margin-bottom: 25px;
-  border-radius: 25px;
   box-shadow: 5px 6px 5px 4px #e6e6fa;
   padding: 5px 0 0 10px;
   color: #525f7f;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .MostOrdered {
@@ -16400,4 +16400,16 @@ button:focus, :focus {
 .check {
   position: absolute;
   right: 22%;
+}
+
+.tableOperations {
+  border: 1px solid lightgrey;
+  background-color: white;
+  color: #525f7f;
+  min-height: 26px;
+}
+
+.ml-mr-per-5 {
+  margin-left: 5%;
+  margin-right: 5%;
 }

@@ -38,85 +38,73 @@ const Tables = (props) => {
                                     {
                                         [...Array(props.noOfTables)].map((value, i) =>
                                             <Col lg="2" md="3" className="cursor-pointer">
-                                                <div
-                                                    key={i}
-                                                    className={props.tablesStatus[i + 1] ? "occupiedTables" : "tables"}
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        props.onTableClick(
-                                                            props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id,
-                                                            (i + 1),
-                                                            props.tablesStatus[i + 1] && props.tablesStatus[i + 1].isOrderCompleted
-                                                        )
-                                                    }}
-                                                >
-                                                    <Row>
-                                                        <Col lg="6" className="font-weight-bold small">
-                                                            {i + 1}
-                                                        </Col>
-                                                        <Col lg="6" className="font-weight-bold small">
-                                                            {
-                                                                props.tablesStatus[i + 1] &&
-                                                                <i className="fa fa-rupee-sign"/>
-                                                            }
-                                                            {
-                                                                props.tablesStatus[i + 1] && " " + props.tablesStatus[i + 1].netAmount
-                                                            }
-                                                        </Col>
-                                                    </Row>
-                                                    {
-                                                        props.tablesStatus[i + 1] &&
+                                                <Row>
+                                                    <Col
+                                                        key={i}
+                                                        className={props.tablesStatus[i + 1] ? "occupiedTables" : "tables"}
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            props.onTableClick(
+                                                                props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id,
+                                                                (i + 1),
+                                                                props.tablesStatus[i + 1] && props.tablesStatus[i + 1].isOrderCompleted
+                                                            )
+                                                        }}
+                                                    >
                                                         <Row>
-                                                            <Col lg="12" className="text-right">
-                                                                <UncontrolledDropdown>
-                                                                    <DropdownToggle
-                                                                        className="btn-icon-only text-dark"
-                                                                        href="#sahil"
-                                                                        role="button"
-                                                                        size="sm"
-                                                                        color=""
-                                                                        onClick={(e) => {
-                                                                            e.stopPropagation();
-                                                                        }}
-                                                                    >
-                                                                        <i className="fas fa-ellipsis-v"/>
-                                                                    </DropdownToggle>
-                                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                        {
-                                                                            !props.tablesStatus[i + 1].isOrderCompleted &&
-                                                                            <DropdownItem
-                                                                                href="#sahil"
-                                                                                onClick={(e) => {
-                                                                                    e.stopPropagation();
-                                                                                    props.onVoidBill(
-                                                                                        props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id
-                                                                                    );
-                                                                                }}
-                                                                            >
-                                                                                Void Bill
-                                                                            </DropdownItem>
-                                                                        }
-
-                                                                        {
-                                                                            props.tablesStatus[i + 1].isOrderCompleted &&
-                                                                            <DropdownItem
-                                                                                href="#sahil"
-                                                                                onClick={(e) => {
-                                                                                    e.stopPropagation();
-                                                                                    props.onSettleBill(
-                                                                                        props.tablesStatus[i + 1].id
-                                                                                    );
-                                                                                }}
-                                                                            >
-                                                                                {settleBillButtonLabel}
-                                                                            </DropdownItem>
-                                                                        }
-                                                                    </DropdownMenu>
-                                                                </UncontrolledDropdown>
+                                                            <Col lg="6" className="font-weight-bold small">
+                                                                {i + 1}
+                                                            </Col>
+                                                            <Col lg="6" className="font-weight-bold small">
+                                                                {
+                                                                    props.tablesStatus[i + 1] &&
+                                                                    <i className="fa fa-rupee-sign" />
+                                                                }
+                                                                {
+                                                                    props.tablesStatus[i + 1] && " " + props.tablesStatus[i + 1].netAmount
+                                                                }
                                                             </Col>
                                                         </Row>
-                                                    }
-                                                </div>
+                                                    </Col>
+                                                </Row>
+
+                                                <Row>
+                                                    <Col className="mb-4 text-center">
+                                                        {
+                                                            props.tablesStatus[i + 1] ?
+                                                            <Row className="m-0">
+                                                                <Col className="tableOperations"
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        props.onVoidBill(
+                                                                            props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    <i className="fa fa-eraser" title="Void Bill" />
+                                                                </Col>
+                                                                {
+                                                                    props.tablesStatus[i + 1].isOrderCompleted &&
+                                                                    <Col className="tableOperations"
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            props.onSettleBill(
+                                                                                props.tablesStatus[i + 1].id
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        <i className="fa fa-file-invoice" title="Settle Bill" />
+                                                                    </Col>
+                                                                }
+                                                            </Row>
+                                                            :
+                                                            <Row className="m-0">
+                                                                <Col className="tableOperations">
+                                                                </Col>
+                                                            </Row>
+                                                        }
+                                                    </Col>
+                                                </Row>
                                             </Col>
                                         )
                                     }
@@ -133,7 +121,7 @@ const Tables = (props) => {
                             switchModal={() => props.switchModal('showCover')}
                             tableNumber={props.tableNumber}
                             orderType={props.orderType}
-                            history={props.history}/>}
+                            history={props.history} />}
                     />
 
                     <Modal

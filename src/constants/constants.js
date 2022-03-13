@@ -164,7 +164,7 @@ export const AddMenuDefaults = {
     buttonText: "Save",
     measurementGroupId: 0,
     units: [],
-    pricing: {},
+    pricing: [],
     errorMessages: {}
 }
 
