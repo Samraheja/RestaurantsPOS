@@ -72,13 +72,13 @@ const MostOrdered = (props) => {
         return finalErrorMessages;
     };
 
-    const onItemClick = (id, name, price) => {
+    const onItemClick = (id, name, pricing) => {
         setState((prevState) => ({
             ...prevState,
             itemId: id,
             searchItem: name,
             quantity: 1,
-            price: price,
+            pricing: pricing,
             suggestionBoxClass: "autoCompleteItemBox d-none"
         }));
     };
@@ -87,15 +87,15 @@ const MostOrdered = (props) => {
         const finalErrorMessages = Validate();
 
         if (Object.keys(finalErrorMessages).length === 0) {
+            props.onMenuItemAdd(state.itemId, state.pricing, state.quantity);
+            
             setState((prevState) => ({
                 ...prevState,
                 itemId: AutoCompleteDefaults.itemId,
                 searchItem: AutoCompleteDefaults.searchItem,
                 quantity: AutoCompleteDefaults.quantity,
-                price: AutoCompleteDefaults.price
+                pricing: AutoCompleteDefaults.pricing
             }));
-
-            props.onMenuItemAdd(state.itemId, state.price, state.quantity);
         } else {
             setState(prevState => ({
                 ...prevState,
@@ -112,7 +112,7 @@ const MostOrdered = (props) => {
                 itemId={state.itemId}
                 searchItem={state.searchItem}
                 quantity={state.quantity}
-                price={state.price}
+                pricing={state.pricing}
                 filteredMenu={state.filteredMenu}
                 errorMessages={state.errorMessages}
                 onChange={onChange}

@@ -145,6 +145,8 @@ export const MenuDefaults = {
     sortBy: "Id",
     order: "desc",
     searchValue: "",
+    pricing: [],
+    showPricing: false,
     editMenu: {}
 }
 
@@ -186,7 +188,7 @@ export const AutoCompleteDefaults = {
     itemId: undefined,
     searchItem: "",
     quantity: undefined,
-    price: 0.00,
+    pricing: {},
     filteredMenu: [],
     suggestionBoxClass: "autoCompleteItemBox",
     errorMessages: {}
@@ -198,10 +200,14 @@ export const MostOrderedDefaults = {
 
 export const OrdersDefault = {
     billId: 0,
+    menuId: 0,
+    quantity: 0,
     discount: "",
     discountAmount: 0,
     netAmount: 0,
-    buttonText: "Print KOT"
+    buttonText: "Print KOT",
+    showPricing: false,
+    pricing: []
 }
 
 export const CustomerSummaryDefault = {

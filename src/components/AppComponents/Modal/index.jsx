@@ -27,7 +27,7 @@ const ShowModal = (props) => {
                     <span aria-hidden={true}>×</span>
                 </button>
             </div>
-            <div className="modal-body">
+            <div className={ props.bodyClassName || "modal-body" }>
                 {props.renderScene}
             </div>
         </Modal>

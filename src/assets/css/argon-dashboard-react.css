@@ -16337,3 +16337,67 @@ button:focus, :focus {
   background: white;
   margin-bottom: 2% !important;
 }
+
+.background {
+  width: 100px;
+  height: 50px;
+  padding: 0;
+  margin: 0;
+}
+
+.line {
+  width: 110px;
+  height: 2px;
+  border-bottom: 1px solid #e9ecef;
+  transform: translateY(10px) translateX(-31px) rotate(29deg);
+  position: absolute;
+  z-index: 0;
+}
+
+.background>div {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.bottom {
+  position: absolute;
+  bottom: -5px;
+  left: 1px;
+}
+
+.top {
+  position: absolute;
+  top: 5px;
+  right: -22px;
+}
+
+.pricingDiv {
+  border: 1px solid #e8ebee;
+  padding: 6%;
+  border-radius: 5%;
+  background-color: #f5f5f5;
+  font-size: 13px;
+}
+
+.pricingDiv:hover {
+  background-color: #e5dada;
+}
+
+.priceSelected {
+  background-color: paleturquoise;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position-x: right;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.check {
+  position: absolute;
+  right: 22%;
+}

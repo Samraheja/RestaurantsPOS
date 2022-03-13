@@ -16,6 +16,7 @@ import './index.css';
 const {
     tableNumberLabel, subcategoriesLabel
 } = localizedStrings;
+
 const MostOrdered = (props) => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [subCategoryIndex, setSubCategoryIndex] = useState(0)
@@ -28,12 +29,13 @@ const MostOrdered = (props) => {
     const updateActiveSubCategoryIndex = (prop) => {
         setSubCategoryIndex((prop === 'inc' && subCategoriesChunks.length > (subCategoryIndex + 1)) ? (subCategoryIndex + 1) : ((prop === 'dec' && (subCategoryIndex > 0)) ? (subCategoryIndex - 1) : subCategoryIndex))
     };
+
     return (
         <>
             <Row>
                 <Col lg="12" className="token bold">
                     {tableNumberLabel}{props.tableNumber}
-                    <hr className="m-0"/>
+                    <hr className="m-0" />
                 </Col>
             </Row>
 
@@ -42,9 +44,7 @@ const MostOrdered = (props) => {
             >
                 {mostOrderedItemChunks.map((items = []) => {
                     return (
-                        <CarouselItem
-                            // key={item.src}
-                        >
+                        <CarouselItem>
                             <Row>
                                 {
                                     items.map((item, index) => {
@@ -53,7 +53,7 @@ const MostOrdered = (props) => {
                                                 <div
                                                     className="MostOrdered"
                                                     onClick={() => {
-                                                        props.onMenuItemAdd(item.id, item.tablePrice, 1);
+                                                        props.onMenuItemAdd(item.id, item.pricing, 1);
                                                     }}
                                                 >
                                                     {item.name}
@@ -67,32 +67,30 @@ const MostOrdered = (props) => {
                     );
                 })}
                 {activeIndex > 0 && <CarouselControl className={'carousel-left'} direction="prev"
-                                                     onClickHandler={() => {
-                                                         updateActiveIndex('dec')
-                                                     }}/>}
+                    onClickHandler={() => {
+                        updateActiveIndex('dec')
+                    }} />}
                 {activeIndex < (mostOrderedItemChunks.length - 1) &&
-                <CarouselControl className={'carousel-right'} direction="next"
-                                 onClickHandler={() => {
-                                     updateActiveIndex('inc')
-                                 }}/>}
+                    <CarouselControl className={'carousel-right'} direction="next"
+                        onClickHandler={() => {
+                            updateActiveIndex('inc')
+                        }} />}
             </Carousel>
 
-            <div className="pt-5"/>
+            <div className="pt-5" />
             <Row>
                 <Col lg="12" className="token bold">
                     {subcategoriesLabel}
-                    <hr className="m-0"/>
+                    <hr className="m-0" />
                 </Col>
             </Row>
             <Carousel
                 activeIndex={subCategoryIndex}
-                // next={next}
-                // previous={previous}
             >
                 {subCategoriesChunks.map((items = []) => {
                     return (
                         <CarouselItem
-                            // key={item.src}
+                        // key={item.src}
                         >
                             <Row>
                                 {
@@ -116,15 +114,14 @@ const MostOrdered = (props) => {
                     );
                 })}
                 {subCategoryIndex > 0 && <CarouselControl className={'carousel-left'} direction="prev"
-                                                          onClickHandler={() => {
-                                                              updateActiveSubCategoryIndex('dec')
-                                                          }}/>}
+                    onClickHandler={() => {
+                        updateActiveSubCategoryIndex('dec')
+                    }} />}
                 {subCategoryIndex < (subCategoriesChunks.length - 1) &&
-                <CarouselControl className={'carousel-right'} direction="next"
-                                 onClickHandler={() => {
-                                     updateActiveSubCategoryIndex('inc')
-                                 }}/>}
-
+                    <CarouselControl className={'carousel-right'} direction="next"
+                        onClickHandler={() => {
+                            updateActiveSubCategoryIndex('inc')
+                        }} />}
             </Carousel>
         </>
     )

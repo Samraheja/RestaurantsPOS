@@ -68,6 +68,21 @@ const Menu = (props) => {
         }));
     };
 
+    const onViewPricing = (pricing) => {
+        setState(prevState => ({
+            ...prevState,
+            showPricing: true,
+            pricing: pricing
+        }));
+    }
+
+    const switchModal = (key) => {
+        setState(prevState => ({
+            ...prevState,
+            [key]:!state[key]
+        }))
+    };
+
     if (isLoading) {
         return <Loader />
     }
@@ -84,6 +99,10 @@ const Menu = (props) => {
                 onMenuDelete={onMenuDelete}
                 editMenu={state.editMenu}
                 SortRecords={SortRecords}
+                pricing={state.pricing}
+                showPricing={state.showPricing}
+                onViewPricing={onViewPricing}
+                switchModal={switchModal}
             />
         );
     }

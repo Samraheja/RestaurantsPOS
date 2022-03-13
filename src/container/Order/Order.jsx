@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import OrderComp from "../../components/Order/Order";
-import {AlertTypes, ErrorMessages, OrdersDefault, SuccessMessages} from "../../constants/constants";
-import {completeOrder, getOrderItemsList, saveOrderItem, updateQuantity} from "../../redux-store/actions/order"
-import {addAlert} from "../../redux-store/actions/alert";
-import {getDailySaleDetails} from "../../redux-store/actions/profile";
+import { AlertTypes, ErrorMessages, OrdersDefault, SuccessMessages } from "../../constants/constants";
+import { completeOrder, getOrderItemsList, saveOrderItem, updateQuantity } from "../../redux-store/actions/order"
+import { addAlert } from "../../redux-store/actions/alert";
+import { getDailySaleDetails } from "../../redux-store/actions/profile";
 
 const Order = (props) => {
     const [state, setState] = useState({
@@ -13,8 +13,8 @@ const Order = (props) => {
     });
 
     const dispatch = useDispatch();
-    const {billingDetails, orderedItems, isLoading} = useSelector(state => state.order);
-    const {customerInfo} = useSelector(state => state.customer);
+    const { billingDetails, orderedItems, isLoading } = useSelector(state => state.order);
+    const { customerInfo } = useSelector(state => state.customer);
 
     useEffect(() => {
         const billId = props.history.location.state;
@@ -44,7 +44,7 @@ const Order = (props) => {
     }, [customerInfo, orderedItems && orderedItems.length]);
 
     const onChange = (e) => {
-        const {id, value} = e.target;
+        const { id, value } = e.target;
 
         if (id !== "discount") {
             setState(prevState => ({
@@ -56,15 +56,26 @@ const Order = (props) => {
         }
     };
 
-    const onMenuItemAdd = (menuId, price, quantity) => {
-        if (menuId) {
+    const onMenuItemAdd = (menuId, pricing, quantity) => {
+        setState(prevState => ({
+            ...prevState,
+            menuId,
+            pricing,
+            quantity,
+            showPricing: true
+        }));
+    };
+
+    const onVariantSelect = (unitId, price) => {
+        if (unitId) {
             const payload = {
                 CollectionName: "Orders",
                 "Orders": {
                     "BillId": parseInt(billingDetails.id),
-                    "MenuId": parseInt(menuId),
+                    "MenuId": parseInt(state.menuId),
+                    "Quantity": parseInt(state.quantity),
                     "Price": parseFloat(price),
-                    "Quantity": parseInt(quantity)
+                    "UnitId": parseInt(unitId)
                 }
             };
 
@@ -120,7 +131,7 @@ const Order = (props) => {
             onSuccess,
             dispatch
         }));
-    }
+    };
 
     const onCompleteOrder = () => {
         if (Object.keys(customerInfo).length > 0 || !billingDetails.isKOTDone) {
@@ -153,7 +164,7 @@ const Order = (props) => {
                 message: ErrorMessages.SelectCustomer
             }));
         }
-    }
+    };
 
     const CalculateAmount = (discount) => {
         var discountAmount = 0;
@@ -172,12 +183,19 @@ const Order = (props) => {
             discountAmount: discountAmount,
             netAmount: netAmount
         }));
-    }
+    };
+
+    const switchModal = (key) => {
+        setState(prevState => ({
+            ...prevState,
+            [key]: !state[key]
+        }))
+    };
 
     return (
         <>
             {
-                isLoading && <Loader/>
+                isLoading && <Loader />
             }
             <OrderComp
                 billingDetails={billingDetails}
@@ -192,6 +210,10 @@ const Order = (props) => {
                 discountAmount={state.discountAmount}
                 netAmount={state.netAmount}
                 onChange={onChange}
+                showPricing={state.showPricing}
+                pricing={state.pricing}
+                switchModal={switchModal}
+                onVariantSelect={onVariantSelect}
             >
             </OrderComp>
         </>

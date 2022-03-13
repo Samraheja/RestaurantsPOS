@@ -1,6 +1,6 @@
 import React from "react";
 import "./Loader.css";
-import Loading from "../../../assets/img/theme/loading3.gif";
+import Loading from "../../../assets/img/theme/Loading2.gif";
 
 const Loader = (props) => {
 

@@ -11,9 +11,15 @@ import AutoComplete from "../../container/Order/AutoComplete";
 import OrderList from "../../container/Order/OrderList";
 import BillSummary from "../../container/Order/BillSummary";
 import CustomerSummary from "../../container/Order/CustomerSummary";
+import Modal from "../AppComponents/Modal";
+import Pricing from "../Menu/Pricing";
+import localizedStrings from "../../constants/localizations";
+
+const {
+    displayForOrder, selectOrderQuantity, displayTablePrice
+} = localizedStrings
 
 const Order = (props) => {
-
     return (
         <>
             <div className="header bg-gradient-info pb-8 pt-5 pt-md-6">
@@ -68,6 +74,22 @@ const Order = (props) => {
                     </Col>
                 </Row>
             </Container>
+
+            <Modal
+                isActive={props.showPricing}
+                title={selectOrderQuantity}
+                switchModal={() => props.switchModal('showPricing')}
+                bodyClassName="modal-body p-0"
+                renderScene={
+                    <Pricing
+                        switchModal={() => props.switchModal('showPricing')}
+                        pricing={props.pricing}
+                        displayFor={displayForOrder}
+                        displayPrice={displayTablePrice}
+                        onVariantSelect={props.onVariantSelect}
+                    />
+                }
+            />
         </>
     )
 };

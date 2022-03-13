@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
     Button,
     Row,
@@ -17,9 +17,9 @@ const AutoComplete = (props) => {
         e.preventDefault();
         props.onAddButtonClick();
     };
-    const onItemSelect = ({item}) => {
+    const onItemSelect = ({ item }) => {
         setSelectedItemIndex(undefined);
-        props.onItemClick(item.id, item.name, item.tablePrice)
+        props.onItemClick(item.id, item.name, item.pricing)
     };
     const onKeyDown = (e) => {
         if (e.code === "ArrowDown") {
@@ -31,7 +31,7 @@ const AutoComplete = (props) => {
             if (selectedItemIndex === undefined) {
                 onAddClick(e)
             } else {
-                onItemSelect({item: props.filteredMenu[selectedItemIndex]})
+                onItemSelect({ item: props.filteredMenu[selectedItemIndex] })
             }
         }
     };
@@ -48,7 +48,6 @@ const AutoComplete = (props) => {
                         autoFocus={true}
                         autocomplete={'off'}
                         onKeyDown={onKeyDown}
-                        // onKeyPress={onSearchKeyPress}
                         id="searchItem"
                         placeholder="Search Item..."
                         type="text"
@@ -58,17 +57,18 @@ const AutoComplete = (props) => {
                         error={props.errorMessages.searchItem}
                     />
                     <div className="autoComplete">
-                        {props.filteredMenu.map((item, index) => {
-                            return (
-                                <div
-                                    style={{backgroundColor: index === selectedItemIndex ? 'rgba(0,0,0,5%)' : 'transparent'}}
-                                    className={props.suggestionBoxClass}
-                                    onClick={() => onItemSelect({item})}
-                                >
-                                    <span key={index}>{item.name}</span>
-                                </div>
-                            )
-                        })
+                        {
+                            props.filteredMenu.map((item, index) => {
+                                return (
+                                    <div
+                                        style={{ backgroundColor: index === selectedItemIndex ? 'rgba(0,0,0,5%)' : 'transparent' }}
+                                        className={props.suggestionBoxClass}
+                                        onClick={() => onItemSelect({ item })}
+                                    >
+                                        <span key={index}>{item.name}</span>
+                                    </div>
+                                )
+                            })
                         }
                     </div>
                 </Col>
@@ -92,7 +92,7 @@ const AutoComplete = (props) => {
                         onClick={onAddClick}
                     >
                         {addButtonLabel}
-                        <i className="fa fa-plus-circle pl-2"/>
+                        <i className="fa fa-plus-circle pl-2" />
                     </Button>
                 </Col>
             </Row>
