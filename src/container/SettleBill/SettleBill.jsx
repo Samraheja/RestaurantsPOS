@@ -38,6 +38,7 @@ const SettleBill = (props) => {
                 setState((prevState) => ({
                     ...prevState,
                     billId: props.billId,
+                    amount: response.data.netAmount,
                     remainingAmount: response.data.netAmount
                 }));
             }

@@ -16,12 +16,13 @@ import localizedStrings from '../../constants/localizations'
 
 const {
     dailySalesReportTitle, serialNoTitle, PaytmTitle, cashTitle, billAmountTitle, billDateTitle,
-    phonePayTitle, googlePayTitle, codTitle, onlinePaymentTitle, paymentDueTitle
+    phonePayTitle, googlePayTitle, codTitle, onlinePaymentTitle, paymentDueTitle, discountAmountTitle
 } = localizedStrings;
 
 const yearsList = Years();
 
 const DailySaleReport = (props) => {
+    debugger;
     return (
         <>
             <div className="header bg-gradient-info pb-8 pt-5 pt-md-7">
@@ -87,6 +88,9 @@ const DailySaleReport = (props) => {
                                     <th scope="col" className="Header"
                                         onClick={() => props.SortRecords("PaymentDue")}>{paymentDueTitle}
                                     </th>
+                                    <th scope="col" className="Header"
+                                        onClick={() => props.SortRecords("DiscountAmount")}>{discountAmountTitle}
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -124,6 +128,9 @@ const DailySaleReport = (props) => {
                                                     </td>
                                                     <td>
                                                         {item.paymentDue}
+                                                    </td>
+                                                    <td>
+                                                        {item.discountAmount}
                                                     </td>
                                                 </tr>
                                             )

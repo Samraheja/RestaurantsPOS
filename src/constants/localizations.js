@@ -45,6 +45,7 @@ export default {
     "alreadyHaveAccount": 'Already have an account? ',
     "categoriesTitle": 'Categories',
     "paymentDueTitle": 'Payment Due',
+    "discountAmountTitle": 'Discount',
     "onlinePaymentTitle": 'Online Payment',
     "codTitle": 'COD',
     "googlePayTitle": 'Google Pay',
