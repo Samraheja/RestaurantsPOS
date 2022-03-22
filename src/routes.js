@@ -11,6 +11,8 @@ import Tables from "./container/Tables/Tables";
 import Order from "./container/Order/Order";
 import SettledBills from "./container/SettleBill/SettledBills";
 import DailySaleReport from "./container/Reports/DailySaleReport";
+import Customers from "./container/Customers/Customers";
+import SettleDues from "./container/SettleBill/SettleDues";
 
 var routes = [
     {
@@ -104,6 +106,21 @@ var routes = [
         name: "Daily Sale Report",
         icon: "fas fa-list-alt icon-color",
         component: DailySaleReport,
+        layout: "/admin",
+    },
+    {
+        path: "/customers",
+        name: "Customers",
+        icon: "fas fa-users icon-color",
+        component: Customers,
+        layout: "/admin",
+    },
+    {
+        path: "/settledues",
+        name: "Settle Dues",
+        icon: "fas fa-rupee icon-color",
+        component: SettleDues,
+        isMenuItem: false,
         layout: "/admin",
     },
 ];

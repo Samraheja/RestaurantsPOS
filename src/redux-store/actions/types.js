@@ -68,10 +68,12 @@ const types = {
         "SWITCH_ORDER_LOADER": "SWITCH_ORDER_LOADER"
     },
     customers: {
+        "GET_CUSTOMERS": "GET_CUSTOMERS",
         "GET_CUSTOMER_BY_ID": "GET_CUSTOMER_BY_ID",
         "SEARCH_CUSTOMER": "SEARCH_CUSTOMER",
         "SAVE_CUSTOMER": "SAVE_CUSTOMER",
         "CLEAR_CUSTOMER": "CLEAR_CUSTOMER",
+        "SETTLE_DUES": "SETTLE_DUES",
         "SWITCH_CUSTOMER_LOADER": "SWITCH_CUSTOMER_LOADER"
     },
     openCloseDay: {

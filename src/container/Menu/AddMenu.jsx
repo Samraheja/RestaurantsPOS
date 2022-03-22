@@ -97,11 +97,37 @@ const AddMenu = (props) => {
 
         if (Object.keys(editMenu).length > 0) {
             getSubCategories(editMenu.categoryId);
-            bindUnits(editMenu.measurementGroupId, () => setMenuDetails(editMenu));
+            bindUnits(editMenu.measurementGroupId, setMenuDetails);
+
+            const pricingValue = {};
+            editMenu.pricing.forEach((item) => {
+                pricingValue[item.unitId] = {
+                    "tablePrice": item.tablePrice,
+                    "takeAwayPrice": item.takeAwayPrice,
+                    "deliveryPrice": item.deliveryPrice
+                }
+            });
+
+            setState(prevState => ({
+                ...prevState,
+                "id": editMenu.id,
+                "categoryId": editMenu.categoryId,
+                "subCategoryId": editMenu.subCategoryId,
+                "itemCode": editMenu.itemCode,
+                "name": editMenu.name,
+                "gst": editMenu.gst,
+                "description": editMenu.description,
+                "isVeg": editMenu.isVeg,
+                "isDiscountApplicable": editMenu.isDiscountApplicable,
+                "menuPic": editMenu.menuPic,
+                "measurementGroupId": editMenu.measurementGroupId,
+                "pricing": pricingValue,
+                "buttonText": "Update"
+            }));
         };
     };
 
-    const setMenuDetails = (editMenu) => {
+    const setMenuDetails = () => {
         const pricingValue = {};
         editMenu.pricing.forEach((item) => {
             pricingValue[item.unitId] = {

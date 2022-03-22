@@ -69,7 +69,7 @@ export const GetBillToSetlle = payload => {
 };
 
 export const settleBillDetails = payload => {
-    const { params, onSuccess, dispatch } = payload;
+    const { params, successMessage, onSuccess, dispatch } = payload;
     dispatch(switchbillSettlementLoader({ status: true }));
 
     return {
@@ -78,8 +78,8 @@ export const settleBillDetails = payload => {
             fetchConfig: {
                 path: GlobalConstants.API_BASE_URL + "/Create",
                 params,
+                successMessage,
                 onSuccess: (response) => {
-                    // dispatch(toggleModal());
                     onSuccess && onSuccess(response);
                     dispatch(switchbillSettlementLoader({ status: false }));
                 },
@@ -136,10 +136,10 @@ export const updateSettledBillDetails = payload => {
     }
 };
 
-export const getSettledBills= payload => {
+export const getSettledBills = payload => {
     const { params, dispatch } = payload;
     dispatch(switchSettledBillLoader({ status: true }));
-    
+
     return {
         type: types.settleBill.GET_SETTLED_BILL,
         payload: {

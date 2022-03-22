@@ -1,12 +1,23 @@
 import types from "../actions/types";
 
 const initialState = {
+    customers: [],
+    totalRecords: 0,
+    totalPages: 0,
     customerInfo: {},
     isLoading: false
 };
 
 const Orders = ((state = initialState, actions = {}) => {
     switch (actions.type) {
+        case types.customers.GET_CUSTOMERS: {
+            return {
+                ...state,
+                totalRecords: actions.payload.data.data.totalRecords,
+                totalPages: actions.payload.data.data.totalPages,
+                customers: actions.payload.data.data.response
+            }
+        }
         case types.customers.GET_CUSTOMER_BY_ID: {
             return {
                 ...state,
@@ -29,6 +40,17 @@ const Orders = ((state = initialState, actions = {}) => {
             return {
                 ...state,
                 customerInfo: initialState.customerInfo
+            }
+        }
+        case types.customers.SETTLE_DUES: {
+            return {
+                ...state,
+                customers: state.customers.map((customer) =>
+                    (customer.id === actions.payload.fetchConfig.params.DuesSettlement.CustomerId) ?
+                        customer.dueAmount = customer.dueAmount - actions.payload.fetchConfig.params.DuesSettlement.Amount
+                        :
+                        customer
+                )
             }
         }
         case types.customers.SWITCH_CUSTOMER_LOADER: {

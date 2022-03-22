@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/AppComponents/Loader/Loader";
 import DailySaleReportComp from "../../components/Reports/DailySaleReport";

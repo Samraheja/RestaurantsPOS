@@ -1,6 +1,27 @@
 import { GlobalConstants } from "../../constants/constants";
 import types from "./types";
 
+export const getCustomers = payload => {
+    const { params, dispatch } = payload;
+    dispatch(switchCustomerLoader({ status: true }));
+
+    return {
+        type: types.customers.GET_CUSTOMERS,
+        payload: {
+            fetchConfig: {
+                path: GlobalConstants.API_BASE_URL + "/Get",
+                params,
+                onSuccess: () => {
+                    dispatch(switchCustomerLoader({ status: false }));
+                },
+                onError: () => {
+                    dispatch(switchCustomerLoader({ status: false}));
+                }
+            }
+        }
+    }
+}
+
 export const getCustomerById = payload => {
     const { params, dispatch } = payload;
     dispatch(switchCustomerLoader({ status: true }));
@@ -52,6 +73,29 @@ export const saveCustomer = payload => {
         payload: {
             fetchConfig: {
                 path: GlobalConstants.API_BASE_URL + "/CREATE",
+                params,
+                successMessage,
+                onSuccess: () => {
+                    onSuccess && onSuccess();
+                    dispatch(switchCustomerLoader({ status: false }));
+                },
+                onError: () => {
+                    dispatch(switchCustomerLoader({ status: false }));
+                }
+            }
+        }
+    }
+};
+
+export const settleDues = payload => {
+    const { params, successMessage, onSuccess, dispatch } = payload;
+    dispatch(switchCustomerLoader({ status: true }));
+
+    return {
+        type: types.customers.SETTLE_DUES,
+        payload: {
+            fetchConfig: {
+                path: GlobalConstants.API_BASE_URL + "/Create",
                 params,
                 successMessage,
                 onSuccess: () => {

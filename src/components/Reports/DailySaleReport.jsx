@@ -22,7 +22,6 @@ const {
 const yearsList = Years();
 
 const DailySaleReport = (props) => {
-    debugger;
     return (
         <>
             <div className="header bg-gradient-info pb-8 pt-5 pt-md-7">

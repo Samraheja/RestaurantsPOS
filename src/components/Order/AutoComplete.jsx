@@ -22,12 +22,13 @@ const AutoComplete = (props) => {
         props.onItemClick(item.id, item.name, item.pricing)
     };
     const onKeyDown = (e) => {
+        debugger;
         if (e.code === "ArrowDown") {
             setSelectedItemIndex((selectedItemIndex === undefined) ? 0 : (selectedItemIndex < (props.filteredMenu.length - 1) ? (selectedItemIndex + 1) : selectedItemIndex))
         } else if (e.code === "ArrowUp") {
             setSelectedItemIndex(selectedItemIndex > 0 ? (selectedItemIndex - 1) : selectedItemIndex)
         }
-        if (e.code === "Enter") {
+        if (e.code === "Enter" || e.code === "NumpadEnter") {
             if (selectedItemIndex === undefined) {
                 onAddClick(e)
             } else {
@@ -36,7 +37,7 @@ const AutoComplete = (props) => {
         }
     };
     const onQuantityKeyPress = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' || e.code === "NumpadEnter") {
             onAddClick(e)
         }
     };

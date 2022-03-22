@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 export const GlobalConstants = {
-    //API_BASE_URL: "https://localhost:44375/api/POS",
-    API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
+    API_BASE_URL: "https://localhost:44375/api/POS",
+    //API_BASE_URL: "http://164.52.216.130/restaurants/api/POS",
     ACCESS_TOKEN_NAME: 'login_access_token',
     EXPIRY_DATE_NAME: 'ExpiryDate',
     REFRESH_TOKEN_NAME: 'RefreshToken',
@@ -33,7 +33,8 @@ export const SuccessMessages = {
     CustomerRegistered: "Customer has been registered successfully",
     DayOpened: "Restaurant is open for the day now",
     DayClosed: "Restaurant is close for the day now",
-    BillSettled: "Bill has been successfully settled"
+    BillSettled: "Bill has been successfully settled",
+    DuesSettled: "Dues has been settled successfully"
 }
 
 export const ErrorMessages = {
@@ -211,7 +212,7 @@ export const OrdersDefault = {
 }
 
 export const CustomerSummaryDefault = {
-    mobileNumber: "",
+    mobileNumber: "0000000000",
     errorMessages: {},
     isAddCustomerVisible:false
 }
@@ -322,4 +323,24 @@ export const DailySaleReportDefaults = {
     searchValue: "",
     month: (new Date().getMonth() + 1),
     year: new Date().getFullYear()
+}
+
+export const SettleDuesDefaults = {
+    customerId: 0,
+    customer: {},
+    pageNo: 1,
+    sortBy: "Id",
+    order: "desc",
+    searchValue: "",
+    paymentModeId: 0,
+    paymentMode: "",
+    settlementAmount: 0,
+    errorMessages: {}
+}
+
+export const CustomersDefaults = {
+    pageNo: 1,
+    sortBy: "Id",
+    order: "desc",
+    searchValue: ""
 }

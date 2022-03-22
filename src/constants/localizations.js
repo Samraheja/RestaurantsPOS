@@ -135,5 +135,10 @@ export default {
     "displayTablePrice": "Table Price",
     "displayTakeAwayPrice": "Take Away Price",
     "displayDeliveryPrice": "Delivery Price",
-    "selectOrderQuantity": "Select Variant"
+    "selectOrderQuantity": "Select Variant",
+    "dueAmountLabel": "Due Amount",
+    "settleAmountLabel": "Settle Dues",
+    "settlementAmountLabel": "Amount",
+    "settleBtnLabel": "Settle",
+    "backBtnLabel": "Back"
 }

@@ -72,36 +72,39 @@ const Tables = (props) => {
                                                     <Col className="mb-4 text-center">
                                                         {
                                                             props.tablesStatus[i + 1] ?
-                                                            <Row className="m-0">
-                                                                <Col className="tableOperations"
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        props.onVoidBill(
-                                                                            props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id
-                                                                        );
-                                                                    }}
-                                                                >
-                                                                    <i className="fa fa-eraser" title="Void Bill" />
-                                                                </Col>
-                                                                {
-                                                                    props.tablesStatus[i + 1].isOrderCompleted &&
-                                                                    <Col className="tableOperations"
-                                                                        onClick={(e) => {
-                                                                            e.stopPropagation();
-                                                                            props.onSettleBill(
-                                                                                props.tablesStatus[i + 1].id
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        <i className="fa fa-file-invoice" title="Settle Bill" />
+                                                                <Row className="m-0">
+                                                                    {
+                                                                        !props.tablesStatus[i + 1].isOrderCompleted &&
+                                                                        <Col className="tableOperations"
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                props.onVoidBill(
+                                                                                    props.tablesStatus[i + 1] && props.tablesStatus[i + 1].id
+                                                                                );
+                                                                            }}
+                                                                        >
+                                                                            <i className="fa fa-eraser" title="Void Bill" />
+                                                                        </Col>
+                                                                    }
+                                                                    {
+                                                                        props.tablesStatus[i + 1].isOrderCompleted &&
+                                                                        <Col className="tableOperations"
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                props.onSettleBill(
+                                                                                    props.tablesStatus[i + 1].id
+                                                                                );
+                                                                            }}
+                                                                        >
+                                                                            <i className="fa fa-file-invoice" title="Settle Bill" />
+                                                                        </Col>
+                                                                    }
+                                                                </Row>
+                                                                :
+                                                                <Row className="m-0">
+                                                                    <Col className="tableOperations">
                                                                     </Col>
-                                                                }
-                                                            </Row>
-                                                            :
-                                                            <Row className="m-0">
-                                                                <Col className="tableOperations">
-                                                                </Col>
-                                                            </Row>
+                                                                </Row>
                                                         }
                                                     </Col>
                                                 </Row>
