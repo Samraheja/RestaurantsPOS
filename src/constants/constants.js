@@ -336,11 +336,21 @@ export const SettleDuesDefaults = {
     paymentMode: "",
     settlementAmount: 0,
     errorMessages: {}
-}
+};
 
 export const CustomersDefaults = {
     pageNo: 1,
     sortBy: "Id",
     order: "desc",
-    searchValue: ""
-}
+    searchValue: "",
+    fitleredCustomers: []
+};
+
+export const DayBookDefaults = {
+    date: moment(new Date()).format('YYYY-MM-DD'),
+};
+
+export const AccountBookDefaults = {
+    accountId: "",
+    ledger: []
+};

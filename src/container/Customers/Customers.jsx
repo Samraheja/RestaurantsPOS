@@ -19,14 +19,30 @@ const Customers = (props) => {
             PageNo: state.pageNo,
             Limit: GlobalConstants.Limit,
             SortColumn: state.sortBy + " " + state.order,
-            SearchValue: state.searchValue
+            SearchValue: ""
         };
 
         dispatch(getCustomers({
             params: payload,
             dispatch
         }));
-    }, [state, dispatch]);
+    }, [state.pageNo, state.sortBy, state.order, dispatch]);
+
+    const onChange = (e) => {
+        const { id, value } = e.target;
+
+        const filtered = customers.filter(
+            customer => customer.name.toLowerCase().includes(value)
+                || customer.mobileNumber.includes(value)
+                || customer.phoneNumber.includes(value)
+        );
+
+        setState(prevState => ({
+            ...prevState,
+            [id]: value,
+            fitleredCustomers: filtered
+        }));
+    }
 
     const SortRecords = (column) => {
         setState(prevState => ({
@@ -53,13 +69,15 @@ const Customers = (props) => {
     else {
         return (
             <CustomersComp
+                searchValue={state.searchValue}
                 totalRecords={totalRecords}
                 totalPages={totalPages}
-                customers={customers}
+                customers={state.searchValue != "" ? state.fitleredCustomers : customers}
                 pageNo={state.pageNo}
                 onPageChange={onPageChange}
                 SortRecords={SortRecords}
                 onSettleDuesClick={onSettleDuesClick}
+                onChange={onChange}
             />
         )
     }

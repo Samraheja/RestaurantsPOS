@@ -12,6 +12,7 @@ import order from "./order";
 import customer from "./customer";
 import settleBill from "./settleBill";
 import report from "./report";
+import accounts from "./accounts";
 
 export default combineReducers({
     login,
@@ -26,5 +27,6 @@ export default combineReducers({
     order,
     customer,
     settleBill,
-    report
+    report,
+    accounts
 });

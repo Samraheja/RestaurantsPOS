@@ -13,6 +13,8 @@ import SettledBills from "./container/SettleBill/SettledBills";
 import DailySaleReport from "./container/Reports/DailySaleReport";
 import Customers from "./container/Customers/Customers";
 import SettleDues from "./container/SettleBill/SettleDues";
+import DayBook from "./container/Accounts/DayBook";
+import AccountBook from "./container/Accounts/AccountBook";
 
 var routes = [
     {
@@ -121,6 +123,20 @@ var routes = [
         icon: "fas fa-rupee icon-color",
         component: SettleDues,
         isMenuItem: false,
+        layout: "/admin",
+    },
+    {
+        path: "/daybook",
+        name: "Day Book",
+        icon: "fas fa-book icon-color",
+        component: DayBook,
+        layout: "/admin",
+    },
+    {
+        path: "/accountbook",
+        name: "Account Book",
+        icon: "fas fa-book icon-color",
+        component: AccountBook,
         layout: "/admin",
     },
 ];

@@ -13,7 +13,7 @@ const SettleDues = (props) => {
     });
 
     const dispatch = useDispatch();
-    const { customers, isLoading } = useSelector(state => state.customer);
+    const { customers } = useSelector(state => state.customer);
     const { paymentModes } = useSelector(state => state.settleBill);
     const { totalRecords, totalPages, settledBills, isSettledLoading } = useSelector(state => state.settleBill);
 

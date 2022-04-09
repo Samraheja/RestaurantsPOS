@@ -140,5 +140,12 @@ export default {
     "settleAmountLabel": "Settle Dues",
     "settlementAmountLabel": "Amount",
     "settleBtnLabel": "Settle",
-    "backBtnLabel": "Back"
+    "backBtnLabel": "Back",
+    "dayBookLabel": 'Day Book',
+    "openingBalanceLabel": "Opening Balance",
+    "dayCreditLabel": "Total Day Credit",
+    "dayDebitLabel": "Total Day Debit",
+    "balanceLabel": "Day Balance",
+    "closingBalanceLabel": "Closing Balance",
+    "accountBookLabel": "Account Book"
 }

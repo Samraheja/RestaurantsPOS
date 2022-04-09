@@ -95,6 +95,11 @@ const types = {
         "GET_DAILY_SALES_REPORT": "GET_DAILY_SALES_REPORT",
         "SWITCH_REPORT_LOADER": "SWITCH_REPORT_LOADER"
     },
+    accounts: {
+        "GET_DAY_BOOK": "GET_DAY_BOOK",
+        "GET_ACCOUNT_BOOK": "GET_ACCOUNT_BOOK",
+        "SWITCH_ACCOUNT_LOADER": "SWITCH_ACCOUNT_LOADER" 
+    }
 };
 
 export default types;

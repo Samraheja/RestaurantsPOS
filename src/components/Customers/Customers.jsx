@@ -6,8 +6,10 @@ import {
     CardBody,
     CardFooter,
     Table,
-    Row
+    Row,
+    Col
 } from "reactstrap";
+import Input from "../AppComponents/input/InputComp";
 import Pagination from "../AppComponents/Pagination/Pagination";
 import localizedStrings from "../../constants/localizations";
 
@@ -25,7 +27,28 @@ const Customers = (props) => {
                     <div className="col">
                         <Card className="shadow">
                             <CardHeader className="border-0">
-                                <span className="font-weight-bold">Customers</span>
+                                <Row>
+                                    <Col lg="6">
+                                        <span className="font-weight-bold">Customers</span>
+                                    </Col>
+                                    <Col lg="2" className="text-right pt-2">
+                                        <label
+                                            className="form-control-label"
+                                            htmlFor="searchValue"
+                                        >
+                                            Search:
+                                        </label>
+                                    </Col>
+                                    <Col lg="4">
+                                        <Input
+                                            className="form-control-alternative"
+                                            id="searchValue"
+                                            type="text"
+                                            value={props.searchValue}
+                                            onChange={props.onChange}
+                                        />
+                                    </Col>
+                                </Row>
                             </CardHeader>
                             <Table className="align-items-center table-flush" responsive>
                                 <thead className="thead-light">
